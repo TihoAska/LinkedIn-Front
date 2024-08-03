@@ -1,0 +1,158 @@
+<div class="container" [ngStyle]="{'background-color': (showEmailAndPasswordForm || showFirstAndLastNameForm) ? '#F3F2F0' : 'white'}">
+    <header>
+        <p>Linked</p>
+        <img src="../../../assets/linked-in.png" alt="" height="38px" width="38px">
+    </header>
+
+    <main>
+        <h1 *ngIf="showEmailAndPasswordForm || showFirstAndLastNameForm">Make the most of your professional life</h1>
+        <div class="email-and-password-form" *ngIf="showEmailAndPasswordForm">
+            <form [formGroup]="emailAndPasswordFrom" (ngSubmit)="submitEmailAndPassword(emailAndPasswordFrom.value)">
+                <div class="input">
+                    <label id="email-label" for="email-input">Email</label>
+                    <input id="email-input" formControlName="email" type="email" [ngClass]="{'error-border': emailAndPasswordFrom.get('email')?.touched && emailAndPasswordFrom.get('email')?.errors?.['required'] || emailAndPasswordFrom.get('email')?.touched && emailAndPasswordFrom.get('email')?.errors?.['email']}">
+                    <div id="email-error">
+                        <p *ngIf="emailAndPasswordFrom.get('email')?.touched && emailAndPasswordFrom.get('email')?.errors?.['required']">
+                            Please enter email address.
+                        </p>
+                        <p *ngIf="emailAndPasswordFrom.get('email')?.touched && emailAndPasswordFrom.get('email')?.errors?.['email']">
+                            Please enter a valid email address.
+                          </p>
+                    </div>
+                </div>
+                <div class="input">
+                    <label id="password-label" for="password-input">Password (6+ characters)</label>
+                    <input id="password-input" formControlName="password" type="password" [ngClass]="{'error-border': emailAndPasswordFrom.get('password')?.touched && emailAndPasswordFrom.get('password')?.errors?.['required'] || emailAndPasswordFrom.get('email')?.touched && emailAndPasswordFrom.get('email')?.errors?.['minlength']}">
+                    <div id="password-error">
+                        <p *ngIf="emailAndPasswordFrom.get('password')?.touched && emailAndPasswordFrom.get('password')?.errors?.['required']">
+                            Please enter your password.
+                        </p>
+                        <p *ngIf="emailAndPasswordFrom.get('password')?.touched && emailAndPasswordFrom.get('password')?.errors?.['minlength']">
+                            Password must be 6 characters or more.
+                        </p>
+                    </div>
+                </div>
+                <p id="agree-and-join">By clicking Agree & Join or Continue, you agree to the LinkedIn <a href="">User Agreement, Privacy Policy</a>, and <a href="">Cookie Policy</a>.</p>
+                <button id="agree-and-join-btn" type="submit">Agree & Join</button>
+            </form>
+
+            <div class="or">
+                <div class="hr">
+                    <hr>
+                </div>
+                <p>or</p>
+                <div class="hr">
+                    <hr>
+                </div>
+            </div>
+
+            <button id="continue-with-google"><img src="../../../assets/google.png" alt="" height="18px" width="18px">Continue with Google</button>
+            <p id="already-on-linkedin">Already on LinkedIn? <a [routerLink]="'/sign-in'">Sign in</a></p>
+        </div>
+        <div class="first-and-last-name-form" *ngIf="showFirstAndLastNameForm">
+            <form [formGroup]="firstAndLastNameForm" (ngSubmit)="submitFirstAndLastName(firstAndLastNameForm)">
+                <div class="input">
+                    <label id="first-name-label" for="first-name-input">First name</label>
+                    <input id="first-name-input" formControlName="firstName" type="text" [ngClass]="{'error-border': firstAndLastNameForm.get('firstName')?.touched && firstAndLastNameForm.get('firstName')?.errors?.['required']}">
+                    <div id="first-name-error">
+                        <p *ngIf="firstAndLastNameForm.get('firstName')?.touched && firstAndLastNameForm.get('firstName')?.errors?.['required']">
+                            Please enter your first name.
+                        </p>
+                    </div>
+                </div>
+                <div class="input">
+                    <label id="last-name-label" for="last-name-input">Last name</label>
+                    <input id="last-name-input" formControlName="lastName" type="text" [ngClass]="{'error-border': firstAndLastNameForm.get('lastName')?.touched && firstAndLastNameForm.get('lastName')?.errors?.['required']}">
+                    <div id="last-name-error">
+                        <p *ngIf="firstAndLastNameForm.get('lastName')?.touched && firstAndLastNameForm.get('lastName')?.errors?.['required']">
+                            Please enter your last name.
+                        </p>
+                    </div>
+                </div>
+                <button id="continue-btn" type="submit">Continue</button>
+            </form>
+        </div>
+
+        <div class="location-form" *ngIf="showLocationForm">
+            <h1>Welcome, {{ firstAndLastNameForm.value.firstName }}! What's your location?</h1>
+            <p>See people, jobs, and news in your area.</p>
+            <form [formGroup]="locationForm" action="" (ngSubmit)="submitLocation(locationForm)">
+                <div class="country">
+                    <label for="location-input">Country/Region *</label>
+                    <input id="location-input" type="text" formControlName="location">
+                </div>
+                <div class="postal-code">
+                    <label for="postal-code-input">Postal code *</label>
+                    <input id="postal-code-input" type="text" formControlName="postalCode">
+                </div>
+                <div class="location">
+                    <label for="location-within-this-area">Location within this area *</label>
+                    <input id="location-within-this-area" type="text" formControlName="locationWithinThisArea">
+                </div>
+                <button *ngIf="!locationForm.valid" id="next-btn-forbidden">Next</button>
+                <button *ngIf="locationForm.valid" id="next-btn">Next</button>
+            </form>
+        </div>
+
+        <div class="job-form" *ngIf="showJobForm">
+            <h1>Your profile helps you discover new people and opportunities</h1>
+            <form [formGroup]="jobForm" action="" (ngSubmit)="submitJobForm(jobForm)">
+                <div class="job-input">
+                    <label for="job-title-input">Most recent job title *</label>
+                    <input id="job-title-input" type="text" formControlName="jobTitle">
+                </div>
+                <div class="employment-input">
+                    <label for="employment-type">Employment type</label>
+                    <select name="employment-type" id="employment-type" formControlName="employmentType">
+                        <option value="SelectOne" disabled selected>Select one</option>
+                        <option value="FullTime">Full-time</option>
+                        <option value="PartTime">Part-time</option>
+                        <option value="SelfEmployed">Self-employed</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Apprenticeship">Apprenticeship</option>
+                        <option value="Temporary">Temporary</option>
+                    </select>
+                </div>
+                <div class="company-input">
+                    <label for="recent-company-input">Most recent company *</label>
+                    <input id="recent-company-input" type="text" formControlName="company">
+                </div>
+                <button id="im-a-student-form">I'm a student</button>
+                <button *ngIf="!jobForm.valid" id="continue-job-form-forbidden">Continue</button>
+                <button *ngIf="jobForm.valid" id="continue-job-form">Continue</button>
+            </form>
+        </div>
+
+        <div class="email-already-used" *ngIf="showToastMessage">
+            <div id="email-already-used-text">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" focusable="false" class="lazy-loaded" aria-busy="false">
+                    <path d="M8 2 2 8v8l6 6h8l6-6V8l-6-6zm10 11H6v-2h12z"></path>
+                </svg>
+                <p>Someone's already using that email.</p>
+            </div>
+
+            <mat-icon (click)="closeEmailAlreadyUsedToast()">close</mat-icon>
+        </div>
+        
+    </main>
+
+    <footer *ngIf="showEmailAndPasswordForm || showFirstAndLastNameForm">
+        <p id="footer-linkedin">Linked <img src="../../../assets/linked-in-black.png" alt="" height="20px" width="20px"></p>
+        <p id="copyright-2024">© 2024</p>
+        <a href="">About</a>
+        <a href="">Accessibility</a>
+        <a href="">User Agreement</a>
+        <a href="">Privacy Policy</a>
+        <a href="">Cookie Policy</a>
+        <a href="">Copyright Policy</a>
+        <a href="">Brand Policy</a>
+        <a href="">Guest Controls</a>
+        <a href="">Community Guidelines</a>
+        <select name="Language" id="">
+            <option value="Language" disabled selected>Language</option>
+            <option value="English">English</option>
+        </select>
+    </footer>
+</div>

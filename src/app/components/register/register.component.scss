@@ -1,0 +1,510 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #F3F2F0;
+
+    header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: #0A66C2;
+        font-weight: 500;
+        position: relative;
+        left: -500px;
+        padding-top: 30px;
+
+        p{
+            margin: 0;
+        }
+    }
+
+    main{
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+
+        h1{
+            padding: 20px;
+            font-size: 32px
+        }
+
+        .email-and-password-form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            height: 466px;
+            width: 400px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 30px 30px 0 30px;
+            gap: 15px;
+            background-color: white;
+
+            a{
+                text-decoration: none;
+                color: #0A66C2;
+                font-weight: 500;
+            }
+
+            #agree-and-join{
+                font-size: 12px;
+                text-align: center;
+                color: gray;
+            }
+
+
+            #agree-and-join-btn{
+                width: 352px;
+                height: 48px;
+                border-radius: 30px;
+                background-color: #0A66C2;
+                border: 0;
+                color: white;
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            #agree-and-join-btn:hover{
+                cursor: pointer;
+                background-color: #0f4f8f;
+            }
+
+            #join-linkedin{
+                font-size: 32px;
+                position: relative;
+                left: -80px;
+            }
+
+            .input{
+                width: 352px;
+                height: 48px;
+                padding-bottom: 30px;
+
+                input{
+                    width: 342px !important;
+                    padding-left: 10px;
+                }
+
+                .error-border {
+                    border-color: red !important;
+                }
+
+                #email-input, #password-input{
+                    height: 32px;
+                    width: 352px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                }
+
+                #email-label, #password-label{
+                    color: gray;
+                    // font-weight: 500;
+                }
+
+                #email-input:hover, #password-input:hover{
+                    cursor: pointer;
+                    background-color: rgba(0, 0, 0, 0.05);
+                    border: 2px solid black;
+                }
+
+                #email-error{
+                    color: red;
+
+                    p{
+                        margin: 0;
+                    }
+                }
+
+                #password-error{
+                    color: red;
+
+                    p{
+                        margin: 0;
+                    }
+                }
+            }
+
+            .or{
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                p{
+                    padding: 0 10px 0 10px;
+                    margin: 0;
+                    color: rgba(0, 0, 0, 0.6);
+                }
+
+                .hr{
+                    padding-top: 2px;
+                    hr{
+
+                        border-color: rgba(0, 0, 0, 0.2);
+                    }
+                    width: 100%;
+                }
+            }
+
+            #continue-with-google{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                height: 42px;
+                width: 320px;
+                border-radius: 30px;
+                background-color: transparent;
+                font-size: 16px;
+                margin-bottom: 10px;
+                border-color: gray;
+            }
+
+            #already-on-linkedin{
+                font-size: 16px;
+                margin-top: 10px;
+            }
+        }
+
+        .first-and-last-name-form{
+            width: 400px;
+            min-height: 265px;
+            background-color: white;
+            box-sizing: border-box;
+            padding: 10px 10px 0 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.6);
+
+            .input{
+                width: 352px;
+                height: 48px;
+                padding-bottom: 30px;
+
+                input{
+                    width: 342px !important;
+                    padding-left: 10px;
+                }
+
+                .error-border {
+                    border-color: red !important;
+                }
+
+                #first-name-input, #last-name-input{
+                    height: 32px;
+                    width: 352px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                }
+
+                #first-name-error{
+                    color: red;
+
+                    p{
+                        margin: 0;
+                    }
+                }
+
+                #last-name-error{
+                    color: red;
+
+                    p{
+                        margin: 0;
+                    }
+                }
+
+                #first-name-label, #last-name-label{
+                    color: gray;
+                }
+
+                #first-name-input:hover, #last-name-input:hover{
+                    cursor: pointer;
+                    background-color: rgba(0, 0, 0, 0.05);
+                    border: 2px solid black;
+                }
+            }
+
+            #continue-btn{
+                width: 352px;
+                height: 48px;
+                border-radius: 30px;
+                background-color: #0A66C2;
+                border: 0;
+                color: white;
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            #continue-btn:hover{
+                cursor: pointer;
+                background-color: #0f4f8f;
+            }
+        }
+
+        .location-form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            h1{
+                margin: 0;
+                font-size: 24px;
+                padding-bottom: 0;
+            }
+
+            p{
+                margin-top: 10px;
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+            form{
+                padding-top: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                color: rgba(0, 0, 0, 0.6);
+
+                input{
+                    height: 28px;
+                    width: 398px;
+                    border-radius: 3px;
+                    border: 1px solid black;
+                    padding-left: 10px !important;
+
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .country, .postal-code, .location{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                #next-btn-forbidden{
+                    width: 408px;
+                    height: 48px;
+                    border-radius: 30px;
+                    background-color: rgba(0, 0, 0, 0.1);
+                    border: 0;
+                    color: gray;
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+
+                #next-btn-forbidden:hover{
+                    cursor: not-allowed;
+                }
+
+                #next-btn{
+                    width: 408px;
+                    height: 48px;
+                    border-radius: 30px;
+                    background-color: #0A66C2;
+                    border: 0;
+                    color: white;
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+    
+                #next-btn:hover{
+                    cursor: pointer;
+                    background-color: #0f4f8f;
+                }
+            }
+        }
+
+        .job-form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 600px;
+            
+            h1{
+                font-size: 24px;
+                text-align: center;
+            }
+
+            form{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                #employment-type{
+                    height: 28px;
+                    width: 408px;
+                    border-radius: 3px;
+                    border: 1px solid black;;
+
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .job-input, .employment-input, .company-input{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                label{
+                    color: rgba(0, 0, 0, 0.6);
+                }
+
+                input{
+                    height: 28px;
+                    width: 398px;
+                    border-radius: 3px;
+                    border: 1px solid black;
+                    padding-left: 10px !important;
+
+                    margin: 0;
+                    padding: 0;
+                }
+
+                #im-a-student-form{
+                    height: 48px;
+                    border-radius: 30px;
+                    border: none;
+                    font-size: 18px;
+                    background-color: transparent;
+                    border-radius: 10px;
+                    transition: background-color 0.3s ease;
+                }
+
+                #im-a-student-form:hover{
+                    background-color: rgba(0, 0, 0, 0.05);
+                    cursor: pointer;
+                }
+
+                #continue-job-form-forbidden{
+                    height: 48px;
+                    border-radius: 30px;
+                    border: none;
+                    font-size: 18px;
+                    background-color: rgba(0, 0, 0, 0.1); 
+                    color: gray;
+                    transition: background-color 0.3s ease;
+                }
+
+                #continue-job-form-forbidden:hover{
+                    cursor: not-allowed;
+                }
+
+                #continue-job-form{
+                    height: 48px;
+                    border-radius: 30px;
+                    border: none;
+                    font-size: 18px;
+                    background-color: #0A66C2;
+                    color: white;
+                }
+                
+                #continue-job-form:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .email-already-used{
+            width: 400px;
+            height: 61px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: white;
+
+            position: absolute;
+            left: 30px;
+            bottom: 80px;
+            box-shadow: 0 0 10px grey;
+
+            #email-already-used-text{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                color: red;
+
+                p{
+                    margin: 0;
+                }
+    
+                svg{
+                    height: 24px;
+                    width: 24px;
+                }
+            }
+
+            mat-icon{
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+            mat-icon:hover{
+                cursor: pointer;
+            }
+        }
+    }
+
+    footer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: white;
+        width: 100%;
+        height: 60px;
+
+        #footer-linkedin{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-weight: 500;
+            margin: 0;
+
+            img{
+                position: relative;
+                top: -2px;
+            }
+        }
+
+        #copyright-2024{
+            margin: 0;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        a{
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        a:hover{
+            cursor: pointer;
+            color: #0A66C2;
+            text-decoration: underline;
+        }
+
+        select{
+            position: relative;
+            top: -2px;
+            border: 0;
+            color: rgba(0, 0, 0, 0.6);
+        }
+    }
+}
