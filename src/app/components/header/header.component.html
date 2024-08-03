@@ -1,0 +1,46 @@
+<header>
+    <div class="container">
+        <div class="logo-and-search">
+            <img id="linked-in-logo" src="../../../assets/linked-in.png" alt="linked-in" width="36.17" height="36.17">
+            <div class="search-container">
+                <mat-icon>search</mat-icon>
+                <input id="search-bar" type="text" placeholder="Search">
+            </div>
+        </div>
+
+        <div class="icons-and-misc">
+            <div class="icons">
+                <div class="icon" *ngFor="let icon of icons">
+                    <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="icon" width="24" height="24" focusable="false">
+                        <path [attr.d]="icon.shape"></path>
+                    </svg>
+                    <p class="icon-name">{{ icon.name }}</p>
+                </div>
+            </div>
+
+            <div class="avatar">
+                <img id="avatar" src="../../../assets/avatar.png" alt="avatar" height="24px" width="24px">
+                <p style="color: #00000099;">Me</p>
+            </div>
+
+            <div class="vertical-line">
+
+            </div>
+
+            <div class="business-and-premium">
+                <div class="for-business">
+                    <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                        <path d="M3 3h4v4H3zm7 4h4V3h-4zm7-4v4h4V3zM3 14h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4zM3 21h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4z"></path>
+                    </svg>
+                    <p style="color: #00000099;">For Business</p>
+                </div>
+                
+                <p class="try-premium">
+                    <u>Try premium 1</u>
+                    <br>
+                    <u>month free</u>
+                </p>
+            </div>            
+        </div>
+    </div>
+</header>
