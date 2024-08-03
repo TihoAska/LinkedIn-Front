@@ -1,0 +1,622 @@
+<div class="container">
+    <header>
+        <div class="header-container">
+            <div class="logo-and-search">
+                <img id="linked-in-logo" src="../../../assets/linked-in.png" alt="linked-in" width="36.17" height="36.17">
+                <div class="search-container">
+                    <mat-icon>search</mat-icon>
+                    <input id="search-bar" type="text" placeholder="Search">
+                </div>
+            </div>
+    
+            <div class="icons-and-misc">
+                <div class="icons">
+                    <div class="icon" *ngFor="let icon of icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="icon" width="24" height="24" focusable="false">
+                            <path [attr.d]="icon.shape"></path>
+                        </svg>
+                        <p class="icon-name">{{ icon.name }}</p>
+                    </div>
+                </div>
+    
+                <div class="avatar">
+                    <img id="avatar" src="../../../assets/avatar.png" alt="avatar" height="24px" width="24px">
+                    <p style="color: #00000099;">Me</p>
+                </div>
+    
+                <div class="vertical-line">
+    
+                </div>
+    
+                <div class="business-and-premium">
+                    <div class="for-business">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                            <path d="M3 3h4v4H3zm7 4h4V3h-4zm7-4v4h4V3zM3 14h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4zM3 21h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4z"></path>
+                        </svg>
+                        <p style="color: #00000099;">For Business</p>
+                    </div>
+                    
+                    <p class="try-premium">
+                        <u>Try premium 1</u>
+                        <br>
+                        <u>month free</u>
+                    </p>
+                </div>            
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <main>
+            <section class="my-profile">
+                <img class="banner" src="../../../assets/timeline.png" alt="" width="804px" height="201px">
+                <img class="avatar" src="../../../assets/images/avatars/avatar-male-1.png" alt="" height="150px" width="150px">
+    
+                <div class="info">
+                    <div class="name-and-verification">
+                        <p id="name">Tihomir Aščić</p>
+                        <button id="verify-now"><mat-icon>verified_user</mat-icon>Verify now</button>
+                    </div>
+                    <p id="experience">Junior Software Developer | Experience with Angular and .NET | Computer Science Graduate</p>
+                    <p id="location">Đakovo, Osijek-Baranja, Croatia</p>
+                    <a href="">12 connections</a>
+                    <div class="buttons">
+                        <button id="open-to">Open to</button>
+                        <button id="add-profile-section">Add profile section</button>
+                        <button id="more">More</button>
+                    </div>
+    
+                    <div class="open-to-work">
+                        <p id="open-to-work">Open to work</p>
+                        <p>Software Engineer roles</p>
+                        <a href="">Show details</a>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="suggested-for-you">
+                <p id="suggested-for-you">Suggested for you</p>
+                <div class="private-to-you">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" class="mercado-match" width="16" height="16" focusable="false">
+                        <path d="M8 3a8.59 8.59 0 00-8 5 8.54 8.54 0 008 5 8.55 8.55 0 008-5 8.55 8.55 0 00-8-5zm0 8a3 3 0 113-3 3 3 0 01-3 3zm2-3a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                    </svg>
+                    <p id="private-to-you">Private to you</p>
+                </div>
+                <p id="intermediate">Intermediate</p>
+                <div class="progress-bar">
+                    <div class="progress">
+    
+                    </div>
+                    <span id="number-out-of">
+                        5/7
+                    </span>
+                </div>
+                <p id="complete-2-steps">Complete 2 steps to achieve <a href="">All-star</a></p>
+                <div class="add-photo-and-summary">
+                    <div class="add-photo">
+                        <div class="add-profile-photo">
+                            <img src="../../../assets/camera.png" alt="camera">
+                            <p>Add a profile photo to help others recognize you</p>
+                        </div>
+                        <p id="members-with-a-photo">Members with a profile photo receive up to 2.3 times as many profile views.</p>
+                        <button id="add-photo-btn">Add photo</button>
+                    </div>
+                    <div class="add-summary">
+                        <div class="write-a-summary">
+                            <img src="../../../assets/summary.png" alt="summary">
+                            <p>Write a summary to highlight your personality or work experience</p>
+                        </div>
+                        <p>Members who include a summary receive up to 3.9 times as many profile views.</p>
+                        <button id="add-summary-btn">Add a summary</button>
+                    </div>
+                </div>
+    
+            </section>
+    
+            <section class="analytics">
+                <div class="analytics-wrapper">
+                    <p id="analytics">Analytics</p>
+                    <div class="private-to-you">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" class="mercado-match" width="16" height="16" focusable="false">
+                            <path d="M8 3a8.59 8.59 0 00-8 5 8.54 8.54 0 008 5 8.55 8.55 0 008-5 8.55 8.55 0 00-8-5zm0 8a3 3 0 113-3 3 3 0 01-3 3zm2-3a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                        </svg>
+                        <p id="private-to-you">Private to you</p>
+                    </div>
+        
+                    <div class="analytics-container">
+                        <div class="profile-views">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M12 16v6H3v-6a3 3 0 013-3h3a3 3 0 013 3zm5.5-3A3.5 3.5 0 1014 9.5a3.5 3.5 0 003.5 3.5zm1 2h-2a2.5 2.5 0 00-2.5 2.5V22h7v-4.5a2.5 2.5 0 00-2.5-2.5zM7.5 2A4.5 4.5 0 1012 6.5 4.49 4.49 0 007.5 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="desc">
+                                <h3>14 profile views</h3>
+                                <p>Discover who's viewed your profile.</p>
+                            </div>
+                        </div>
+            
+                        <div class="post-impressions">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M23 20v1H1v-1zM8 9H2v10h6zm7-6H9v16h6zm7 11h-6v5h6z"></path>
+                                </svg>
+                            </div>
+                            
+                            <div class="desc">
+                                <h3>61 post impressions</h3>
+                                <p>Check out who's engaging with your posts.</p>
+                                <p id="past-7-days">Past 7 days</p>
+                            </div>
+                        </div>
+            
+                        <div class="search-appearances">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M21.41 18.59l-5.27-5.28A6.83 6.83 0 0017 10a7 7 0 10-7 7 6.83 6.83 0 003.31-.86l5.28 5.27a2 2 0 002.82-2.82zM5 10a5 5 0 115 5 5 5 0 01-5-5z"></path>
+                                </svg>
+                            </div>
+                            
+                            <div class="desc">
+                                <h3>7 search appearances</h3>
+                                <p>See how often you appear in search results.</p>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                
+                
+                <div class="show-all-analytics">
+                    <p>Show all analytics</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+    
+            <section class="resources">
+                <div class="resources-container">
+                    <p id="resources">Resources</p>
+                    <div class="private-to-you">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" class="mercado-match" width="16" height="16" focusable="false">
+                            <path d="M8 3a8.59 8.59 0 00-8 5 8.54 8.54 0 008 5 8.55 8.55 0 008-5 8.55 8.55 0 00-8-5zm0 8a3 3 0 113-3 3 3 0 01-3 3zm2-3a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                        </svg>
+                        <p id="private-to-you">Private to you</p>
+                    </div>
+        
+                    <div class="network-and-saved-items">
+                        <div class="my-network">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M12 16v6H3v-6a3 3 0 013-3h3a3 3 0 013 3zm5.5-3A3.5 3.5 0 1014 9.5a3.5 3.5 0 003.5 3.5zm1 2h-2a2.5 2.5 0 00-2.5 2.5V22h7v-4.5a2.5 2.5 0 00-2.5-2.5zM7.5 2A4.5 4.5 0 1012 6.5 4.49 4.49 0 007.5 2z"></path>
+                                </svg>
+                            </div>
+        
+                            <div class="desc">
+                                <p id="my-network">My network</p>
+                                <p>See and manage your connections and interests.</p>
+                            </div>
+                        </div>
+            
+                        <div class="saved-items">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M19 5a3 3 0 00-3-3H5v20l7-6.29L19 22z"></path>
+                                  </svg>
+                            </div>
+        
+                            <div class="desc">
+                                <p id="saved-items">Saved items</p>
+                                <p>Keep track of your jobs, courses and articles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="show-all-resources">
+                    <p>Show all 4 resources</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+    
+            <section class="activity">
+                <div class="activity-wrapper">
+                    <div class="top-part">
+                        <div class="activity-and-followers">
+                            <p>Activity</p>
+                            <a href="">12 followers</a>
+                        </div>
+                        <div class="button-and-create">
+                            <button>Create a post</button>
+                            <mat-icon>create</mat-icon>
+                        </div>
+                    </div>
+        
+                    <div class="buttons">
+                        <button id="posts-btn">Posts</button>
+                        <button id="images-btn">Images</button>
+                    </div>
+        
+                    <div class="post">
+                        <p id="tihomir-posted-this"><span>Tihomir Aščić</span> posted this 2mo</p>
+                        <div class="img-and-desc">
+                            <img src="../../../assets/diploma.jpeg" alt="diploma" height="64px" width="64px">
+                            <p class="desc">I just finished a .NET MVC bootcamp organised by <a href="">joinUP</a>. On this 3-month journey I learned a lot and met some great people. A big thank you to my lecturer <a href="">Robert Maksić</a>.</p>
+                        </div>
+                    </div>
+    
+                    <div class="likes-and-comments">
+                        <div class="likes">
+                            <img id="like" class="reactions-icon social-detail-social-counts__count-icon social-detail-social-counts__count-icon--0 reactions-icon__consumption--small data-test-reactions-icon-type-LIKE data-test-reactions-icon-theme-light" src="https://static.licdn.com/aero-v1/sc/h/8ekq8gho1ruaf8i7f86vd1ftt" alt="like" data-test-reactions-icon-type="LIKE" data-test-reactions-icon-theme="light">
+                            <img id="heart" class="reactions-icon social-detail-social-counts__count-icon social-detail-social-counts__count-icon--1 reactions-icon__consumption--small reactions-icon--stacked data-test-reactions-icon-type-EMPATHY data-test-reactions-icon-theme-light" src="https://static.licdn.com/aero-v1/sc/h/cpho5fghnpme8epox8rdcds22" alt="love" data-test-reactions-icon-type="EMPATHY" data-test-reactions-icon-theme="light">
+                            <p>4</p>
+                        </div>
+                        <div class="comments">
+                            <p>1 comment</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="show-all-posts">
+                    <p>Show all posts</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+    
+            <section class="experience">
+                <div class="title-and-edit">
+                    <p id="experience">Experience</p>
+                    <div class="add-and-edit">
+                        <div class="plus-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                            </svg>
+                        </div>
+                        <mat-icon>create</mat-icon>
+                    </div>
+                </div>
+    
+                <div class="joinup">
+                    <div class="joinup-image">
+                        <img src="../../../assets/images/pageLogos/joinup.jpeg" alt="joinup" height="48px" width="48px">
+                    </div>
+    
+                    <div class="description">
+                        <p id="junior-software-developer">Junior Software Developer</p>
+                        <p id="joinup-full-time">joinUP · Full-time</p>
+                        <p id="date-worked">Oct 2023 - Apr 2024 · 7 mos</p>
+                        <p id="place-worked">Osijek, Osijek-Baranja, Croatia · Remote</p>
+                        <br>
+                        <div class="skills-earned">
+                            <mat-icon>details</mat-icon>
+                            <p id="skills-earned">Software Development, Angular and +3 skills</p>
+                        </div>
+                    </div>
+                </div>
+    
+            </section>
+    
+            <section class="education">
+                <div class="top-part">
+                    <p id="education">Education</p>
+                    <div class="add-and-edit">
+                        <div class="plus-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                            </svg>
+                        </div>
+                        <mat-icon>create</mat-icon>
+                    </div>
+                </div>
+    
+                <div class="faculty">
+                    <div class="masters-degree">
+                        <img src="../../../assets/ferit.jpeg" alt="ferit" height="48px" width="48px">
+                        <div class="degree-desc">
+                            <p id="faculty-name">Faculty of Electrical Engineering, Computer Science and Information Technology Osijek</p>
+                            <p id="degree-name">Master's degree, Automotive Computing and Communications</p>
+                            <p id="time-studied">Oct 2022</p>
+                        </div>
+                    </div>
+    
+                    <div class="bachelors-degree">
+                        <img src="../../../assets/ferit.jpeg" alt="ferit" height="48px" width="48px">
+                        <div class="degree-desc">
+                            <p id="faculty-name">Faculty of Electrical Engineering, Computer Science and Information Technology Osijek</p>
+                            <p id="degree-name">Bachelor's degree, Computer Science</p>
+                            <p id="time-studied">Oct 2018 - Oct 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="licenses-and-verifications">
+                <div class="top-part">
+                    <p id="licenses-and-certifications">Licenses & certifications</p>
+                    <div class="add-and-edit">
+                        <div class="plus-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                            </svg>
+                        </div>
+                        <mat-icon>create</mat-icon>
+                    </div>
+                </div>
+    
+                <div class="main-part">
+                    <img src="../../../assets/freecodecamp.jpeg" alt="freecodecamp" height="48px" width="48px">
+                    <div class="desc">
+                        <p id="responsive-web-design">Responsive Web Design</p>
+                        <p>freeCodeCamp</p>
+                        <p id="issued-at">Issued Aug 2023</p>
+                        <p id="credential-id">Credential ID tihoaska-rwd</p>
+                        <button id="show-credential-btn">Show credential<mat-icon>launch</mat-icon></button>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="skills">
+                <div class="skills-container">
+                    <div class="top-part">
+                        <p id="skills">Skills</p>
+                        <div class="add-and-edit">
+                            <div class="plus-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                                </svg>
+                            </div>
+                            <mat-icon>create</mat-icon>
+                        </div>
+                    </div>
+        
+                    <div class="main-part">
+                        <div class="software-development">
+                            <p id="software-development">Software Development</p>
+                            <div class="img-and-desc">
+                                <img src="../../../assets/images/pageLogos/joinup.jpeg" alt="joinup" height="24px" width="24px">
+                                <p>Junior Software Development at joinUP</p>
+                            </div>
+                        </div>
+        
+                        <div class="angular">
+                            <p id="angular">Angular</p>
+                            <div class="img-and-desc">
+                                <img src="../../../assets/images/pageLogos/joinup.jpeg" alt="joinup" height="24px" width="24px">
+                                <p>Junior Software Development at joinUP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bottom-part">
+                    <p>Show all 5 skills</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+    
+            <section class="languages">
+                <div class="languages-container">
+                    <div class="top-part">
+                        <p id="languages">Languages</p>
+                        <div class="add-and-edit">
+                            <div class="plus-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                    <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                                </svg>
+                            </div>
+                            <mat-icon>create</mat-icon>
+                        </div>
+                    </div>
+        
+                    <div class="main-part">
+                        <div class="croatian">
+                            <p id="croatian">Croatian</p>
+                            <p class="native-or-bilingual">Native or bilingual proficiency</p>
+                        </div>
+        
+                        <div class="english">
+                            <p id="english">English</p>
+                            <p class="native-or-bilingual">Professional working proficiency</p>
+                        </div>
+                    </div>
+                </div>
+                
+    
+                <div class="bottom-part">
+                    <p>Show all 3 languages</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+    
+            <section class="interests">
+    
+                <div class="interests-wrapper">
+                    <div class="top-side">
+                        <p id="interests">Interests</p>
+                    </div>
+        
+                    <div class="main-side">
+                        <div class="tabs">
+                            <p id="companies">Companies</p>
+                            <p id="schools">Schools</p>
+                        </div>
+                        <div class="companies">
+                            <div class="ferit">
+                                <img src="../../../assets/ferit.jpeg" alt="ferit" height="48px" width="48px"> 
+                                <div class="info">
+                                    <p id="ferit-name">Faculty of Electrical Engineering, Computer Science and Information Technology Osijek</p>
+                                    <p class="no-of-followers">3,818 followers</p>
+                                    <button class="following"><mat-icon>check</mat-icon>Following</button>
+                                </div>
+                            </div>
+                            <div class="cobe">
+                                <img src="../../../assets/images/pageLogos/cobe.jpeg" alt="cobe" height="48px" width="48px">
+                                <div class="info">
+                                    <p id="cobe-name">COBE</p>
+                                    <p class="no-of-followers">3,828 followers</p>
+                                    <button class="following"><mat-icon>check</mat-icon>Following</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="schools">
+        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bottom-side">
+                    <p>Show all companies</p>
+                    <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
+                </div>
+            </section>
+        </main>
+    
+        <aside>
+            <section class="edit-profile">
+                <div class="profile-languages">
+                    <div class="top-part">
+                        <p id="profile-languages">Profile language</p>
+                        <mat-icon>create</mat-icon>
+                    </div>
+                    <p id="english">English</p>
+                </div>
+                <div class="public-profile">
+                    <div class="top-part">
+                        <p id="public-profile">Public profile & URL</p>
+                        <mat-icon>create</mat-icon>
+                    </div>
+                    <p id="www-linkedin">www.linkedin.com/in/tihomir-ascic</p>
+                </div>
+            </section>
+    
+            <section class="see-whos-hiring">
+    
+            </section>
+    
+            <section class="other-similar-profiles" *ngIf="otherSimilarProfiles && otherSimilarProfiles.length > 0">
+                <div class="profiles-wrapper">
+                    <p id="other-similar-profiles">Other similar profiles</p>
+                    <div class="profile" *ngFor="let profile of userService.$otherSimilarProfiles | async">
+                        <img [src]="profile.imageUrl" [alt]="profile.firstName" height="48px" width="48px">
+                        <div class="desc">
+                            <p id="profile-name">{{ profile.firstName }} {{ profile.lastName }}<span>· 1st</span></p>
+                            <p id="profile-job">{{ profile.job }}</p>
+                            <button><mat-icon>send</mat-icon>Message</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="show-all">
+                    <p id="show-all">Show all</p>
+                </div>
+            </section>
+    
+            <section class="people-you-may-know" *ngIf="peopleYouMayKnow && peopleYouMayKnow.length > 0">
+                <div class="people-you-may-know-wrapper">
+                    <p id="people-you-may-know">People you may know</p>
+                    <p id="from-your-school">From your school</p>
+                    <div class="profiles-you-may-know" *ngFor="let profile of userService.$peopleYouMayKnow | async">
+                        <img [src]="profile.imageUrl" [alt]="profile.firstName" height="48px" width="48px">
+                        <div class="desc">
+                            <p id="profile-name">{{ profile.firstName }} {{ profile.lastName }}<span>· 1st</span></p>
+                            <p id="profile-job">{{ profile.job }}</p>
+                            <button><mat-icon>person_add</mat-icon>Connect</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="show-all">
+                    <p id="show-all">Show all</p>
+                </div>
+            </section>
+    
+            <section class="you-might-like">
+                <div class="you-might-like-wrapper">
+                    <p id="you-might-like">You might like</p>
+                    <p id="pages-for-you">Pages for you</p>
+                    <div class="pages-you-might-like" *ngFor="let page of pageService.$twoPages | async">
+                        <img [src]="page.imageUrl" [alt]="page.name" height="48px" width="48px">
+                        <div class="desc">
+                            <p id="profile-name">{{ page.name }}</p>
+                            <p id="profile-job">{{ page.description }}</p>
+                            <p id="profile-followers">{{ page.numberOfFollowers }} followers</p>
+                            <div class="people-following">
+                                <img id="people-following-1" [src]="page.followers[0].imageUrl" alt="avatar" height="24px" width="24px">
+                                <img id="people-following-2" [src]="page.followers[1].imageUrl" alt="avatar" height="24px" width="24px">
+                                <img id="people-following-3" [src]="page.followers[2].imageUrl" alt="avatar" height="24px" width="24px">
+                                <p id="four-connections-follow">{{ page.followers.count }} connections follow this page</p>
+                            </div>
+                            <button (click)="followPage(page.name)"><mat-icon>add</mat-icon>Follow</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="show-all">
+                    <p>Show all</p>
+                </div>
+            </section>
+    
+            <section class="see-whos-hiring">
+    
+            </section>
+        </aside>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <section class="links">
+                <div class="left">
+                    <a href="">About</a>
+                    <a href="">Professional Community Policy</a>
+                    <a href="">Privacy & Terms</a>
+                    <a href="">Sales Solutions</a>
+                    <a href="">Safety Center</a>
+                </div>
+                <div class="middle">
+                    <a href="">Accessibility</a>
+                    <a href="">Careers</a>
+                    <a href="">Ad Choices</a>
+                    <a href="">Mobile</a>
+                </div>
+                <div class="right">
+                    <a href="">Talent Solutions</a>
+                    <a href="">Marketing Solutions</a>
+                    <a href="">Advertising</a>
+                    <a href="">Small Business</a>
+                </div>
+            </section>
+        
+            <section class="manage">
+                <div id="questions-and-help">
+                    <mat-icon>help</mat-icon>
+                    <div class="questions-and-visit">
+                        <p id="questions">Questions?</p>
+                        <p id="visit-help">Visit our Help Center.</p>
+                    </div>
+                </div>
+        
+                <div id="manage-and-settings">
+                    <mat-icon>settings</mat-icon>
+                    <div class="manage-and-privacy">
+                        <p id="manage">Manage your account and privacy</p>
+                        <p id="go-to-settings">Go to your Settings.</p>
+                    </div>
+                </div>
+        
+                <div id="recommendation-and-security">
+                    <mat-icon>security</mat-icon>
+                    <div class="reccomendation-transparency">
+                        <p id="recommendation">Recommendation transparency</p>
+                        <p id="learn-more">Learn more about Recommended Content.</p>
+                    </div>
+                </div>
+            </section>
+        
+            <section class="select-language">
+                <p>Select language</p>
+                <select name="" id="">
+                    <option selected value="">English (English)</option>
+                </select>
+            </section>
+        </div>
+        
+        <p id="linkedin-corporation">LinkedIn Corporation © 2024</p>
+    </footer>
+</div>
