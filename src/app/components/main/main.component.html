@@ -1,0 +1,115 @@
+<div class="container">
+    <header>
+        <div class="header-container">
+            <div class="logo-and-search">
+                <img id="linked-in-logo" src="../../../assets/images/logos/linked-in.png" alt="linked-in" width="36.17" height="36.17">
+                <div class="search-container">
+                    <mat-icon>search</mat-icon>
+                    <input id="search-bar" type="text" placeholder="Search">
+                </div>
+            </div>
+    
+            <div class="icons-and-misc">
+                <div class="icons">
+                    <div class="icon" *ngFor="let icon of icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="icon" width="24" height="24" focusable="false">
+                            <path [attr.d]="icon.shape"></path>
+                        </svg>
+                        <p class="icon-name">{{ icon.name }}</p>
+                    </div>
+                </div>
+    
+                <div class="avatar">
+                    <img id="avatar" src="../../../assets/images/avatars/avatar.png" alt="avatar" height="24px" width="24px">
+                    <p style="color: #00000099;">Me</p>
+                </div>
+    
+                <div class="vertical-line">
+    
+                </div>
+    
+                <div class="business-and-premium">
+                    <div class="for-business">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                            <path d="M3 3h4v4H3zm7 4h4V3h-4zm7-4v4h4V3zM3 14h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4zM3 21h4v-4H3zm7 0h4v-4h-4zm7 0h4v-4h-4z"></path>
+                        </svg>
+                        <p style="color: #00000099;">For Business</p>
+                    </div>
+                    
+                    <p class="try-premium">
+                        <u>Try premium 1</u>
+                        <br>
+                        <u>month free</u>
+                    </p>
+                </div>            
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <router-outlet></router-outlet>
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <section class="links">
+                <div class="left">
+                    <a href="">About</a>
+                    <a href="">Professional Community Policy</a>
+                    <a href="">Privacy & Terms</a>
+                    <a href="">Sales Solutions</a>
+                    <a href="">Safety Center</a>
+                </div>
+                <div class="middle">
+                    <a href="">Accessibility</a>
+                    <a href="">Careers</a>
+                    <a href="">Ad Choices</a>
+                    <a href="">Mobile</a>
+                </div>
+                <div class="right">
+                    <a href="">Talent Solutions</a>
+                    <a href="">Marketing Solutions</a>
+                    <a href="">Advertising</a>
+                    <a href="">Small Business</a>
+                </div>
+            </section>
+        
+            <section class="manage">
+                <div id="questions-and-help">
+                    <mat-icon>help</mat-icon>
+                    <div class="questions-and-visit">
+                        <p id="questions">Questions?</p>
+                        <p id="visit-help">Visit our Help Center.</p>
+                    </div>
+                </div>
+        
+                <div id="manage-and-settings">
+                    <mat-icon>settings</mat-icon>
+                    <div class="manage-and-privacy">
+                        <p id="manage">Manage your account and privacy</p>
+                        <p id="go-to-settings">Go to your Settings.</p>
+                    </div>
+                </div>
+        
+                <div id="recommendation-and-security">
+                    <mat-icon>security</mat-icon>
+                    <div class="reccomendation-transparency">
+                        <p id="recommendation">Recommendation transparency</p>
+                        <p id="learn-more">Learn more about Recommended Content.</p>
+                    </div>
+                </div>
+            </section>
+        
+            <section class="select-language">
+                <p>Select language</p>
+                <select name="" id="">
+                    <option selected value="">English (English)</option>
+                </select>
+            </section>
+        </div>
+        
+        <p id="linkedin-corporation">LinkedIn Corporation © 2024</p>
+    </footer>
+</div>
+
+
