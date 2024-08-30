@@ -36,8 +36,9 @@ export class LoginComponent {
           localStorage.setItem('accessToken', res.accessToken);
           localStorage.setItem('refreshToken', res.refreshToken);
   
-          var user = this.userService.getUserById(userFromToken.id);
-          this.userService.$loggedUser.next(user);
+          this.userService.getUserById(userFromToken.id).subscribe(res => {
+            this.userService.$loggedUser.next(res);
+          });
 
           this.router.navigate(['your-profile']);
         } else{
