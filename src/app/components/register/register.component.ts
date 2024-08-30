@@ -93,6 +93,9 @@ export class RegisterComponent {
         var userFromToken = this.userService.decodeUserFromToken((<any>res).accessToken);
         localStorage.setItem('accessToken', (<any>res).accessToken);
         localStorage.setItem('refreshToken', (<any>res).refreshToken);
+        this.userService.getUserById(userFromToken.id).subscribe(res => {
+          this.userService.$loggedUser.next(res);
+        });
 
         this.router.navigate(['your-profile']);
       } 
