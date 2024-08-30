@@ -12,6 +12,9 @@ export class UserService {
   public $otherSimilarProfiles : BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public $peopleYouMayKnow : BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
+  public otherSimilarProfiles : any = [];
+  public peopleYouMayKnow : any = [];
+
   public $loggedUser : BehaviorSubject<any> = new BehaviorSubject<any>(new User);
 
   constructor(
@@ -59,6 +62,14 @@ export class UserService {
 
   getUserById(id : any){
     return this.http.get<any>('/api/User/GetById?id=' + id);
+  }
+
+  sendConnection(senderId : number, receiverId : number){
+    return this.http.post<any>('/api/Connections/SendConnection?senderId=' + senderId + '&receiverId=' + receiverId, {});
+  }
+
+  getUserByIdWithUserDetails(id : any){
+    return this.http.get<any>('api/User/GetByIdWithUserDetails?id=' + id);
   }
 }
 
