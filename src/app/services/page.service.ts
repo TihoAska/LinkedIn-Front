@@ -34,4 +34,20 @@ export class PageService {
   public getTwoPages(){
     return this.http.get<any>('/api/Page/Get2PagesYouMightLike?userId=' + this.userService.$loggedUser.value.id);
   }
+
+  public getCompanyLocationByCityName(cityName : any){
+    return this.http.get<any>('api/Page/GetCompanyLocationByCityName?cityName=' + cityName);
+  }
+
+  public getCompanyLocationByLocationId(locationId : any){
+    return this.http.get<any>('api/Page/GetCompanyLocationByLocationId?locationId=' + locationId);
+  }
+
+  public getAllCompanyLocations(){
+    return this.http.get<any>('api/Page/GetAllCompanyLocations');
+  }
+
+  public getAllCompanies(){
+    return this.http.get<any>('api/Page/GetAll');
+  }
 }
