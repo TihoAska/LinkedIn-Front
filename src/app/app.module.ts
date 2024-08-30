@@ -14,6 +14,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { LoginComponent } from './components/login/login.component';
+import { AddExperienceWindowComponent } from './components/add-experience-window/add-experience-window.component';
+import { EditExperienceComponent } from './components/edit-experience/edit-experience.component';
+import { MainComponent } from './components/main/main.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { EditExperienceWindowComponent } from './components/edit-experience-window/edit-experience-window.component';
 
 
 @NgModule({
@@ -23,7 +28,12 @@ import { LoginComponent } from './components/login/login.component';
     ProfileComponent,
     FooterComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    AddExperienceWindowComponent,
+    EditExperienceComponent,
+    MainComponent,
+    ProfileDetailsComponent,
+    EditExperienceWindowComponent
   ],
   imports: [
     BrowserModule,
