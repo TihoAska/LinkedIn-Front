@@ -1,13 +1,34 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { EditExperienceComponent } from './components/edit-experience/edit-experience.component';
+import { MainComponent } from './components/main/main.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 
 const routes: Routes = [
   {
-    path: 'your-profile',
-    component: ProfileComponent,
+    path: '',
+    component: MainComponent,
+
+    children: [
+      {
+        path: 'your-profile',
+        component: ProfileComponent,
+
+        children: [
+          {
+            path: 'profile-details',
+            component: ProfileDetailsComponent,
+          },
+          {
+            path: 'edit-experience',
+            component: EditExperienceComponent,
+          },
+        ]
+      },
+    ]
   },
   {
     path: 'sign-up',
