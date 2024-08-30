@@ -1,0 +1,166 @@
+<div class="container" *ngIf="helperService.$showAddExperienceWindow.value">
+    <main>
+        <header>
+            <p>Add experience</p>
+            <div class="close-container" (click)="undimBackground()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </header>
+        <section>
+            <p>* indicates required</p>
+
+            <form [formGroup]="experienceForm">
+                <div class="title-container">
+                    <label for="title-input">Title*</label>
+                    <input id="title-input" type="text" placeholder="Ex: Retail Sales Manager" formControlName="title">
+                </div>
+
+                <div class="employment-container">
+                    <label for="employment-type-input">Employment type</label>
+                    <select name="employment-type" id="employment-type-input" formControlName="employmentType">
+                        <option value="please-select">Please select</option>
+                        <option value="Full-time">Full time</option>
+                        <option value="Part-time">Part time</option>
+                        <option value="Self-employed">Self-employed</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Apprenticeship">Apprenticeship</option>
+                        <option value="Seasonal">Seasonal</option>
+                    </select>
+                    <p>Learn more about <a href="">employment types.</a></p>
+                </div>
+
+                <div class="company-container">
+                    <label for="company-name-input">Company name*</label>
+                    <img id="selected-company-in-input" src="" alt="" height="30px" width="30px" [ngStyle]="{'display': showCompanyImage ? 'inline' : 'none'}">
+                    <input [formControl]="searchCompaniesControl" id="company-name-input" type="text" placeholder="Ex: Microsoft" formControlName="companyName" (input)="onInputChange($event)" [ngStyle]="{'padding-left': showCompanyImage ? '40px' : '2px'}" autocomplete="off">
+
+                    <div class="search-company-results" *ngIf="showCompaniesQuery" [ngStyle]="{'border': filteredCompanies.length > 0 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}">
+                        <div class="searched-company-result" *ngFor="let company of filteredCompanies" (click)="select('company', company)">
+                            <img [src]="company?.imageUrl" [alt]="company.name" height="40px" width="40px">
+                            {{ company?.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-container">
+                    <label for="location-input">Location</label>
+                    <input [formControl]="searchControl" id="location-input" type="text" placeholder="Ex: London, United Kingdom" formControlName="location" autocomplete="off" >
+
+                    <div class="search-results" *ngIf="showQuery">
+                        <div class="searched-result" *ngFor="let companyLocation of filteredCompanyLocations" (click)="select('companyLocation', companyLocation)">
+                            {{ companyLocation?.city }}, {{ companyLocation?.county }}, {{ companyLocation?.country }}
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="location-type-container">
+                    <label for="location-type-input">Location type</label>
+                    <select name="location-type" id="location-type-input" formControlName="locationType">
+                        <option value="please-select">Please select</option>
+                        <option value="On-site">On-site</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Remote">Remote</option>
+                    </select>
+                    <p>Pick a location type (ex: remote)</p>
+                </div>
+
+                <div class="role-checkbox">
+                    <input type="checkbox">
+                    <span>I am currently working in this role</span>
+                </div>
+
+                <div class="start-date">
+                    <p>Start date*</p>
+
+                    <div class="start-date-and-year-input">
+                        <div class="start-date-inputs">
+                            <select name="month-select" id="month-input-select" formControlName="startDateMonth">
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+    
+                        <div class="start-year-input">
+                            <select name="year-select" id="year-input-select" formControlName="startDateYear">
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="end-date">
+                    <p>End date*</p>
+
+                    <div class="end-month-and-year-inputs">
+                        <div class="end-month-input">
+                            <select name="" id="" formControlName="endDateMonth">
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="end-year-input">
+                            <select name="year-select" id="year-input-select" formControlName="endDateYear">
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <p>Start and end dates are required</p> -->
+                </div>
+
+                <div class="description-container">
+                    <label for="description-input">Description</label>
+                    <textarea name="description" id="description-input" formControlName="description"></textarea>
+                    <span>0/2,000</span>
+                </div>
+
+                <div class="skills-section">
+                    <h3>Skills</h3>
+                    <p>We recommend adding your top 5 used in this role. They'll also appear in your Skills section.</p>
+                    <button>
+                        <mat-icon>add</mat-icon>
+                        Add skill
+                    </button>
+                    <!-- <input type="text" placeholder="Skill (ex: Project Manager)"> -->
+                </div>
+
+                <div class="media-section">
+                    <h3>Media</h3>
+                    <p>Add media like images, documents, sites or presentations. Learn more about media <a href="">file types supported</a></p>
+                    <button>
+                        <mat-icon>add</mat-icon>
+                        Add media
+                    </button>
+                </div>
+            </form>
+        </section>
+        <footer>
+            <button type="submit" (click)="submitForm()">Save</button>
+        </footer>
+    </main>
+</div>

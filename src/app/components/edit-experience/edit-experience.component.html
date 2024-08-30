@@ -1,0 +1,38 @@
+<div class="container">
+    <section class="experience">
+        <div class="title-and-edit">
+            <p id="experience">Experience</p>
+            <div class="add-and-edit">
+                <div class="plus-wrapper" (click)="addExperience()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                        <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="joinup" *ngFor="let experience of (userService.$loggedUser | async)?.experience ">
+            <div class="image-and-description">
+                <div class="joinup-image">
+                    <img [src]="experience.companyImageUrl" alt="joinup" height="48px" width="48px">
+                </div>
+    
+                <div class="description">
+                    <p id="junior-software-developer">{{experience.position}}</p>
+                    <p id="joinup-full-time">{{experience.company.name}} · <span>{{ experience.employmentType }}</span></p>
+                    <p id="date-worked">{{ experience.startTime | date: 'MMM yyyy' }} - {{ experience.endTime | date: 'MMM yyyy' }} · {{ getMonthDifference(experience.startTime, experience.endTime) }}</p>
+                    <p id="place-worked">Osijek, Osijek-Baranja, Croatia · {{ experience.locationType }}</p>
+                    <br>
+                    <div class="skills-earned">
+                        <mat-icon>details</mat-icon>
+                        <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0].name }}, {{ (userService.$loggedUser | async)?.skills[1].name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="create-icon-wrapper" (click)="editExperience(experience)">
+                <mat-icon id="create-icon">create</mat-icon>
+            </div>
+        </div>
+    </section>
+</div>
+
