@@ -20,6 +20,7 @@ import { MainComponent } from './components/main/main.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { EditExperienceWindowComponent } from './components/edit-experience-window/edit-experience-window.component';
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
+import { EditEducationWindowComponent } from './components/edit-education-window/edit-education-window.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { EditEducationComponent } from './components/edit-education/edit-educati
     ProfileDetailsComponent,
     EditExperienceWindowComponent,
     EditEducationComponent,
+    EditEducationWindowComponent
   ],
   imports: [
     BrowserModule,
