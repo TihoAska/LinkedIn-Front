@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { EditExperienceComponent } from './components/edit-experience/edit-experience.component';
 import { MainComponent } from './components/main/main.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { EditEducationComponent } from './components/edit-education/edit-education.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
             path: 'edit-experience',
             component: EditExperienceComponent,
           },
+          {
+            path: 'edit-education',
+            component: EditEducationComponent,
+          }
         ]
       },
     ]
