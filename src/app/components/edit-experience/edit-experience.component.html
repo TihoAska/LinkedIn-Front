@@ -21,7 +21,7 @@
                     <p id="junior-software-developer">{{experience.position}}</p>
                     <p id="joinup-full-time">{{experience.company.name}} · <span>{{ experience.employmentType }}</span></p>
                     <p id="date-worked">{{ experience.startTime | date: 'MMM yyyy' }} - {{ experience.endTime | date: 'MMM yyyy' }} · {{ getMonthDifference(experience.startTime, experience.endTime) }}</p>
-                    <p id="place-worked">Osijek, Osijek-Baranja, Croatia · {{ experience.locationType }}</p>
+                    <p id="place-worked">{{ experience.location.city }}, {{ experience.location.county }}, {{ experience.location.country }} · {{ experience.locationType }}</p>
                     <br>
                     <div class="skills-earned">
                         <mat-icon>details</mat-icon>
