@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PageService } from '../../services/page.service';
 import { UserService } from '../../services/user.service';
 import { HelperService } from '../../services/helper.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -42,7 +43,8 @@ export class MainComponent {
   constructor(
     public pageService : PageService,
     public userService : UserService,
-    public helperService : HelperService) {
+    public helperService : HelperService,
+    public router : Router) {
 
   }
 
@@ -115,6 +117,10 @@ export class MainComponent {
       this.buttonStates[receiverId] = true;
       console.log(res);
     });
+  }
+
+  navigateToProfile(){
+    this.router.navigate(['', 'your-profile', 'profile-details']);
   }
 
   getMonthDifference(startDate: Date, endDate: Date) {
