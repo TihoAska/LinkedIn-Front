@@ -1,35 +1,35 @@
+import { ProfileService } from './../../services/profile.service';
+import { HelperService } from './../../services/helper.service';
 import { Component } from '@angular/core';
-import { PageService } from '../../services/page.service';
 import { UserService } from '../../services/user.service';
-import { HelperService } from '../../services/helper.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile-details',
-  templateUrl: './profile-details.component.html',
-  styleUrl: './profile-details.component.scss'
+  selector: 'app-edit-education',
+  templateUrl: './edit-education.component.html',
+  styleUrl: './edit-education.component.scss'
 })
-export class ProfileDetailsComponent {
+export class EditEducationComponent {
 
-  constructor(public pageService : PageService,
-    public userService : UserService,
+  constructor(
+    public userService : UserService, 
     public helperService : HelperService,
-    private router : Router) {
+    public profileService : ProfileService) {
     
     
   }
 
-  editEducation(){
-    this.router.navigate(['your-profile', 'edit-education']);
+  ngOnInit(){
+    window.scrollTo(0, 0);
   }
 
-  dimBackground(){
+  addEducation(){
+
+  }
+
+  editEducation(education : any){
+    this.profileService.$editEducationFormValues.next(education);
     this.helperService.$dimBackground.next(true);
-    this.helperService.$showAddExperienceWindow.next(true);
-  }
-
-  editExperiences(){
-    this.router.navigate(['your-profile', 'edit-experience']);
+    this.helperService.$showEditEducationWindow.next(true);
   }
 
   getMonthDifference(startDate: Date, endDate: Date) {

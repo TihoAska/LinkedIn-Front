@@ -19,6 +19,7 @@ import { EditExperienceComponent } from './components/edit-experience/edit-exper
 import { MainComponent } from './components/main/main.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { EditExperienceWindowComponent } from './components/edit-experience-window/edit-experience-window.component';
+import { EditEducationComponent } from './components/edit-education/edit-education.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { EditExperienceWindowComponent } from './components/edit-experience-wind
     EditExperienceComponent,
     MainComponent,
     ProfileDetailsComponent,
-    EditExperienceWindowComponent
+    EditExperienceWindowComponent,
+    EditEducationComponent,
   ],
   imports: [
     BrowserModule,

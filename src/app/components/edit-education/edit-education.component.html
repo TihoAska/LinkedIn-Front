@@ -1,0 +1,33 @@
+<div class="container">
+    <section class="experience">
+        <div class="title-and-edit">
+            <p id="experience">Education</p>
+            <div class="add-and-edit">
+                <div class="plus-wrapper" (click)="addEducation()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                        <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="joinup" *ngFor="let education of (userService.$loggedUser | async)?.education ">
+            <div class="image-and-description">
+                <div class="joinup-image">
+                    <img [src]="education.schoolImageUrl" alt="joinup" height="48px" width="48px">
+                </div>
+    
+                <div class="description">
+                    <p id="junior-software-developer">{{education.name}}</p>
+                    <p id="joinup-full-time">{{education.degree}} · <span>{{ education.fieldOfStudy }}</span></p>
+                    <p id="date-worked">{{ education.startTime | date: 'MMM yyyy' }} - {{ education.endTime | date: 'MMM yyyy' }} · {{ getMonthDifference(education.startTime, education.endTime) }}</p>
+                    <br>
+                </div>
+            </div>
+            <div class="create-icon-wrapper" (click)="editEducation(education)">
+                <mat-icon id="create-icon">create</mat-icon>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -11,6 +11,7 @@ export class ProfileService {
   private baseUrl = environment.baseUrl;
 
   public $editExperienceFormValues : BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public $editEducationFormValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http : HttpClient) { }
 
