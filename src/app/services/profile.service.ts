@@ -38,4 +38,9 @@ export class ProfileService {
   editEducationForUser(updateRequest : any){
     return this.http.put('/api/Profile/EditEducationForUser', updateRequest);
   }
+
+  getAllLicensesAndCertificationsForUser(userId : any){
+    return this.http.get<any>('/api/Profile/GetAllLicensesAndCertificationsByUserId?id=' + userId);
+  }
+
 }
