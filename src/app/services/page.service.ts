@@ -50,4 +50,8 @@ export class PageService {
   public getAllCompanies(){
     return this.http.get<any>('api/Page/GetAll');
   }
+
+  public getCompanyByName(name : any){
+    return this.http.get<any>('api/Page/GetByName?name=' + name);
+  }
 }
