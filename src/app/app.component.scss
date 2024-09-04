@@ -12,19 +12,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
 
-    app-add-experience{
-        position: fixed;
-        top: 0;
-        z-index: 15;
-    }
-
-    app-edit-experience-window{
-        position: fixed;
-        top: 0;
-        z-index: 15;
-    }
-
-    app-edit-education-window{
+    app-add-experience, app-edit-experience-window, app-edit-education-window, app-edit-license-window{
         position: fixed;
         top: 0;
         z-index: 15;

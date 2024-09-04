@@ -1,0 +1,128 @@
+<div class="container" *ngIf="helperService.$showEditLicenseWindow.value">
+    <main>
+        <header>
+            <p>Edit license or certification</p>
+            <div class="close-container" (click)="closeWindow()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </header>
+        <section>
+            <p>* indicates required</p>
+
+            <form [formGroup]="licenseForm">
+                <div class="title-container">
+                    <label for="title-input">Name*</label>
+                    <input id="title-input" type="text" placeholder="Ex: Microsoft certified network associate security" formControlName="name" autocomplete="off">
+                </div>
+
+                <div class="company-container">
+                    <label for="company-name-input">Issuing organization*</label>
+                    <img id="selected-company-in-input" src="" alt="" height="30px" width="30px" [ngStyle]="{'display': showIssuingOrganizationImage ? 'inline' : 'none'}">
+                    <input id="company-name-input" type="text" placeholder="Ex: Microsoft" formControlName="issuingOrganization" (input)="onInputChange($event)" [ngStyle]="{'padding-left': showIssuingOrganizationImage ? '40px' : '2px'}" autocomplete="off">
+
+                    <div class="search-company-results" *ngIf="showIssuingOrganizationQuery" [ngStyle]="{'border': filteredInstitutions.length > 0 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}">
+                        <div class="searched-company-result" *ngFor="let institution of filteredInstitutions" (click)="select(institution)">
+                            <img [src]="institution?.imageUrl" [alt]="institution.name" height="40px" width="40px">
+                            {{ institution?.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="start-date">
+                    <p>Issue date*</p>
+
+                    <div class="start-date-and-year-input">
+                        <div class="start-date-inputs">
+                            <select name="month-select" id="month-input-select" formControlName="issueDateMonth">
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+    
+                        <div class="start-year-input">
+                            <select name="year-select" id="year-input-select" formControlName="issueDateYear">
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="end-date">
+                    <p>End date*</p>
+
+                    <div class="end-month-and-year-inputs">
+                        <div class="end-month-input">
+                            <select name="" id="" formControlName="expirationDateMonth">
+                                <option value="">Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="end-year-input">
+                            <select name="year-select" id="year-input-select" formControlName="expirationDateYear">
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <p>Start and end dates are required</p> -->
+                </div>
+
+                <div class="title-container">
+                    <label for="title-input">Credential ID</label>
+                    <input id="title-input" type="text" formControlName="credentialId" autocomplete="off">
+                </div>
+
+                <div class="description-container">
+                    <label for="description-input">Credential URL</label>
+                    <input id="title-input" type="text" formControlName="credentialUrl" autocomplete="off">
+                </div>
+
+                <div class="skills-section">
+                    <h3>Skills</h3>
+                    <p>We recommend adding your top 5 used in this role. They'll also appear in your Skills section.</p>
+                    <button>
+                        <mat-icon>add</mat-icon>
+                        Add skill
+                    </button>
+                    <!-- <input type="text" placeholder="Skill (ex: Project Manager)"> -->
+                </div>
+
+                <div class="media-section">
+                    <h3>Media</h3>
+                    <p>Add media like images, documents, sites or presentations. Learn more about media <a href="">file types supported</a></p>
+                    <button>
+                        <mat-icon>add</mat-icon>
+                        Add media
+                    </button>
+                </div>
+            </form>
+        </section>
+        <footer>
+            <span>Delete education</span>
+            <button type="submit" (click)="submitForm()">Save</button>
+        </footer>
+    </main>
+</div>
+
+

@@ -21,6 +21,7 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
 import { EditExperienceWindowComponent } from './components/edit-experience-window/edit-experience-window.component';
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
 import { EditEducationWindowComponent } from './components/edit-education-window/edit-education-window.component';
+import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.component';
 import { EditLicenseWindowComponent } from './components/edit-license-window/edit-license-window.component';
 
 
@@ -40,6 +41,7 @@ import { EditLicenseWindowComponent } from './components/edit-license-window/edi
     EditEducationComponent,
     EditEducationWindowComponent,
     EditLicensesComponent,
+    EditLicenseWindowComponent
   ],
   imports: [
     BrowserModule,
