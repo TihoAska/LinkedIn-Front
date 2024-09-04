@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class ProfileDetailsComponent {
 
+  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
   constructor(public pageService : PageService,
     public userService : UserService,
     public helperService : HelperService,
@@ -30,6 +32,20 @@ export class ProfileDetailsComponent {
 
   editExperiences(){
     this.router.navigate(['your-profile', 'edit-experience']);
+  }
+
+  editLicenses(){
+    this.router.navigate(['your-profile', 'edit-licenses']);
+  }
+
+  public getMonthFromDateObject(date : any){
+    let issueDate = new Date(date);
+    return this.months[issueDate.getMonth()];
+  }
+
+  public getYearFromDateObject(date : any){
+    let issueDate = new Date(date);
+    return issueDate.getFullYear();
   }
 
   getMonthDifference(startDate: Date, endDate: Date) {

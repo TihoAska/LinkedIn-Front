@@ -239,17 +239,17 @@
                         <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                     </svg>
                 </div>
-                <mat-icon>create</mat-icon>
+                <mat-icon (click)="editLicenses()">create</mat-icon>
             </div>
         </div>
 
         <div class="main-part" *ngFor="let license of (userService.$loggedUser | async)?.licensesAndCertifications">
             <img [src]="license?.organizationImageUrl" alt="freecodecamp" height="48px" width="48px">
             <div class="desc">
-                <p id="responsive-web-design">Responsive Web Design</p>
-                <p>freeCodeCamp</p>
-                <p id="issued-at">Issued Aug 2023</p>
-                <p id="credential-id">Credential ID tihoaska-rwd</p>
+                <p id="responsive-web-design">{{license.name}}</p>
+                <p>{{license.issuingOrganization}}</p>
+                <p id="issued-at">Issued {{getMonthFromDateObject(license.issueDate)}} {{getYearFromDateObject(license.issueDate)}}</p>
+                <p id="credential-id">Credential ID {{license.credentialId}}</p>
                 <button id="show-credential-btn">Show credential<mat-icon>launch</mat-icon></button>
             </div>
         </div>
