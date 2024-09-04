@@ -21,6 +21,7 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
 import { EditExperienceWindowComponent } from './components/edit-experience-window/edit-experience-window.component';
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
 import { EditEducationWindowComponent } from './components/edit-education-window/edit-education-window.component';
+import { EditLicenseWindowComponent } from './components/edit-license-window/edit-license-window.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { EditEducationWindowComponent } from './components/edit-education-window
     ProfileDetailsComponent,
     EditExperienceWindowComponent,
     EditEducationComponent,
-    EditEducationWindowComponent
+    EditEducationWindowComponent,
+    EditLicensesComponent,
   ],
   imports: [
     BrowserModule,

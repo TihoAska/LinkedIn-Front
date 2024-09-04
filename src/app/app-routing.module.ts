@@ -7,6 +7,7 @@ import { EditExperienceComponent } from './components/edit-experience/edit-exper
 import { MainComponent } from './components/main/main.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
+import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
           {
             path: 'edit-education',
             component: EditEducationComponent,
+          },
+          {
+            path: 'edit-licenses',
+            component: EditLicensesComponent,
           }
         ]
       },

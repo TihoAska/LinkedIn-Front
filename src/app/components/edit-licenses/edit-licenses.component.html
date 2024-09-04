@@ -1,0 +1,38 @@
+<div class="container">
+    <section class="experience">
+        <div class="title-and-edit">
+            <p id="experience">Licenses & certifications</p>
+            <div class="add-and-edit">
+                <div class="plus-wrapper" (click)="addLicense()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                        <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="joinup" *ngFor="let license of (userService.$loggedUser | async)?.licensesAndCertifications">
+            <div class="image-and-description">
+                <div class="joinup-image">
+                    <img [src]="license.organizationImageUrl" alt="joinup" height="48px" width="48px">
+                </div>
+    
+                <div class="description">
+                    <p id="junior-software-developer">{{license.name}}</p>
+                    <p id="joinup-full-time">{{license.issuingOrganization}}</p>
+                    <p id="date-worked">Issued {{getMonthFromDateObject(license.issueDate)}} {{getYearFromDateObject(license.issueDate) }}</p>
+                    <p id="place-worked">{{ license.credentialId }}</p>
+                    <br>
+                    <div class="skills-earned">
+                        <mat-icon>details</mat-icon>
+                        <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0].name }}, {{ (userService.$loggedUser | async)?.skills[1].name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="create-icon-wrapper" (click)="editLicense(license)">
+                <mat-icon id="create-icon">create</mat-icon>
+            </div>
+        </div>
+    </section>
+</div>
+
