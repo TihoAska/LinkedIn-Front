@@ -43,4 +43,7 @@ export class ProfileService {
     return this.http.get<any>('/api/Profile/GetAllLicensesAndCertificationsByUserId?id=' + userId);
   }
 
+  editLicenseForUser(updateRequest : any){
+    return this.http.put('/api/Profile/EditLicenseOrCertificationForUser', updateRequest);
+  }
 }
