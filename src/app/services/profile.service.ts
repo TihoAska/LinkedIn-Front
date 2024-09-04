@@ -12,6 +12,7 @@ export class ProfileService {
 
   public $editExperienceFormValues : BehaviorSubject<any> = new BehaviorSubject<any>({});
   public $editEducationFormValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public $editLicenseFormValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http : HttpClient) { }
 
