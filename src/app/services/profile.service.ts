@@ -21,6 +21,10 @@ export class ProfileService {
     return this.http.post('/api/Profile/CreateExperienceForUser', createRequest);
   }
 
+  createEducationForUser(createRequest : any){
+    return this.http.post('/api/Profile/CreateEducationForUser', createRequest);
+  }
+
   editExperience(editRequest : any){
     return this.http.put('api/Profile/EditExperienceForUser', editRequest);
   }
