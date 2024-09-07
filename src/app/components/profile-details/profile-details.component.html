@@ -177,12 +177,12 @@
         <div class="title-and-edit">
             <p id="experience">Experience</p>
             <div class="add-and-edit">
-                <div class="plus-wrapper" (click)="dimBackground()">
+                <div class="plus-wrapper" (click)="toggleWindow('experience')">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                         <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                     </svg>
                 </div>
-                <mat-icon (click)="editExperiences()">create</mat-icon>
+                <mat-icon (click)="edit('edit-experience')">create</mat-icon>
             </div>
         </div>
 
@@ -209,12 +209,12 @@
         <div class="top-part">
             <p id="education">Education</p>
             <div class="add-and-edit">
-                <div class="plus-wrapper">
+                <div class="plus-wrapper" (click)="toggleWindow('education')">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                         <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                     </svg>
                 </div>
-                <mat-icon (click)="editEducation()">create</mat-icon>
+                <mat-icon (click)="edit('edit-education')">create</mat-icon>
             </div>
         </div>
 
@@ -239,7 +239,7 @@
                         <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                     </svg>
                 </div>
-                <mat-icon (click)="editLicenses()">create</mat-icon>
+                <mat-icon (click)="edit('edit-licenses')">create</mat-icon>
             </div>
         </div>
 
@@ -304,7 +304,7 @@
                             <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                         </svg>
                     </div>
-                    <mat-icon (click)="editLanguages()">create</mat-icon>
+                    <mat-icon (click)="edit('edit-languages')">create</mat-icon>
                 </div>
             </div>
 

@@ -21,25 +21,20 @@ export class ProfileDetailsComponent {
     
   }
 
-  editEducation(){
-    this.router.navigate(['your-profile', 'edit-education']);
+  toggleWindow(window : any){
+    if(window == 'education'){
+      this.helperService.$dimBackground.next(true);
+      this.helperService.$showAddEducationWindow.next(true);
+    } else if(window == 'experience'){
+      this.helperService.$dimBackground.next(true);
+      this.helperService.$showAddExperienceWindow.next(true);
+    } else if(window == 'language'){
+
+    }
   }
 
-  dimBackground(){
-    this.helperService.$dimBackground.next(true);
-    this.helperService.$showAddExperienceWindow.next(true);
-  }
-
-  editExperiences(){
-    this.router.navigate(['your-profile', 'edit-experience']);
-  }
-
-  editLicenses(){
-    this.router.navigate(['your-profile', 'edit-licenses']);
-  }
-
-  editLanguages(){
-    this.router.navigate(['your-profile', 'edit-languages']);
+  edit(location : any){
+    this.router.navigate(['your-profile', location]);
   }
 
   public getMonthFromDateObject(date : any){
