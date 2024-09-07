@@ -25,6 +25,7 @@ import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.
 import { EditLicenseWindowComponent } from './components/edit-license-window/edit-license-window.component';
 import { EditLanguagesComponent } from './components/edit-languages/edit-languages.component';
 import { EditLanguageWindowComponent } from './components/edit-language-window/edit-language-window.component';
+import { AddEducationWindowComponent } from './components/add-education-window/add-education-window.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { EditLanguageWindowComponent } from './components/edit-language-window/e
     EditLicensesComponent,
     EditLicenseWindowComponent,
     EditLanguagesComponent,
-    EditLanguageWindowComponent
+    EditLanguageWindowComponent,
+    AddEducationWindowComponent
   ],
   imports: [
     BrowserModule,

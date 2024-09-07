@@ -11,7 +11,10 @@ export class HelperService {
   
   $showAddExperienceWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $showEditExperienceWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  $showAddEducationWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $showEditEducationWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   $showEditLicenseWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $showEditLanguageWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
