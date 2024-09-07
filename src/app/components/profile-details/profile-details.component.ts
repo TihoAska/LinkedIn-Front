@@ -38,6 +38,10 @@ export class ProfileDetailsComponent {
     this.router.navigate(['your-profile', 'edit-licenses']);
   }
 
+  editLanguages(){
+    this.router.navigate(['your-profile', 'edit-languages']);
+  }
+
   public getMonthFromDateObject(date : any){
     let issueDate = new Date(date);
     return this.months[issueDate.getMonth()];

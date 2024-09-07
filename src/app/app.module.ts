@@ -23,6 +23,7 @@ import { EditEducationComponent } from './components/edit-education/edit-educati
 import { EditEducationWindowComponent } from './components/edit-education-window/edit-education-window.component';
 import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.component';
 import { EditLicenseWindowComponent } from './components/edit-license-window/edit-license-window.component';
+import { EditLanguagesComponent } from './components/edit-languages/edit-languages.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { EditLicenseWindowComponent } from './components/edit-license-window/edi
     EditEducationComponent,
     EditEducationWindowComponent,
     EditLicensesComponent,
-    EditLicenseWindowComponent
+    EditLicenseWindowComponent,
+    EditLanguagesComponent,
   ],
   imports: [
     BrowserModule,

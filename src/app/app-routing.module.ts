@@ -8,6 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
 import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.component';
+import { EditLanguagesComponent } from './components/edit-languages/edit-languages.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
           {
             path: 'edit-licenses',
             component: EditLicensesComponent,
+          },
+          {
+            path: 'edit-languages',
+            component: EditLanguagesComponent,
           }
         ]
       },
