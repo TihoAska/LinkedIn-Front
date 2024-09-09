@@ -57,6 +57,10 @@ export class ProfileService {
     return this.http.get('api/Profile/GetAllLanguagesByUserId?id=' + userId);
   }
 
+  createLanguageForUser(createRequest : any){
+    return this.http.post('/api/Profile/CreateLanguageForUser', createRequest);
+  }
+
   editLanguageForUser(updateRequest : any){
     return this.http.put('api/Profile/EditUserLanguage', updateRequest);
   }

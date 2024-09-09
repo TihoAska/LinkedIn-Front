@@ -29,7 +29,8 @@ export class ProfileDetailsComponent {
       this.helperService.$dimBackground.next(true);
       this.helperService.$showAddExperienceWindow.next(true);
     } else if(window == 'language'){
-
+      this.helperService.$dimBackground.next(true);
+      this.helperService.$showAddLanguageWindow.next(true);
     }
   }
 

@@ -1,0 +1,43 @@
+<div class="container" *ngIf="helperService.$showAddLanguageWindow.value">
+    <main>
+        <header>
+            <p>Edit language</p>
+            <div class="close-container" (click)="closeWindow()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </header>
+        <section>
+            <p>* indicates required</p>
+
+            <form [formGroup]="languageForm">
+                <div class="title-container">
+                    <label for="title-input">Language*</label>
+                    <input id="title-input" type="text" formControlName="language" autocomplete="off">
+                </div>
+
+                <div class="start-date">
+                    <p>Proficiency*</p>
+
+                    <div class="start-date-and-year-input">
+                        <div class="start-date-inputs">
+                            <select name="month-select" id="month-input-select" formControlName="proficiency">
+                                <option value="">Please select</option>
+                                <option value="Elementary proficiency">Elementary proficiency</option>
+                                <option value="Limited working proficiency">Limited working proficiency</option>
+                                <option value="Professional working proficiency">Professional working proficiency</option>
+                                <option value="Full professional proficiency">Full professional proficiency</option>
+                                <option value="Native or bilingual proficiency">Native or bilingual proficiency</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer>
+            <span>Delete education</span>
+            <button type="submit" (click)="submitForm()">Save</button>
+        </footer>
+    </main>
+</div>
+
+
