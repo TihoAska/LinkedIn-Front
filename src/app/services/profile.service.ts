@@ -68,4 +68,8 @@ export class ProfileService {
   getAllSkills(){
     return this.http.get('/api/Profile/GetAllSkills');
   }
+
+  createSkillForUser(createRequest : any){
+    return this.http.post('/api/Profile/CreateSkillForUser', createRequest);
+  }
 }
