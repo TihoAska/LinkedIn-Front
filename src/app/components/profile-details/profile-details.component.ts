@@ -13,12 +13,26 @@ export class ProfileDetailsComponent {
 
   months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+  displaySkills = false;
+  displayLicenses = false;
+
   constructor(public pageService : PageService,
     public userService : UserService,
     public helperService : HelperService,
     private router : Router) {
     
     
+  }
+
+  ngOnInit(){
+    this.userService.$loggedUser.subscribe(res => {
+      if(res.skills){
+        this.displaySkills = true;
+      }
+      if(res.licensesAndCertifications){
+        this.displayLicenses = true;
+      }
+    });
   }
 
   toggleWindow(window : any){
