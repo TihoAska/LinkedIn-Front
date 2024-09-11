@@ -103,4 +103,11 @@
             </section>
         </aside>
     </div>
+
+    <div class="error" *ngIf="helperService.$displayError.value">
+        <span>
+            {{ helperService.$errorMessage.value }}
+        </span>
+        <mat-icon (click)="closeError()">close</mat-icon>
+    </div>
 </div>

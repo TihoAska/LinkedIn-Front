@@ -144,4 +144,8 @@ export class ProfileComponent {
   
     return result || '0 mos';
   }
+
+  closeError(){
+    this.helperService.$displayError.next(false);
+  }
 }

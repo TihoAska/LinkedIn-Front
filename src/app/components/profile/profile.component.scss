@@ -473,7 +473,37 @@
         }
     }
 
-    
+    .error{
+        height: 50px;
+        width: 300px;
+        color: black;
+        background-color: white;
+        border-radius: 10px;
+        border-color: black;
+        position: fixed;
+        top: 92%;
+        left: 2%;
+        z-index: 50;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+
+        mat-icon{
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        mat-icon:hover{
+            background-color: lightgray;
+            cursor: pointer;
+        }
+    }
 }
 
 .no-scroll{
