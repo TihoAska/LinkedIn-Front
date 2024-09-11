@@ -12,7 +12,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
 
-    app-add-experience, app-edit-experience-window, app-edit-education-window, app-edit-license-window, app-edit-language-window, app-add-education-window, app-add-language-window{
+    app-add-experience-window, app-edit-experience-window, app-edit-education-window, app-edit-license-window, app-edit-language-window, app-add-education-window, app-add-language-window, app-add-licenses-window, app-add-skill-window, app-edit-skill-window{
         position: fixed;
         top: 0;
         z-index: 15;
