@@ -53,6 +53,7 @@ import { EditSkillWindowComponent } from './components/edit-skill-window/edit-sk
     EditLanguagesComponent,
     EditLanguageWindowComponent,
     AddEducationWindowComponent,
+    AddLanguageWindowComponent,
     AddLicensesWindowComponent,
     EditSkillsComponent,
     AddSkillWindowComponent,
