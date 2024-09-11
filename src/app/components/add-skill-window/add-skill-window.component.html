@@ -1,0 +1,72 @@
+<div class="container" *ngIf="helperService.$showAddSkillWindow.value">
+    <main>
+        <header>
+            <p>Add skill</p>
+            <div class="close-container" (click)="closeWindow()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </header>
+        <section>
+            <p>* indicates required</p>
+
+            <form [formGroup]="skillForm">
+                <div class="company-container">
+                    <div class="title-container">
+                        <label for="title-input">Skill*</label>
+                        <input id="title-input" type="text" placeholder="Skill (ex: Project Management)" formControlName="skill" (input)="onInputChange($event)" autocomplete="off">
+                    </div>
+    
+                    <div class="search-company-results" *ngIf="showQuery">
+                        <div class="searched-company-result" *ngFor="let skill of filteredSkills" (click)="select(skill)">
+                            {{ skill?.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-used">
+                    <h2>Show us where you used this skill</h2>
+                    <p>75% of hirers value skill context. Select at least one item to show where you used this skill.</p>
+
+                    <div class="skill-categories">
+                        <div class="experience" formArrayName="experiences">
+                            <p>Experience</p>
+                            <div class="check-and-experiences" *ngFor="let experience of experiences; let i = index">
+                                <input type="checkbox" [formControlName]="i">
+                                <p>{{ experience.position }} at {{ experience.company.name }}</p>
+                            </div>
+                        </div>
+    
+                        <div class="education" formArrayName="educations">
+                            <p>Education</p>
+                            <div class="check-and-education" *ngFor="let education of uniqueEducations; let i = index">
+                                <input type="checkbox" [formControlName]="i">
+                                <p>{{ education }}</p>
+                            </div>
+                        </div>
+    
+                        <div class="licenses-and-certifications" formArrayName="licenses">
+                            <p>Licenses & certifications</p>
+                            <div class="check-and-licenses" *ngFor="let license of licenses; let i = index">
+                                <input type="checkbox" [formControlName]="i">
+                                <p>{{ license.name }}</p>
+                            </div>
+                        </div>
+    
+                        <div class="follow-this-skill">
+                            <input type="checkbox" formControlName="followSkill">
+                            <p>Follow this skill to keep up with relevant content.</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer>
+            <button type="submit" (click)="submitForm()">Save</button>
+        </footer>
+    </main>
+
+    <div class="error" *ngIf="displayError">
+        {{ errorMessage }}
+    </div>
+</div>
+
