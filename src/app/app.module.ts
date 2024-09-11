@@ -28,6 +28,7 @@ import { EditLanguageWindowComponent } from './components/edit-language-window/e
 import { AddEducationWindowComponent } from './components/add-education-window/add-education-window.component';
 import { AddLanguageWindowComponent } from './components/add-language-window/add-language-window.component';
 import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
+import { EditSkillWindowComponent } from './components/edit-skill-window/edit-skill-window.component';
 
 
 @NgModule({

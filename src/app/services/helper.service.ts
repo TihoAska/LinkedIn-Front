@@ -20,6 +20,7 @@ export class HelperService {
   $showAddLanguageWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $showEditLanguageWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $showAddSkillWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  $showEditSkillWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 }
