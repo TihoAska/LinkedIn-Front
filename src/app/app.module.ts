@@ -55,6 +55,7 @@ import { EditSkillWindowComponent } from './components/edit-skill-window/edit-sk
     AddEducationWindowComponent,
     AddLicensesWindowComponent,
     EditSkillsComponent,
+    AddSkillWindowComponent,
   ],
   imports: [
     BrowserModule,
