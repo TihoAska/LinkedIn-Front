@@ -7,7 +7,7 @@ import { PageService } from '../../services/page.service';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'app-add-experience',
+  selector: 'app-add-experience-window',
   templateUrl: './add-experience-window.component.html',
   styleUrl: './add-experience-window.component.scss'
 })
