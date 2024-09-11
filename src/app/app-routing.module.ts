@@ -9,6 +9,7 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
 import { EditEducationComponent } from './components/edit-education/edit-education.component';
 import { EditLicensesComponent } from './components/edit-licenses/edit-licenses.component';
 import { EditLanguagesComponent } from './components/edit-languages/edit-languages.component';
+import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
           {
             path: 'edit-languages',
             component: EditLanguagesComponent,
+          },
+          {
+            path: 'edit-skills',
+            component: EditSkillsComponent,
           }
         ]
       },

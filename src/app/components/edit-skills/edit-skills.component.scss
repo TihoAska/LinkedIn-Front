@@ -1,0 +1,157 @@
+.container{
+    .experience{
+        width: 804px;
+        min-height: 75px;
+        background-color: white;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 25px 20px 0 20px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        .title-and-edit{    
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            
+            #experience{
+                font-size: 20px;
+                font-weight: bold;
+            }
+            
+            .add-and-edit{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-self: center;
+                gap: 5px;
+
+                mat-icon{
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 50%;
+                    position: relative;
+                    top: -12px;
+
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    transition: background-color 0.3s ease;
+                }
+
+                mat-icon:hover{
+                    cursor: pointer;
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+
+                .plus-wrapper{
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 50%;
+                    position: relative;
+                    top: -12px;
+
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    transition: background-color 0.3s ease;
+                }
+
+                .plus-wrapper:hover{
+                    cursor: pointer;
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+            }
+        }
+
+        .joinup{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            
+            .image-and-description{
+                padding-top: 15px;
+                padding-bottom: 10px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                min-height: 60px;
+                width: 100%;
+                
+                p{
+                    margin: 0;
+                }
+    
+                #junior-software-developer{
+                    font-weight: bold;
+                    font-size: 17px;
+                }
+
+                #joinup-full-time{
+                    color: gray;
+                }
+    
+                #date-worked, #place-worked{
+                    color: rgba(0, 0, 0, 0.6);
+                }
+    
+                #skills-earned{
+                    font-weight: bold;
+                }
+    
+                .description{
+                    min-height: 50px;
+                    .skills-earned{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        color: rgba(0, 0, 0, 0.8);
+    
+                        mat-icon{
+                            transform: rotate(180deg);
+                        }
+                    }
+
+                    .img-and-description{
+                        display: flex;
+                        flex-direction: row;
+                        padding-top: 10px;
+                        height: 30px;
+
+                        img{
+                            height: 24px;
+                            width: 24px;
+                            padding-right: 10px;
+                        }
+                    }
+                }
+            }
+
+            .create-icon-wrapper{
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.3s ease;
+            }
+
+            
+            .create-icon-wrapper:hover{
+                cursor: pointer;               
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .joinup:last-child {
+            border-bottom: none;
+        }
+    }
+}

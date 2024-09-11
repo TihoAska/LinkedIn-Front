@@ -27,6 +27,7 @@ import { EditLanguagesComponent } from './components/edit-languages/edit-languag
 import { EditLanguageWindowComponent } from './components/edit-language-window/edit-language-window.component';
 import { AddEducationWindowComponent } from './components/add-education-window/add-education-window.component';
 import { AddLanguageWindowComponent } from './components/add-language-window/add-language-window.component';
+import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { AddLanguageWindowComponent } from './components/add-language-window/add
     EditLanguagesComponent,
     EditLanguageWindowComponent,
     AddEducationWindowComponent,
-    AddLanguageWindowComponent
+    EditSkillsComponent,
   ],
   imports: [
     BrowserModule,
