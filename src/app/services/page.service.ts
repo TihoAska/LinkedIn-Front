@@ -54,4 +54,8 @@ export class PageService {
   public getCompanyByName(name : any){
     return this.http.get<any>('api/Page/GetByName?name=' + name);
   }
+
+  public getCompanyById(id : any){
+    return this.http.get<any>('/api/Page/GetById');
+  }
 }
