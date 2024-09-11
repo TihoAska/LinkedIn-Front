@@ -45,6 +45,12 @@ export class ProfileDetailsComponent {
     } else if(window == 'language'){
       this.helperService.$dimBackground.next(true);
       this.helperService.$showAddLanguageWindow.next(true);
+    } else if(window == 'license'){
+      this.helperService.$dimBackground.next(true);
+      this.helperService.$showAddLicenseWindow.next(true);
+    } else if(window == 'skill'){
+      this.helperService.$dimBackground.next(true);
+      this.helperService.$showAddSkillWindow.next(true);
     }
   }
 

@@ -186,7 +186,7 @@
             </div>
         </div>
 
-        <div class="joinup" *ngFor="let experience of (userService.$loggedUser | async)?.experience ">
+        <div class="joinup" *ngFor="let experience of (userService.$loggedUser | async)?.experience">
             <div class="joinup-image">
                 <img [src]="experience.companyImageUrl" alt="joinup" height="48px" width="48px">
             </div>
@@ -199,7 +199,7 @@
                 <br>
                 <div class="skills-earned">
                     <mat-icon>details</mat-icon>
-                    <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0].name }}, {{ (userService.$loggedUser | async)?.skills[1].name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
+                    <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0]?.name }}, {{ (userService.$loggedUser | async)?.skills[1]?.name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
                 </div>
             </div>
         </div>
@@ -234,7 +234,7 @@
         <div class="top-part">
             <p id="licenses-and-certifications">Licenses & certifications</p>
             <div class="add-and-edit">
-                <div class="plus-wrapper">
+                <div class="plus-wrapper" (click)="toggleWindow('license')">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                         <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                     </svg>
@@ -248,7 +248,7 @@
             <div class="desc">
                 <p id="responsive-web-design">{{license.name}}</p>
                 <p>{{license.issuingOrganization}}</p>
-                <p id="issued-at">Issued {{getMonthFromDateObject(license.issueDate)}} {{getYearFromDateObject(license.issueDate)}}</p>
+                <p id="issued-at">Issued {{getMonthFromDateObject(license?.issueDate)}} {{getYearFromDateObject(license?.issueDate)}}</p>
                 <p id="credential-id">Credential ID {{license.credentialId}}</p>
                 <button id="show-credential-btn">Show credential<mat-icon>launch</mat-icon></button>
             </div>
@@ -260,12 +260,12 @@
             <div class="top-part">
                 <p id="skills">Skills</p>
                 <div class="add-and-edit">
-                    <div class="plus-wrapper">
+                    <div class="plus-wrapper" (click)="toggleWindow('skill')">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                             <path d="M21 13h-8v8h-2v-8H3v-2h8V3h2v8h8z"></path>
                         </svg>
                     </div>
-                    <mat-icon>create</mat-icon>
+                    <mat-icon (click)="edit('edit-skills')">create</mat-icon>
                 </div>
             </div>
 
@@ -273,23 +273,23 @@
                 <div class="software-development">
                     <p id="software-development">{{(userService.$loggedUser | async)?.skills[0]?.name}}</p>
                     <div class="img-and-desc">
-                        <img [src]="(userService.$loggedUser | async)?.skills[0].skillsImageUrl" alt="joinup" height="24px" width="24px">
-                        <p>{{(userService.$loggedUser | async)?.skills[0].description}}</p>
+                        <img [src]="(userService.$loggedUser | async)?.skills[0]?.skillsImageUrl" alt="joinup" height="24px" width="24px">
+                        <p>{{(userService.$loggedUser | async)?.skills[0]?.description}}</p>
                     </div>
                 </div>
 
-                <div class="angular">
-                    <p id="angular">{{(userService.$loggedUser | async)?.skills[1].name}}</p>
+                <div class="angular" *ngIf="(userService.$loggedUser | async)?.skills?.length > 1">
+                    <p id="angular">{{(userService.$loggedUser | async)?.skills[1]?.name}}</p>
                     <div class="img-and-desc">
-                        <img [src]="(userService.$loggedUser | async)?.skills[1].skillsImageUrl" alt="joinup" height="24px" width="24px">
-                        <p>{{(userService.$loggedUser | async)?.skills[1].description}}</p>
+                        <img [src]="(userService.$loggedUser | async)?.skills[1]?.skillsImageUrl" alt="joinup" height="24px" width="24px">
+                        <p>{{(userService.$loggedUser | async)?.skills[1]?.description}}</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="bottom-part">
-            <p>Show all {{ (userService.$loggedUser | async)?.skills.length }} skills</p>
+        <div class="bottom-part" (click)="edit('edit-skills')" *ngIf="(userService.$loggedUser | async)?.skills?.length >= 3">
+            <p>Show all {{ (userService.$loggedUser | async)?.skills?.length }} skills</p>
             <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
         </div>
     </section>
@@ -321,7 +321,7 @@
             </div>
         </div>
         
-        <div class="bottom-part">
+        <div class="bottom-part" (click)="edit('edit-languages')">
             <p>Show all {{ (userService.$loggedUser | async)?.languages?.length }} languages</p>
             <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
         </div>
@@ -340,18 +340,18 @@
                 </div>
                 <div class="companies">
                     <div class="ferit">
-                        <img [src]="(userService.$loggedUser | async).pagesFollowing[0].imageUrl" alt="ferit" height="48px" width="48px"> 
+                        <img [src]="(userService.$loggedUser | async)?.pagesFollowing[0]?.imageUrl" alt="ferit" height="48px" width="48px"> 
                         <div class="info">
-                            <p id="ferit-name">{{ (userService.$loggedUser | async).pagesFollowing[0].name }}</p>
+                            <p id="ferit-name">{{ (userService.$loggedUser | async)?.pagesFollowing[0]?.name }}</p>
                             <p class="no-of-followers">{{ (userService.$loggedUser | async).pagesFollowing[0].numberOfFollowers }} followers</p>
                             <button class="following"><mat-icon>check</mat-icon>Following</button>
                         </div>
                     </div>
                     <div class="cobe">
-                        <img [src]="(userService.$loggedUser | async).pagesFollowing[1].imageUrl" alt="cobe" height="48px" width="48px">
+                        <img [src]="(userService.$loggedUser | async)?.pagesFollowing[1]?.imageUrl" alt="cobe" height="48px" width="48px">
                         <div class="info">
-                            <p id="cobe-name">{{ (userService.$loggedUser | async).pagesFollowing[1].name }}</p>
-                            <p class="no-of-followers">{{ (userService.$loggedUser | async).pagesFollowing[1].numberOfFollowers }} followers</p>
+                            <p id="cobe-name">{{ (userService.$loggedUser | async)?.pagesFollowing[1]?.name }}</p>
+                            <p class="no-of-followers">{{ (userService.$loggedUser | async)?.pagesFollowing[1]?.numberOfFollowers }} followers</p>
                             <button class="following"><mat-icon>check</mat-icon>Following</button>
                         </div>
                     </div>
