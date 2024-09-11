@@ -64,4 +64,8 @@ export class ProfileService {
   editLanguageForUser(updateRequest : any){
     return this.http.put('api/Profile/EditUserLanguage', updateRequest);
   }
+
+  getAllSkills(){
+    return this.http.get('/api/Profile/GetAllSkills');
+  }
 }
