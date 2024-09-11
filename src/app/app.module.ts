@@ -27,6 +27,7 @@ import { EditLanguagesComponent } from './components/edit-languages/edit-languag
 import { EditLanguageWindowComponent } from './components/edit-language-window/edit-language-window.component';
 import { AddEducationWindowComponent } from './components/add-education-window/add-education-window.component';
 import { AddLanguageWindowComponent } from './components/add-language-window/add-language-window.component';
+import { AddLicensesWindowComponent } from './components/add-licenses-window/add-licenses-window.component';
 import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
 import { AddSkillWindowComponent } from './components/add-skill-window/add-skill-window.component';
 import { EditSkillWindowComponent } from './components/edit-skill-window/edit-skill-window.component';
@@ -52,6 +53,7 @@ import { EditSkillWindowComponent } from './components/edit-skill-window/edit-sk
     EditLanguagesComponent,
     EditLanguageWindowComponent,
     AddEducationWindowComponent,
+    AddLicensesWindowComponent,
     EditSkillsComponent,
   ],
   imports: [
