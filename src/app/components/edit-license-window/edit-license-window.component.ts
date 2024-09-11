@@ -130,9 +130,6 @@ export class EditLicenseWindowComponent {
 
   submitForm(){
     if(this.licenseForm.valid){
-      this.helperService.$dimBackground.next(false);
-      this.helperService.$showEditLicenseWindow.next(false);
-  
       this.profileService.editLicenseForUser({
         id: this.profileService.$editLicenseFormValues.value.id,
         name: this.licenseForm.value.name,
