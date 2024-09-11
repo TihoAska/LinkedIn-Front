@@ -1105,7 +1105,7 @@ main{
 
     .skills{
         width: 804px;
-        height: 277px;
+        min-height: 80px;
         background-color: white;
         border-radius: 10px;
         box-sizing: border-box;
@@ -1196,6 +1196,7 @@ main{
 
                 .angular{
                     padding-top: 10px;
+                    padding-bottom: 20px;
                 }
 
                 p{
