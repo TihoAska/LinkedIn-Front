@@ -6,7 +6,8 @@ import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
 import { PageService } from '../../services/page.service';
 import exp from 'constants';
-import { forkJoin, of } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-skill-window',
@@ -40,7 +41,12 @@ export class AddSkillWindowComponent {
     followSkill: new FormControl(false),
   });
 
-  constructor(public helperService : HelperService, public profileService : ProfileService, public userService : UserService, public pageService : PageService) {
+  constructor(
+    public helperService : HelperService,
+    public profileService : ProfileService, 
+    public userService : UserService, 
+    public pageService : PageService,
+    public router : Router) {
     
   }
 
@@ -102,22 +108,54 @@ export class AddSkillWindowComponent {
       let experienceObservables;
       let educationObservables;
       let licenseObservables;
+
+      this.userService.$loggedUser.value.skills.forEach((skill : any) => {
+        console.log(skill);
+      });
+
+      let userSkills = this.userService.$loggedUser.value.skills.filter((skill : any) => skill.name == this.skillForm.value.skill).map((skill : any) => skill.description);
   
       const selectedExperiences = experiencesArray.value
         .map((checked: boolean, i: number) => checked ? this.experiences[i] : null)
         .filter((value: any) => value !== null);
+
+      const validExperiences = selectedExperiences.filter((experience: any) => {
+        const experienceDescription = experience.position + ' at ' + experience.company.name;
+        return !userSkills.includes(experienceDescription);
+      });
   
       const selectedEducations = educationsArray.value
         .map((checked: boolean, i: number) => checked ? this.uniqueEducations[i] : null)
         .filter((value: any) => value !== null);
+
+      const validEducations = selectedEducations.filter((education : any) => {
+        return !userSkills.includes(education);
+      });
       
       const selectedLicenses = licensesArray.value
         .map((checked: boolean, i: number) => checked ? this.licenses[i] : null)
         .filter((value: any) => value !== null);
 
+      const validLicenses = selectedLicenses.filter((license : any) => {
+        return !userSkills.includes(license.name);
+      });
 
-      if(selectedExperiences.length > 0){
-        experienceObservables = selectedExperiences.map((experience: any) => 
+      if(selectedEducations.length == 0 && selectedExperiences.length == 0 && selectedLicenses.length == 0){
+        this.helperService.$errorMessage.next("Please select where you used this skill");
+        this.helperService.$displayError.next(true);
+
+        return ;
+      }
+
+      if(validExperiences.length == 0 && validEducations.length == 0 && validLicenses == 0){
+        this.helperService.$errorMessage.next("This skill is already on your profile");
+        this.helperService.$displayError.next(true);
+
+        return ;
+      }
+
+      if(validExperiences.length > 0){
+        experienceObservables = validExperiences.map((experience: any) =>
           this.profileService.createSkillForUser({
             userId: this.userService.$loggedUser.value.id,
             name: this.skillForm.value.skill,
@@ -127,8 +165,8 @@ export class AddSkillWindowComponent {
         );
       }
 
-      if(selectedEducations.length > 0){
-        educationObservables = selectedEducations.map((element: any) =>
+      if(validEducations.length > 0){
+        educationObservables = validEducations.map((element: any) =>
           this.profileService.createSkillForUser({
             userId: this.userService.$loggedUser.value.id,
             name: this.skillForm.value.skill,
@@ -138,8 +176,8 @@ export class AddSkillWindowComponent {
         );
       }
 
-      if(selectedLicenses.length > 0){
-        licenseObservables = selectedLicenses.map((element: any) =>
+      if(validLicenses.length > 0){
+        licenseObservables = validLicenses.map((element: any) =>
           this.profileService.createSkillForUser({
             userId: this.userService.$loggedUser.value.id,
             name: this.skillForm.value.skill,
@@ -158,12 +196,14 @@ export class AddSkillWindowComponent {
           this.helperService.$dimBackground.next(false);
           this.helperService.$showAddSkillWindow.next(false);
 
+          window.location.reload();
+
           this.userService.getUserByIdWithUserDetails(this.userService.$loggedUser.value.id).subscribe(res => {
             this.userService.$loggedUser.value.skills = res.skills;
           });
       }, error => {
-        console.log(error.error.Message);
-        this.helperService.$errorMessage.next(error.error.Message);
+        console.log(error);
+        this.helperService.$errorMessage.next(error);
         this.helperService.$displayError.next(true);
       });
     }

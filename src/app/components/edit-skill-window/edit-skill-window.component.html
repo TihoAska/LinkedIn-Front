@@ -1,30 +1,15 @@
 <div class="container" *ngIf="helperService.$showEditSkillWindow.value">
     <main>
         <header>
-            <p>Edit skill</p>
+            <p>Edit {{ profileService.$editSkillFormValues.value[0].name }}</p>
             <div class="close-container" (click)="closeWindow()">
                 <mat-icon>close</mat-icon>
             </div>
         </header>
         <section>
-            <p>* indicates required</p>
-
             <form [formGroup]="skillForm">
-                <div class="company-container">
-                    <div class="title-container">
-                        <label for="title-input">Skill*</label>
-                        <input id="title-input" type="text" placeholder="Skill (ex: Project Management)" formControlName="skill" (input)="onInputChange($event)" autocomplete="off">
-                    </div>
-    
-                    <div class="search-company-results" *ngIf="showQuery">
-                        <div class="searched-company-result" *ngFor="let skill of filteredSkills" (click)="select(skill)">
-                            {{ skill?.name }}
-                        </div>
-                    </div>
-                </div>
-
                 <div class="skills-used">
-                    <h2>Show us where you used this skill</h2>
+                    <h2>Tell us where you put this skill to use</h2>
                     <p>75% of hirers value skill context. Select at least one item to show where you used this skill.</p>
 
                     <div class="skill-categories">
@@ -61,6 +46,9 @@
             </form>
         </section>
         <footer>
+            <div class="delete-skill">
+                <span (click)="deleteSkill()">Delete skill</span>
+            </div>
             <button type="submit" (click)="submitForm()">Save</button>
         </footer>
     </main>

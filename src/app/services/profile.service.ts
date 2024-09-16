@@ -77,4 +77,8 @@ export class ProfileService {
   createSkillForUser(createRequest : any){
     return this.http.post('/api/Profile/CreateSkillForUser', createRequest);
   }
+
+  deleteUserSkill(userId : any, skillName : any, skillDescription : any){
+    return this.http.delete('/api/Profile/DeleteUserSkill?userId=' + userId + '&skillName=' + skillName + '&skillDescription=' + skillDescription);
+  }
 }
