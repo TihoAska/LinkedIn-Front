@@ -15,6 +15,9 @@ export class ProfileDetailsComponent {
 
   displaySkills = false;
   displayLicenses = false;
+  displaySkillForExperience = true;
+
+  userSkills = [];
 
   constructor(public pageService : PageService,
     public userService : UserService,
@@ -26,6 +29,8 @@ export class ProfileDetailsComponent {
 
   ngOnInit(){
     this.userService.$loggedUser.subscribe(res => {
+      this.userSkills = res.skills;
+
       if(res.skills){
         this.displaySkills = true;
       }
@@ -51,6 +56,20 @@ export class ProfileDetailsComponent {
     } else if(window == 'skill'){
       this.helperService.$dimBackground.next(true);
       this.helperService.$showAddSkillWindow.next(true);
+    }
+  }
+
+  getExperienceSkills(experience : any){
+    let skillsForExperience : any[] = this.userSkills.filter((skill : any) => skill.description == experience.position + ' at ' + experience.company.name);
+
+    if(skillsForExperience.length == 0){
+      return '';
+    } else if(skillsForExperience.length == 1){
+      return skillsForExperience[0].name;
+    } else if(skillsForExperience.length == 2){
+      return skillsForExperience[0].name + ', ' + skillsForExperience[1].name;
+    } else {
+      return skillsForExperience[0].name + ', ' + skillsForExperience[1].name + ' and +' + (skillsForExperience.length - 2) + ' skills';
     }
   }
 

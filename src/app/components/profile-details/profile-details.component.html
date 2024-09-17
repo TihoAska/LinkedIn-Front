@@ -197,9 +197,9 @@
                 <p id="date-worked">{{ experience.startTime | date: 'MMM yyyy' }} - {{ experience.endTime | date: 'MMM yyyy' }} · {{ getMonthDifference(experience.startTime, experience.endTime) }}</p>
                 <p id="place-worked">Osijek, Osijek-Baranja, Croatia · {{ experience.locationType }}</p>
                 <br>
-                <div class="skills-earned">
+                <div class="skills-earned" *ngIf="getExperienceSkills(experience)">
                     <mat-icon>details</mat-icon>
-                    <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0]?.name }}, {{ (userService.$loggedUser | async)?.skills[1]?.name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
+                    <a id="skills-earned">{{ getExperienceSkills(experience) }}</a>
                 </div>
             </div>
         </div>
