@@ -22,7 +22,8 @@ export class EditLicensesComponent {
   }
 
   addLicense(){
-
+    this.helperService.$dimBackground.next(false);
+    this.helperService.$showAddLicenseWindow.next(false);
   }
 
   public getMonthFromDateObject(date : any){
