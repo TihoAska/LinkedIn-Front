@@ -19,7 +19,8 @@ export class EditLanguagesComponent {
   }
 
   addLanguage(){
-
+    this.helperService.$dimBackground.next(true);
+    this.helperService.$showAddLanguageWindow.next(true);
   }
 
   editLanguage(language : any){
