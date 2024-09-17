@@ -23,7 +23,8 @@ export class EditEducationComponent {
   }
 
   addEducation(){
-
+    this.helperService.$dimBackground.next(true);
+    this.helperService.$showAddEducationWindow.next(true);
   }
 
   editEducation(education : any){
