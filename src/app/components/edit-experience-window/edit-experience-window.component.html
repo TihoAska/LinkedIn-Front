@@ -33,7 +33,7 @@
 
                 <div class="company-container">
                     <label for="company-name-input">Company name*</label>
-                    <img id="selected-company-in-input" src="" alt="" height="30px" width="30px" [ngStyle]="{'display': showCompanyImage ? 'inline' : 'none'}">
+                    <img id="selected-company-in-input" [src]="companyImage" alt="" height="30px" width="30px" [ngStyle]="{'display': showCompanyImage ? 'inline' : 'none'}">
                     <input [formControl]="searchCompaniesControl" id="company-name-input" type="text" placeholder="Ex: Microsoft" formControlName="companyName" (input)="onInputChange($event)" [ngStyle]="{'padding-left': showCompanyImage ? '40px' : '2px'}" autocomplete="off">
 
                     <div class="search-company-results" *ngIf="showCompaniesQuery" [ngStyle]="{'border': filteredCompanies.length > 0 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}">

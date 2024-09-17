@@ -20,6 +20,8 @@ export class AddEducationWindowComponent {
   schools : any = [];
   filteredSchools : School[] = [];
 
+  companyImage = '';
+
   searchControl = new FormControl();
   searchSchoolControl = new FormControl();
 
@@ -61,6 +63,8 @@ export class AddEducationWindowComponent {
 
   select(school : any){
     this.showSchoolQuery = false;
+    this.showSchoolImage = true;
+    this.companyImage = school.schoolImageUrl;
     this.educationForm.patchValue({
       school: school.name,
     });
@@ -78,11 +82,7 @@ export class AddEducationWindowComponent {
     } else {
       this.filteredSchools.forEach(company => {
         if(company.name != inputValue){
-          const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-  
-          if (selectedCompanyImage) {
-            selectedCompanyImage.src = '../../../assets/images/pageLogos/default-experience.png';
-          }
+          this.companyImage = '../../../assets/images/pageLogos/default-experience.png';
         }
       });
   

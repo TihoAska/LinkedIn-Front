@@ -19,6 +19,7 @@ export class EditLicenseWindowComponent {
 
   showIssuingOrganizationImage = false;
   showIssuingOrganizationQuery = false;
+  issuingOrganizationImage = '';
 
   licenseForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -53,11 +54,8 @@ export class EditLicenseWindowComponent {
       });
 
       this.pageService.getCompanyByName(lf.issuingOrganization).subscribe(res => {
-        let issuingOrhanizationImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-        if(issuingOrhanizationImage){
-          this.showIssuingOrganizationImage = true;
-          issuingOrhanizationImage.src = res.imageUrl;
-        }
+        this.issuingOrganizationImage = res.imageUrl;
+        this.showIssuingOrganizationImage = true;
       });
     });
 
@@ -101,11 +99,7 @@ export class EditLicenseWindowComponent {
       this.filteredInstitutions.forEach(institution => {
         if(institution.name != inputValue){
 
-          const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-  
-          if (selectedCompanyImage) {
-            selectedCompanyImage.src = '../../../assets/images/pageLogos/default-experience.png';
-          }
+          this.issuingOrganizationImage = '../../../assets/images/pageLogos/default-experience.png';
         }
       });
 
@@ -116,16 +110,13 @@ export class EditLicenseWindowComponent {
 
   select(institution : any){
     this.showIssuingOrganizationQuery = false;
+    this.showIssuingOrganizationImage = true;
     
     this.licenseForm.patchValue({
       issuingOrganization: institution.name,
     });
 
-    let issuingOrganizationImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-
-    if(issuingOrganizationImage){
-      issuingOrganizationImage.src = institution.imageUrl;
-    }
+    this.issuingOrganizationImage = institution.imageUrl;
   }
 
   submitForm(){

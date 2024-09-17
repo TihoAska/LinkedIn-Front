@@ -22,6 +22,8 @@ export class EditEducationWindowComponent {
   searchControl = new FormControl();
   searchSchoolControl = new FormControl();
 
+  schoolImage = '';
+
   educationForm = new FormGroup({
     school: new FormControl('', Validators.required),
     degree: new FormControl('', Validators.required),
@@ -54,6 +56,9 @@ export class EditEducationWindowComponent {
 
     this.profileService.$editEducationFormValues.subscribe(ef => {
       let formattedDate = this.formatDate(ef);
+
+      this.schoolImage = ef.schoolImageUrl;
+      this.showSchoolImage = true;
 
       this.educationForm.patchValue({
         school: ef.name,
@@ -93,6 +98,10 @@ export class EditEducationWindowComponent {
 
   select(school : any){
     this.showSchoolQuery = false;
+    this.showSchoolImage = true;
+
+    this.schoolImage = school.schoolImageUrl;
+
     this.educationForm.patchValue({
       school: school.name,
     });
@@ -138,15 +147,12 @@ export class EditEducationWindowComponent {
     } else {
       this.filteredSchools.forEach(company => {
         if(company.name != inputValue){
-          const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-  
-          if (selectedCompanyImage) {
-            selectedCompanyImage.src = '../../../assets/images/pageLogos/default-experience.png';
-          }
+          this.schoolImage = '../../../assets/images/pageLogos/default-experience.png';
         }
       });
   
       this.showSchoolQuery = true;
+      this.showSchoolImage = true;
       if (!inputValue.trim()) {
         this.filteredSchools = [];
       } else {

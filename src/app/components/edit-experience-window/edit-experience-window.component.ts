@@ -16,6 +16,7 @@ export class EditExperienceWindowComponent {
   showQuery = false;
   showCompaniesQuery = false;
   showCompanyImage = false;
+  companyImage = '';
 
   monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -87,10 +88,7 @@ export class EditExperienceWindowComponent {
         this.companyLocation = res;
 
         this.showCompanyImage = true;
-        const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-        if (selectedCompanyImage) {
-          selectedCompanyImage.src = ef.companyImageUrl;
-        }
+        this.companyImage = ef.companyImageUrl;
 
         let formattedDate = this.formatDate(ef);
 
@@ -138,11 +136,7 @@ export class EditExperienceWindowComponent {
     } else {
       this.filteredCompanies.forEach(company => {
         if(company.name != inputValue){
-          const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-  
-          if (selectedCompanyImage) {
-            selectedCompanyImage.src = '../../../assets/images/pageLogos/default-experience.png';
-          }
+          this.companyImage = '../../../assets/images/pageLogos/default-experience.png';
         }
       });
   
@@ -179,15 +173,12 @@ export class EditExperienceWindowComponent {
       this.showCompanyImage = true;
       this.showCompaniesQuery = false;
       const companyNameInput = document.querySelector<HTMLInputElement>('#company-name-input');
-      const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
 
       if(companyNameInput){
         companyNameInput.value = item.name;
         this.experienceForm.get('companyName')?.setValue(item.name);
 
-        if (selectedCompanyImage) {
-          selectedCompanyImage.src = item.imageUrl;
-        }
+        this.companyImage = item.imageUrl;
       }
     } else if(list == 'companyLocation'){
       this.showQuery = false;

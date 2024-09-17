@@ -12,7 +12,7 @@
             <form [formGroup]="educationForm">
                 <div class="company-container">
                     <label for="company-name-input">School*</label>
-                    <img id="selected-company-in-input" src="" alt="" height="30px" width="30px" [ngStyle]="{'display': showSchoolImage ? 'inline' : 'none'}">
+                    <img id="selected-company-in-input" [src]="schoolImage" alt="" height="30px" width="30px" [ngStyle]="{'display': showSchoolImage ? 'inline' : 'none'}">
                     <input id="company-name-input" type="text" placeholder="Ex: Boston Universtiy" formControlName="school" (input)="onInputChange($event)" [ngStyle]="{'padding-left': showSchoolImage ? '40px' : '2px'}" autocomplete="off">
 
                     <div class="search-company-results" *ngIf="showSchoolQuery" [ngStyle]="{'border': filteredSchools.length > 0 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}">

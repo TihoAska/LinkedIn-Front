@@ -16,6 +16,7 @@ export class AddExperienceWindowComponent {
   showQuery = false;
   showCompaniesQuery = false;
   showCompanyImage = false;
+  companyImage = '../../../assets/images/pageLogos/default-experience.png';
 
   experienceForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -78,6 +79,8 @@ export class AddExperienceWindowComponent {
 
     if(inputValue == ""){
       this.showCompanyImage = false;
+    } else {
+      this.showCompanyImage = true;
     }
   }
 
@@ -95,11 +98,7 @@ export class AddExperienceWindowComponent {
   filterCompanies(query : string){
     this.filteredCompanies.forEach(company => {
       if(company.name != query){
-        const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
-
-        if (selectedCompanyImage) {
-          selectedCompanyImage.src = '../../../assets/images/pageLogos/default-experience.png';
-        }
+        this.companyImage = '../../../assets/images/pageLogos/default-experience.png';
       }
     });
 
@@ -119,15 +118,12 @@ export class AddExperienceWindowComponent {
       this.showCompanyImage = true;
       this.showCompaniesQuery = false;
       const companyNameInput = document.querySelector<HTMLInputElement>('#company-name-input');
-      const selectedCompanyImage = document.querySelector<HTMLImageElement>('#selected-company-in-input');
 
       if(companyNameInput){
         companyNameInput.value = item.name;
         this.experienceForm.get('companyName')?.setValue(item.name);
 
-        if (selectedCompanyImage) {
-          selectedCompanyImage.src = item.imageUrl;
-        }
+        this.companyImage = item.imageUrl;
       }
     } else if(list == 'companyLocation'){
       this.showQuery = false;
