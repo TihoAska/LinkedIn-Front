@@ -127,8 +127,12 @@ export class MainComponent {
     });
   }
 
-  navigateToProfile(){
-    this.router.navigate(['', 'your-profile', 'profile-details']);
+  navigateTo(route : any){
+    if(route.name == "My Network"){
+      this.router.navigate(['', 'my-network']);
+    } else if(route == "Profile"){
+      this.router.navigate(['', 'your-profile', 'profile-details']);
+    }
   }
 
   getMonthDifference(startDate: Date, endDate: Date) {
