@@ -3,6 +3,7 @@ import { PageService } from '../../services/page.service';
 import { UserService } from '../../services/user.service';
 import { HelperService } from '../../services/helper.service';
 import { Router } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile-details',
@@ -22,7 +23,8 @@ export class ProfileDetailsComponent {
   constructor(public pageService : PageService,
     public userService : UserService,
     public helperService : HelperService,
-    private router : Router) {
+    private router : Router,
+    public profileService : ProfileService) {
     
     
   }
@@ -110,5 +112,10 @@ export class ProfileDetailsComponent {
     }
   
     return result || '0 mos';
+  }
+
+  addTimelinePhoto(){
+    this.helperService.$dimBackground.next(true);
+    this.profileService.$showAddTimelineWindow.next(true);
   }
 }
