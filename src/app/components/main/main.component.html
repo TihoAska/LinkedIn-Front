@@ -16,6 +16,9 @@
                             <path [attr.d]="icon.shape"></path>
                         </svg>
                         <p class="icon-name">{{ icon.name }}</p>
+                        <div class="red-dot" *ngIf="helperService.showRedDots[i]">
+                            <div class="white-dot"></div>
+                        </div>
                     </div>
                 </div>
     
