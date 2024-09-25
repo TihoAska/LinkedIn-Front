@@ -1,0 +1,145 @@
+.timeline-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100vh;
+    width: 100vw;
+
+    .add-background-photo{
+        width: 750px;
+        height: 550px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 20px;
+
+        header{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            
+            span{
+                font-size: 20px;
+            }
+
+            .close-icon{
+                height: 40px;
+                width: 40px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: background-color 0.2s ease;
+            }
+
+            .close-icon:hover{
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.5;
+
+            #showcase-your-personality{
+                font-size: 20px;
+                width: 400px;
+                text-align: center;
+                padding-bottom: 10px;
+            }
+
+            #a-good-background-photo{
+                color: gray;
+
+                #learn-more{
+                    color: #0A66C2;
+                    font-weight: bold;
+                }
+            }            
+        }
+
+        footer{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            box-sizing: border-box;
+            padding: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+            .buttons-before-upload{
+                button{
+                    background-color: #0A66C2;
+                    color: white;
+                    width: 220px;
+                    height: 32px;
+                    border: 0;
+                    border-radius: 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    transition: background-color 0.2s ease;
+                }
+    
+                button:hover{
+                    background-color: #054d96;
+                    cursor: pointer;
+                }
+            }
+
+            .buttons-after-upload{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+
+                #change-background{
+                    background-color: white;
+                    color: #0A66C2;
+                    width: 220px;
+                    height: 32px;
+                    border: 0;
+                    border-radius: 20px;
+                    border: 2px solid #0A66C2;
+                    font-size: 16px;
+                    font-weight: bold;
+                    transition: background-color 0.2s ease;
+                }
+
+                #change-background:hover{
+                    cursor: pointer;
+                    background-color: #bad5f0;
+                }
+
+                #apply{
+                    background-color: #0A66C2;
+                    color: white;
+                    width: 100px;
+                    height: 32px;
+                    border: 0;
+                    border-radius: 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    transition: background-color 0.2s ease;
+                }
+
+                #apply:hover{
+                    cursor: pointer;
+                    background-color: #054d96;
+                }
+            }
+        }
+    }
+}

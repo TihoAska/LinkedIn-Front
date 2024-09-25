@@ -1,0 +1,41 @@
+<div class="timeline-container" *ngIf="profileService.$showAddTimelineWindow.value">
+    <section class="add-background-photo">
+        <header class="top">
+            <span>Add background photo</span>
+            <div class="close-icon" (click)="closeWindow()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </header>
+    
+        <main>
+            <img [src]="displayedPreviewImage" alt="add-background-photo"
+                [ngStyle]="isPreviewImage ? {
+                    'max-width': '600px',
+                    'max-height': '300px',
+                    'object-fit': 'contain',
+                    'display': 'block',
+                    'margin-top': '10px'
+                } : 
+                {
+                    'max-height': '250px',
+                    'max-width': '250px'
+                }"
+            >
+            <span *ngIf="!isPreviewImage" id="showcase-your-personality">Showcase your personality, interests, team moments or notable milestones</span>
+            <span *ngIf="!isPreviewImage" id="a-good-background-photo">A good background photo will help you stand out. <span id="learn-more">Learn more</span></span>
+        </main>
+    
+        <footer class="bottom">
+            <div class="buttons-before-upload" *ngIf="!isPreviewImage">
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none">
+                <button (click)="triggerFileInput()">Edit profile background</button>
+            </div>
+
+            <div class="buttons-after-upload" *ngIf="isPreviewImage">
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none">
+                <button id="change-background" (click)="triggerFileInput()">Change background</button>
+                <button id="apply" (click)="uploadBackgroundImage()">Apply</button>
+            </div>
+        </footer>
+    </section>
+</div>
