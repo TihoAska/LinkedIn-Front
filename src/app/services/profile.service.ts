@@ -83,4 +83,8 @@ export class ProfileService {
   deleteUserSkill(userId : any, skillName : any, skillDescription : any){
     return this.http.delete('/api/Profile/DeleteUserSkill?userId=' + userId + '&skillName=' + skillName + '&skillDescription=' + skillDescription);
   }
+
+  changeBackgroundImage(updateRequest : any){
+    return this.http.put<any>('/api/Profile/ChangeBackgroundImage', updateRequest);
+  }
 }
