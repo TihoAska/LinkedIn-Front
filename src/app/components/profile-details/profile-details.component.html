@@ -1,7 +1,13 @@
 <main>
     <section class="my-profile">
-        <img class="banner" src="../../../assets/images/profileMisc/timeline.png" alt="" width="804px" height="201px">
-        <img class="avatar" [src]="(userService.$loggedUser | async).imageUrl" alt="" height="150px" width="150px">
+        <div class="banner-container">
+            <img class="banner" [src]="(userService.$loggedUser | async)?.profileDetails?.bannerImage" alt="banner-image" width="804px" height="201px">
+        </div>
+        <img class="avatar" [src]="(userService.$loggedUser | async)?.imageUrl" alt="user-image" height="150px" width="150px">
+
+        <div class="add-timeline" (click)="addTimelinePhoto()">
+            <mat-icon>add_a_photo</mat-icon>
+        </div>
 
         <div class="info">
             <div class="name-and-verification">
