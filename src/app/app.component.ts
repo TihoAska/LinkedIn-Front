@@ -4,6 +4,7 @@ import { UserService } from './services/user.service';
 import { PageService } from './services/page.service';
 import { HelperService } from './services/helper.service';
 import { WebSocketService } from './services/web-socket.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,8 @@ export class AppComponent {
         this.userService.getUserByIdWithUserDetails(user.id).subscribe(res => {
           console.log(res?.education[0]?.startTime);
           console.log(res?.education[0]?.endTime);
+
+          res.profileDetails.bannerImage = environment.baseUrl + res.profileDetails.bannerImage;
 
           this.userService.$loggedUser.next(res);
           this.webSocketService.initWebSocketService();
