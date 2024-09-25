@@ -16,6 +16,7 @@ export class UserService {
   public peopleYouMayKnow : any = [];
 
   public $loggedUser : BehaviorSubject<any> = new BehaviorSubject<any>(new User);
+  public $receivedConnection : BehaviorSubject<any> = new BehaviorSubject<any>('');
 
   constructor(
     private http : HttpClient,
@@ -68,8 +69,36 @@ export class UserService {
     return this.http.post<any>('/api/Connections/SendConnection?senderId=' + senderId + '&receiverId=' + receiverId, {});
   }
 
+  acceptConnection(senderId : number){
+    return this.http.put<any>('/api/Connections/AcceptConnection?senderId=' + senderId + '&receiverId=' + this.$loggedUser.value.id, {});
+  }
+
+  rejectConnection(senderId : number){
+    return this.http.put<any>('/api/Connections/RejectConnection?senderId=' + senderId + '&receiverId=' + this.$loggedUser.value.id, {});
+  }
+
+  withdrawConnection(receiverId : number){
+    return this.http.delete<any>('/api/Connections/WithdrawSentConnection?senderId=' + this.$loggedUser.value.id + '&receiverId=' + receiverId);
+  }
+
+  getPendingConnectionsForUser(userId : number){
+    return this.http.get<any>('/api/Connections/GetAllPendingConnections?userId=' + userId);
+  }
+
+  getAllAcceptedUserConnections(userId : number){
+    return this.http.get<any>('/api/Connections/GetAllAcceptedConnectionsForUser?userId=' + userId);
+  }
+
+  getAllUserConnections(userId : number){
+    return this.http.get<any>('api/Connections/GetAllUserConnections?id=' + userId);
+  }
+
   getUserByIdWithUserDetails(id : any){
     return this.http.get<any>('api/User/GetByIdWithUserDetails?id=' + id);
+  }
+  
+  getAllUsersWithEducations(){
+    return this.http.get<any>('/api/User/GetAllWithEducations');
   }
 }
 
