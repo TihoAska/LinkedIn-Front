@@ -1,0 +1,116 @@
+<div class="container">
+    <aside>
+        <section class="manage-networks">
+            <h3>Manage my network</h3>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </section>
+        <section class="see-whos-hiring">
+            
+        </section>
+    </aside>
+    <main>
+        <section class="grow-and-catch-up">
+            <span>Grow</span>
+            <span>Catch up</span>
+        </section>
+
+        <section class="no-pending-invitations">
+            <div class="top" [ngStyle]="{'padding-bottom': hasReceivedConnections ? '20px' : 0}">
+                <span *ngIf="hasReceivedConnections; else manageConnections">Manage connections</span>
+                <ng-template #manageConnections>
+                    <span>No pending invitations</span>
+                </ng-template>
+                <span class="manage">Manage</span>
+            </div>
+
+            <div class="received-and-sent" [ngStyle]="{'padding-bottom': hasReceivedConnections ? '10px' : 0}">
+                <span *ngIf="receivedConnections.length > 0" [ngStyle]="{
+                    'color': selectedReceivedOrSent == 'received' ? 'green' : 'gray', 
+                    'font-weight': '500', 
+                    'border-bottom': selectedReceivedOrSent == 'received' ? '2px solid green' : '2px solid transparent',
+                    'padding-bottom': '5px',
+                }" (click)="toggleSentReceived('received')">Received</span>
+                <span *ngIf="sentConnections.length > 0" [ngStyle]="{
+                    'color': selectedReceivedOrSent == 'sent' ? 'green' : 'gray',
+                    'font-weight': '500', 
+                    'border-bottom': selectedReceivedOrSent == 'sent' ? '2px solid green' : '2px solid transparent',
+                    'padding-bottom': '5px',
+                }" (click)="toggleSentReceived('sent')">Sent</span>
+            </div>
+
+            <div class="profiles" *ngIf="selectedReceivedOrSent == 'received'">
+                <div class="profile" *ngFor="let pendingConnection of receivedConnections">
+                    <div class="image-and-details">
+                        <img [src]="pendingConnection.sender.imageUrl" alt="image" height="64px" width="64px">
+                        <div class="details">
+                            <span class="name">{{ pendingConnection.sender.firstName }} {{ pendingConnection.sender.lastName }}</span>
+                            <span class="job">{{ pendingConnection.sender.job }}</span>
+                            <span class="time-sent">Sent: {{ pendingConnection.requestDate | date: 'dd MMM yyyy' }}</span>
+                        </div>
+                    </div>
+                    <div class="ignore-accept">
+                        <button (click)="rejectConnection(pendingConnection.senderId)" id="ignore">Ignore</button>
+                        <button (click)="acceptConnection(pendingConnection.senderId)" id="accept">Accept</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profiles" *ngIf="selectedReceivedOrSent == 'sent'">
+                <div class="profile" *ngFor="let pendingConnection of sentConnections">
+                    <div class="image-and-details">
+                        <img [src]="pendingConnection.receiver.imageUrl" alt="image" height="64px" width="64px">
+                        <div class="details">
+                            <span class="name">{{ pendingConnection.receiver.firstName }} {{ pendingConnection.receiver.lastName }}</span>
+                            <span class="job">{{ pendingConnection.receiver.job }}</span>
+                            <span class="time-sent">Sent: {{ pendingConnection.requestDate | date: 'dd MMM yyyy' }}</span>
+                        </div>
+                    </div>
+                    <div class="ignore-accept">
+                        <button (click)="withdrawConnection(pendingConnection)" id="ignore">Withdraw</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="job-search-smarter">
+            <div class="top">
+                <h3>Job search smarter</h3>
+                <mat-icon>close</mat-icon>
+            </div>
+            <p>See who's viewed your profile and directly message recruiters with InMail.</p>
+            <div class="members-using-premium">
+                <div class="images">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                </div>
+                Benjamin and millions of other members use Premium
+            </div>
+            <button>Try Premium for HRK0</button>
+            <p class="one-month-free-trial">1-month free trial. We'll send you a reminder 7 days before your trial ends.</p>
+        </section>
+        <section class="people-you-may-know" *ngIf="displayDisplayedProfiles">
+            <div class="top">
+                <h3>People you may know from {{ (userService.$loggedUser | async)?.education[0].name }}</h3>
+                <span>See all</span>
+            </div>
+
+            <div class="profiles">
+                <div class="card" *ngFor="let profile of displayedProfiles, let i = index">
+                    <mat-icon class="close" (click)="hideProfile(profile)">close</mat-icon>
+                    <img [src]="profile.bannerImage" class="timeline"/>
+                    <img [src]="profile.imageUrl" class="photo"/>
+                    <div class="description">
+                        <h3>{{ profile.firstName }} {{ profile.lastName }}</h3>
+                        <span>{{ profile.job }}</span>
+                        <div class="img-and-education">
+                            <img [src]="profile.education[0].schoolImageUrl" alt="profile photo" height="24px" width="24px">
+                            <span class="education">{{ profile.education[0].name }}</span>
+                        </div>
+                        <button (click)="sendConnection(profile)"><mat-icon>person_add</mat-icon>Connect</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

@@ -1,0 +1,409 @@
+.container{
+    background-color: #F4F2EE;
+    min-height: 100vh;
+    width: 100vw;
+    padding-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .manage-networks{
+            width: 300px;
+            height: 52px;
+            background-color: white;
+            border-radius: 10px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding-left: 20px;
+            padding-right: 20px;
+
+            h3{
+                margin: 0;
+            }
+        }
+
+        .see-whos-hiring{
+            height: 250px;
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-image: url(../../../assets/images/adverts/see-whos-hiring.png);
+        }
+    }
+
+    main{
+        width: 804px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .grow-and-catch-up{
+            width: 804px;
+            height: 52px;
+            background-color: white;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: center;
+
+            span{
+                font-size: 16px;
+            }
+        }
+
+        .no-pending-invitations{
+            width: 804px;
+            min-height: 60px;
+            background-color: white;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 20px;
+
+            .top{
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 20px;
+
+                .manage{
+                    color: gray;
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+
+                span{
+                    font-weight: 500;
+                    font-size: 16px; 
+                }
+            }
+
+            .received-and-sent{
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                align-items: center;
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+
+            .received-and-sent:hover{
+                cursor: pointer;
+            }
+
+            span{
+                font-size: 16px;
+            }
+
+            .profiles{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                
+                .profile{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    padding-bottom: 10px;
+
+                    .image-and-details{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 20px;
+
+                        .details{
+                            display: flex;
+                            flex-direction: column;
+
+                            .name{
+                                font-weight: bold;
+                            }
+
+                            .job{
+                                color: gray;
+                                font-size: 14px;
+                            }
+
+                            .time-sent{
+                                font-size: 12px;
+                                color: gray;
+                            }
+                        }
+                    }
+
+                    .ignore-accept{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+
+                        button{
+                            background-color: transparent;
+                            border-radius: 20px;
+
+                        }
+
+                        #ignore{
+                            color: rgba(0, 0, 0, 0.6);
+                            border: 1px solid rgba(0, 0, 0, 0.6);
+                            height: 30px;
+                            width: 75px;
+                            transition: background-color 0.2s;
+                        }
+
+                        #accept{
+                            color: #0A66C2;
+                            border: 1px solid #0A66C2;
+                            height: 30px;
+                            width: 70px;
+                            transition: background-color 0.2s;
+                        }
+
+                        #ignore:hover{
+                            cursor: pointer;
+                            background-color: rgba(0, 0, 0, 0.1);   
+                            border: 2px solid rgba(0, 0, 0, 0.6);
+                        }
+
+                        #accept:hover{
+                            background-color: #cde2f6;
+                            border: 2px solid #0A66C2;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .profile:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
+
+        .job-search-smarter{
+            height: 190px;
+            width: 804px;
+            background-color: white;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            p{
+                margin: 0;
+            }
+
+            .top{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
+                h3{
+                    margin: 0;
+                    font-weight: 500;
+                }
+
+                mat-icon:hover{
+                    cursor: pointer;
+                }
+            }
+
+            .members-using-premium{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                font-size: 12px;
+                color: gray;
+
+
+                .images{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+            }
+
+            button{
+                width: 192px;
+                height: 32px;
+                background-color: #f9c982;
+                border: none;
+                border-radius: 20px;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+            button:hover{
+                background-color: #e9a53f;
+                cursor: pointer;
+            }
+
+            .one-month-free-trial{
+                color: gray;
+                font-size: 12px;
+            }
+        }
+
+        .people-you-may-know{
+            width: 804px;
+            min-height: 350px;
+            background-color: white;
+            border-radius: 20px;
+            box-sizing: border-box;
+            padding: 20px;
+
+            .top{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding: 5px;
+
+                h3{
+                    font-size: 16px;
+                    width: 650px;
+                    font-weight: 500;
+                }
+
+                span{
+                    // width: 60px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: gray;
+                }
+            }
+
+            .profiles{
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+
+                .card{
+                    width: 184px;
+                    height: 282px;
+                    border-radius: 20px;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+
+                    .close{
+                        position: absolute;
+                        left: 145px;
+                        top: 10px;
+                        border-radius: 50%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        height: 32px;
+                        width: 32px;
+                        font-size: 20px;
+                        color: white;
+                    }
+
+                    .timeline{
+                        height: 62px;
+                        width: 184px;
+                        border-radius: 20px 20px 0 0;
+                    }
+
+                    .photo{
+                        position: absolute;
+                        top: 15px;
+                        left: 40px;
+                        height: 104px;
+                        width: 104px;
+                        border-radius: 50%;
+                    }
+
+                    .description{
+                        width: 184px;
+                        height: 30px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        padding-top: 60px;
+                        gap: 10px;
+
+                        h3{
+                            font-weight: 500;
+                            margin: 0;
+                        }
+
+                        span{
+                            color: gray;
+                        }
+
+                        .img-and-education{
+                            height: 30px;
+                            width: 160px;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 5px;
+
+                            .education{
+                                display: -webkit-box;
+                                max-height: 40px;
+                                -webkit-box-orient: vertical; /* Sets the box orientation to vertical (for multiple lines) */
+                                -webkit-line-clamp: 2; /* Limits the text to 3 lines */
+                                font-size: 12px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        button{
+                            width: 160px;
+                            height: 32px;
+                            background-color: transparent;
+                            border: 2px solid #0A66C2;
+                            color: #0A66C2;
+                            border-radius: 20px;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            transition: background-color 0.2s ease;
+                        }
+
+                        button:hover{
+                            cursor: pointer;
+                            background-color: #cde2f6;
+                            border: 2px solid #0A66C2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
