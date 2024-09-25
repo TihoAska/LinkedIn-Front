@@ -37,6 +37,7 @@ export class EditExperienceComponent {
   peopleYouMayKnow : any = [];
   twoPages : any = [];
   buttonStates: { [key: number]: boolean } = {};
+  userSkills = [];
 
   constructor(
     public pageService : PageService,
@@ -48,6 +49,24 @@ export class EditExperienceComponent {
 
   ngOnInit(){
     window.scrollTo(0, 0);
+
+    this.userService.$loggedUser.subscribe(res => {
+      this.userSkills = res.skills;
+    });
+  } 
+
+  getExperienceSkills(experience : any){
+    let skillsForExperience : any[] = this.userSkills.filter((skill : any) => skill.description == experience.position + ' at ' + experience.company.name);
+
+    if(skillsForExperience.length == 0){
+      return '';
+    } else if(skillsForExperience.length == 1){
+      return skillsForExperience[0].name;
+    } else if(skillsForExperience.length == 2){
+      return skillsForExperience[0].name + ', ' + skillsForExperience[1].name;
+    } else {
+      return skillsForExperience[0].name + ', ' + skillsForExperience[1].name + ' and +' + (skillsForExperience.length - 2) + ' skills';
+    }
   } 
 
   addExperience(){
