@@ -27,5 +27,7 @@ export class HelperService {
   $displayError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $errorMessage: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  public showRedDots = [false, false, false, false, false];
+
   constructor() { }
 }
