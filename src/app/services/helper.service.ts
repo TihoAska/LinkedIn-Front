@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,11 @@ export class HelperService {
   public showRedDots = [false, false, false, false, false];
 
   constructor() { }
+
+  getFullImagePath(imageUrl : string){
+    if(!environment.production){
+      return environment.baseUrl + imageUrl;
+    }
+    return '';
+  }
 }
