@@ -31,6 +31,7 @@ import { AddLicensesWindowComponent } from './components/add-licenses-window/add
 import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
 import { AddSkillWindowComponent } from './components/add-skill-window/add-skill-window.component';
 import { EditSkillWindowComponent } from './components/edit-skill-window/edit-skill-window.component';
+import { MyNetworkComponent } from './components/my-network/my-network.component';
 import { AddTimelinePhotoComponent } from './components/add-timeline-photo/add-timeline-photo.component';
 
 
