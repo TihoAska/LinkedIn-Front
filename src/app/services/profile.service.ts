@@ -16,6 +16,8 @@ export class ProfileService {
   public $editLanguageFormValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public $editSkillFormValues: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
+  public $showAddTimelineWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private http : HttpClient) { }
 
   createExperience(createRequest : any){
