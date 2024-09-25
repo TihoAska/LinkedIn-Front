@@ -108,14 +108,18 @@ export class User{
   lastName?: string;
   email?: string;
   job?: string;
-  education?: string;
+  education?: [];
+  imageUrl?: string;
+  bannerImage?: string;
 
-  constructor(id?: number, firstName?: string, lastName?: string, email?: string, job?: string, education?: string) {
+  constructor(id?: number, firstName?: string, lastName?: string, email?: string, job?: string, education?: [], imageUrl?: string, bannerImage?: string) {
     this.id = id;
     this.firstName =  firstName;
     this.lastName = lastName;
     this.email = email;
     this.job = job;
     this.education = education;
+    this.imageUrl = imageUrl;
+    this.bannerImage = bannerImage;
   }
 }
