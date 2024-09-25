@@ -76,6 +76,14 @@ export class MainComponent {
         document.querySelector('.container')?.classList.remove('no-scroll');
       }
     });
+
+    this.userService.$receivedConnection.subscribe(res => {
+      if(res && res != ''){
+        this.helperService.showRedDots[1] = true;
+      } else {
+        this.helperService.showRedDots[1] = false;
+      }
+    });
   } 
 
   dimBackground(){
