@@ -9,6 +9,7 @@ export class WebSocketService {
 
   private socket: WebSocket | null = null;
   private messageSubject: BehaviorSubject<any> = new BehaviorSubject<any>('Initial value');
+  public newMessage: BehaviorSubject<any> = new BehaviorSubject<any>('');
   
   constructor(public userService : UserService) {
     
@@ -20,8 +21,18 @@ export class WebSocketService {
 
     // Handle incoming messages
     this.socket.onmessage = (event) => {
-      this.messageSubject.next(JSON.parse(event.data));
-      this.userService.$receivedConnection.next(JSON.parse(event.data));
+      let parsedData = JSON.parse(event.data);
+
+      this.messageSubject.next(parsedData);
+      
+      switch(parsedData.EventType) {
+        case 'connection': 
+          this.userService.$receivedConnection.next(parsedData);
+          break;
+        case 'message':
+          this.newMessage.next(parsedData.Data);
+          break;
+      }
     };
 
     // Handle WebSocket errors
