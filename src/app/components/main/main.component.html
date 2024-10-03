@@ -113,6 +113,93 @@
         
         <p id="linkedin-corporation">LinkedIn Corporation © 2024</p>
     </footer>
+
+    <section (click)="toggleChatBox()" class="messaging" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
+        <div class="img-and-messaging">
+            <img [src]="(userService.$loggedUser | async).imageUrl" alt="" height="30px" width="30px">
+            <span>Messaging</span>
+        </div>
+        <div class="icons">
+            <div class="more-horiz-container">
+                <mat-icon>more_horiz</mat-icon>
+            </div>
+            <div class="create-container">
+                <mat-icon id="create">create</mat-icon>
+            </div>
+            <div class="toggle-chat-container" (click)="toggleChatBox(); $event.stopPropagation()">
+                <mat-icon>
+                    {{ isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+                </mat-icon>
+            </div>
+        </div>
+    </section>
+
+    <section class="chat-content" [@expandCollapseContent]="isExpanded ? 'expanded' : 'collapsed'">
+        <div class="friends" *ngFor="let connection of ($usersFromChat | async)" (click)="openChatWindow(connection.chat)">
+            <div class="friend">
+                <div class="img-and-desc">
+                    <img id="image" [src]="connection.chat.imageUrl" alt="" height="50px" width="50px">
+                    <div class="name-and-last-message">
+                        <span id="name">{{ connection.chat.firstName }} {{ connection.chat.lastName }}</span>
+                        <span id="last-message">{{ getLastMessage(connection.chat) }}</span>
+                    </div>
+                </div>
+                <div class="last-message-sent">{{ getLastMessageTimeSent(connection.chat) }}</div>
+            </div>
+        </div>
+    </section>
+
+    <section *ngFor="let chatWindow of chatWindows; let i = index" class="chat-window" 
+            [@expandShrinkWindow]="isShrinked ? 'shrinked' : 'expanded'" 
+            [@minimizeRestoreWindow]="{ value: chatWindow.minimized ? 'minimized' : 'restored', params: getAnimationParams() }"
+            [ngStyle]="{'right': (350 + i * 510) + 'px'}">
+        <div class="top" (click)="toggleMinimizeRestoreWindow(chatWindow)">
+            <div class="img-and-name">
+                <img [src]="chatWindow.profile?.imageUrl" alt="" height="30px" width="30px">
+                <span>{{ chatWindow.profile.firstName }} {{ chatWindow.profile.lastName }}</span>
+            </div>
+
+            <div class="icons">
+                <mat-icon *ngIf="!chatWindow.minimized" id="more-container">more_horiz</mat-icon>
+                <mat-icon *ngIf="!chatWindow.minimized" id="video-call-container">video_call</mat-icon>
+                <mat-icon *ngIf="!chatWindow.minimized" id="unfold-container" (click)="toggleWindowShrink(); $event.stopPropagation()">{{ isShrinked ? 'unfold_more' : 'unfold_less' }}</mat-icon>
+                <mat-icon id="close-chat-container" (click)="closeChatWindow(chatWindow); $event.stopPropagation()">close</mat-icon>
+            </div>
+        </div>
+
+        <main class="chat" #chatContent>
+            <div class="chat-description">
+                <img [src]="chatWindow.profile.imageUrl" alt="" height="72px" width="72px">
+                <span id="name">{{ chatWindow.profile.firstName }} {{ chatWindow.profile.lastName }}</span>
+                <span>{{ chatWindow.profile.job }}</span>
+            </div>
+            <div class="messages-container">
+                <div class="messages" *ngFor="let message of chatWindow.messages; let i = index">
+                    <div class="date-separator" *ngIf="i === 0 || isNewDay(chatWindow.messages[i].timeSent, chatWindow.messages[i-1].timeSent)">
+                        <hr>
+                        <span class="date-label">{{ message.timeSent | date: 'MMM dd' }}</span>
+                        <hr>
+                    </div>                
+                    <div class="message-header" *ngIf="i === 0 || chatWindow.messages[i-1].senderId !== message.senderId">
+                        <img [src]="chatWindow.messages[i].senderId == loggedInUser.id ? loggedInUser.imageUrl : chatWindow.profile.imageUrl" alt="" height="30px" width="30px">
+                        <span id="name">{{ message.senderId === loggedInUser.id ? loggedInUser.firstName : chatWindow.profile.firstName }} {{ message.senderId === loggedInUser.id ? loggedInUser.lastName : chatWindow.profile.lastName }}</span>
+                        <span id="time-sent"> <strong>·</strong> {{ message.timeSent | date:'HH:mm' }}</span>
+                    </div>
+                    <div class="message-content">
+                        {{ message.content }}
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="chatbox">
+            <textarea (keyup.enter)="sendMessage($event, chatWindow)" [(ngModel)]="messagesInput[chatWindow.profile.id]" name="" id="" placeholder="Write a message..."></textarea>
+        </section>
+
+        <div class="bottom">
+
+        </div>
+    </section>
 </div>
 
 

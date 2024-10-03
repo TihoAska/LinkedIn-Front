@@ -1,13 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { PageService } from '../../services/page.service';
 import { UserService } from '../../services/user.service';
 import { HelperService } from '../../services/helper.service';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MessagesService } from '../../services/messages.service';
+import { WebSocketService } from '../../services/web-socket.service';
+import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+  styleUrl: './main.component.scss',
+  providers: [DatePipe],
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        transform: 'translateY(0)',
+      })),
+      state('expanded', style({
+        transform: 'translateY(-1200px)',
+      })),
+      transition('collapsed <=> expanded', [
+        animate('300ms ease-in-out')
+      ]),
+    ]),
+    trigger('expandCollapseContent', [
+      state('collapsed', style({
+        transform: 'translateY(1200px)',
+      })),
+      state('expanded', style({
+        transform: 'translateY(0)',
+      })),
+      transition('collapsed <=> expanded', [
+        animate('300ms ease-in-out')
+      ]),
+    ]),
+    trigger('expandShrinkWindow', [
+      state('shrinked', style({
+        'height': '400px',
+        'width': '350px',
+      })),
+      state('expanded', style({
+        'height': '700px',
+        'width': '500px',
+      })),
+      transition('shrinked <=> expanded', [
+        animate('300ms ease-in-out')
+      ]),
+    ]),
+    trigger('minimizeRestoreWindow', [
+      state('minimized', style({
+        transform: 'translateY({{translateY}}px)',
+        width: '200px',
+      }), { params: { translateY: 650 } }),
+      state('restored', style({
+        transform: 'translateY(0)',
+        width: '{{width}}px',
+      }), { params: { width: 500 } }),
+      transition('minimized <=> restored', [
+        animate('300ms ease-in-out')
+      ]),
+    ]),
+  ],
 })
 export class MainComponent {
   icons = [
@@ -33,6 +89,21 @@ export class MainComponent {
     },
   ];
 
+  @ViewChildren('chatContent') chatContents!: QueryList<ElementRef>;
+
+  isExpanded = false;
+  isShrinked = false;
+  isChatWindowOpen = false;
+  isChatWindowMinimized = false;
+
+  chatMessages : string[] = [];
+  chatWindows : any[] = [];
+  receivedMessages : any[] = [];
+  messagesInput: { [key: string]: string } = {};
+
+  fetchedChatMessages : BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  $usersFromChat : BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
   otherSimilarProfiles : any = [];
   peopleYouMayKnow : any = [];
   twoPages : any = [];
@@ -40,17 +111,24 @@ export class MainComponent {
   buttonConnectText : string = 'Connect';
   buttonSentText: string = 'Sent...';
 
+  loggedInUser : any;
+
   constructor(
     public pageService : PageService,
     public userService : UserService,
     public helperService : HelperService,
-    public router : Router) {
+    public router : Router,
+    public messagesService : MessagesService,
+    public webSocketService : WebSocketService,
+    private datePipe : DatePipe) {
 
   }
 
   ngOnInit(){
     this.userService.$loggedUser.subscribe(user => {
       if(user.id){
+        this.loggedInUser = user;
+
         this.userService.getFiveOtherSimilarProfiles().subscribe(res => {
           this.otherSimilarProfiles = [];
           this.userService.$otherSimilarProfiles.next(res);
@@ -65,6 +143,47 @@ export class MainComponent {
           this.twoPages = [];
           this.pageService.$twoPages.next(res);
           this.twoPages.push(res);
+        });
+
+        this.messagesService.getAllMessagesForUser(this.userService.$loggedUser.value.id).subscribe(res => {
+          this.fetchedChatMessages.next(res);
+          const uniqueUserIds = new Set<number>();
+
+          res.forEach((message: any) => {
+            uniqueUserIds.add(message.senderId);
+            uniqueUserIds.add(message.receiverId);
+          });
+
+          const uniqueUserIdsArray = Array.from(uniqueUserIds);
+          this.fetchUsersFromIds(uniqueUserIdsArray);
+        });
+
+        this.webSocketService.newMessage.subscribe(res => {
+          if (res) {
+            let chatWindowIndex = this.chatWindows.findIndex(cw => cw.profile.id == res.SenderId);
+            this.fetchedChatMessages.value.push({
+              content: res.Content,
+              id: res.Id, 
+              receiverId: res.ReceiverId,
+              senderId: res.SenderId,
+              timeSent: res.TimeSent,
+            });
+
+            this.sortChatMessagesByTimeOFLastMessage(res.SenderId);
+
+            if (chatWindowIndex !== -1) {
+              this.chatWindows[chatWindowIndex].messages = this.chatWindows[chatWindowIndex].messages || [];
+              this.chatWindows[chatWindowIndex].messages.push({
+                content: res.Content,
+                id: res.Id, 
+                receiverId: res.ReceiverId,
+                senderId: res.SenderId,
+                timeSent: res.TimeSent,
+              });
+
+              this.scrollToBottom(chatWindowIndex);
+            }
+          }
         });
       }
     });
@@ -85,6 +204,54 @@ export class MainComponent {
       }
     });
   } 
+
+  sortChatMessagesByTimeOFLastMessage(senderId : number){
+    this.$usersFromChat.value.forEach((user: any) => {
+      if (user.chat.id == senderId) {
+        user.timeOfLastMessage = new Date();
+    
+        let sortedUsers = [...this.$usersFromChat.value].sort((a: any, b: any) => {
+          return new Date(b.timeOfLastMessage).getTime() - new Date(a.timeOfLastMessage).getTime();
+        });
+    
+        this.$usersFromChat.next(sortedUsers);
+      }
+    });
+  }
+
+  fetchUsersFromIds(userIds: number[]) {
+    let chats = this.userService.$loggedUser.value.connections.filter((connection : any) => 
+      userIds.some(userId => 
+        userId == connection.id && 
+        userId != this.userService.$loggedUser.value.id
+      )
+    );
+
+    let chatsWithLastMessageSentTime : any = [];
+
+    chats.forEach((chat : any) => {
+      chatsWithLastMessageSentTime.push({
+        chat: chat,
+        timeOfLastMessage: this.getLastMessageFullTimeSent(chat),
+      });
+    });
+
+    chatsWithLastMessageSentTime.sort((a: any, b: any) => {
+      return new Date(b.timeOfLastMessage).getTime() - new Date(a.timeOfLastMessage).getTime();
+    });
+
+    this.$usersFromChat.next(chatsWithLastMessageSentTime);
+  }
+
+  getLastMessageFullTimeSent(profile : any){
+    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+
+    if(messagesForUser){
+      return messagesForUser[messagesForUser.length-1]?.timeSent;
+    }
+
+    return null;
+  }
 
   dimBackground(){
     this.helperService.$dimBackground.next(true);
@@ -158,5 +325,119 @@ export class MainComponent {
     }
   
     return result || '0 mos';
+  }
+
+  toggleChatBox() { //veliki prozor sa svim chatovima
+    this.isExpanded = !this.isExpanded;
+  }
+
+  toggleWindowShrink(){ //povecaj/smanji chat prozor
+    this.isShrinked = !this.isShrinked;
+  }
+
+  closeChatWindow(chatWindow : any){
+    const index = this.chatWindows.findIndex((cw : any) => cw.profile.id == chatWindow.profile.id);
+    this.chatWindows.splice(index, 1);
+  }
+
+  openChatWindow(profile : any){
+    let windowAlreadyOpen = this.chatWindows.some(window => window.profile.id === profile.id);
+    if (windowAlreadyOpen) {
+      return;
+    }
+
+    if(this.chatWindows.length >= 4){
+      this.chatWindows.pop();
+    }
+
+    this.chatWindows.push({
+      profile: profile,
+      messages: this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id),
+      minimized: false,
+    });
+
+    setTimeout(() => {
+      const index = this.chatWindows.findIndex(cw => cw.profile.id === profile.id);
+      this.scrollToBottom(index);
+    }, 0); 
+  }
+
+  getLastMessage(profile : any){
+    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+
+    if(messagesForUser[messagesForUser.length-1]?.senderId == profile.id){
+      return (profile.firstName + ': ' + messagesForUser[messagesForUser.length-1]?.content);
+    } else{
+      return ('You: ' + messagesForUser[messagesForUser.length-1]?.content);
+    }
+  }
+
+  getLastMessageTimeSent(profile : any){
+    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+
+    if(messagesForUser){
+      let lastMessageTime = messagesForUser[messagesForUser.length-1]?.timeSent;
+
+      return this.datePipe.transform(lastMessageTime, 'MMM dd');
+    }
+
+    return null;
+  }
+
+  toggleMinimizeRestoreWindow(chatWindow : any){
+    chatWindow.minimized = !chatWindow.minimized;
+  }
+
+  isNewDay(currentTime: string, previousTime: string): boolean {
+    const currentDate = new Date(currentTime).setHours(0, 0, 0, 0);
+    const previousDate = new Date(previousTime).setHours(0, 0, 0, 0);
+  
+    return currentDate !== previousDate;
+  }
+
+  getAnimationParams() {
+    return {
+      translateY: this.isShrinked ? 350 : 650,
+      width: this.isShrinked ? 350 : 500,
+    };
+  }
+
+  sendMessage(event : any, chatWindow : any){
+    if(this.messagesInput[chatWindow.profile.id]?.trim()){
+      event.preventDefault();
+
+      const sanitizedMessage = this.messagesInput[chatWindow.profile.id].replace(/\n/g, '').trim();
+      
+      this.messagesService.sendMessage({
+        receiverId: chatWindow.profile.id,
+        senderId: this.userService.$loggedUser.value.id, 
+        content: sanitizedMessage,
+      }).subscribe(res => {
+        let index = this.chatWindows.findIndex(cw => cw.profile.id === chatWindow.profile.id);
+        if (index !== -1) {
+          this.fetchedChatMessages.value.push(res);
+          this.chatWindows[index].messages = this.chatWindows[index].messages || [];
+          this.chatWindows[index].messages.push(res);
+          this.messagesInput[chatWindow.profile.id] = '';
+        }
+        
+        this.sortChatMessagesByTimeOFLastMessage(chatWindow.profile.id);
+
+        this.scrollToBottom(index);
+      });
+    }
+  }
+
+  changeMessageReceiver(messageReceiver : any){
+    this.messagesService.messageReceiver.next(messageReceiver);
+  }
+
+  scrollToBottom(chatWindowIndex: number){
+    const chatContent = this.chatContents.toArray()[chatWindowIndex]?.nativeElement;
+    if (chatContent) {
+      setTimeout(() => {
+        chatContent.scrollTop = chatContent.scrollHeight;
+      }, 0);
+    }
   }
 }
