@@ -1,0 +1,119 @@
+<div class="container">
+    <main>
+        <div class="top">
+            <div class="left">
+                <span>Messaging</span>
+                <div class="search-messages">
+                    <mat-icon>search</mat-icon>
+                    <input type="search" placeholder="Search messages">
+                </div>
+            </div>
+            <div class="right">
+                <mat-icon>more_horiz</mat-icon>
+                <mat-icon>message</mat-icon>
+            </div>
+        </div>
+    
+        <div class="tabs">
+            <button>Inbox</button>
+            <div class="line"></div>
+            <button>Unread</button>
+            <button>My Connections</button>
+            <button>InMail</button>
+            <button>Starred</button>
+        </div>
+
+        <div class="middle">
+            <div class="left"> <!-- ngFor ... svi profili -->
+                <div class="profile">
+                    <img src="" alt="">
+                    <span>firstName lastName</span>
+                    <span class="last-message"></span>
+                    <span class="last-message-date-sent"></span>
+                </div>
+                
+            </div>
+        
+            <div class="right">
+                <div class="profile-description">
+                    <div class="name-and-study">
+                        <span id="profile-name">fistName lastName</span>
+                        <span id="studied-at">studied at ...</span>
+                    </div>
+                    
+                    <div class="profile-icons">
+                        <mat-icon>more_horiz</mat-icon>
+                        <mat-icon>video_call</mat-icon>
+                        <mat-icon>star_border</mat-icon>
+                    </div>
+                </div>
+        
+                <div class="messages">
+                    
+                </div>
+        
+                <div class="chatbox">
+                    <textarea [(ngModel)]="messageInput" (ngModelChange)="isTextareaEmpty()" name="" id="" placeholder="Write a message..."></textarea>
+                </div>
+        
+                <div class="bottom">
+                    <div class="bottom-left">
+                        <mat-icon>image</mat-icon>
+                        <mat-icon>attach_file</mat-icon>
+                        <mat-icon>gif</mat-icon>
+                        <mat-icon id="smile-face">😊</mat-icon>
+                    </div>
+        
+                    <div class="bottom-right">
+                        <button id="send-button" [ngStyle]="{
+                            'background-color': isTextareaEmpty() ? 'rgba(0, 0, 0, 0.2)' : '#0A66C2'
+                            }">Send
+                        </button>
+                        <mat-icon>more_horiz</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </main>
+    
+    <aside>
+        <div class="see-whos-hiring">
+
+        </div>
+
+        <div class="grow-your-network">
+            <p id="grow-your-network">Grow Your Network with Premium</p>
+            <p id="premium-inmail">Premium InMail is 4.6x more effective in hearing back than cold email.</p>
+            <div class="people-who-use-premium">
+
+            </div>
+            <button>Try premium for HRK0</button>
+            <p id="free-trial">1-month free trial. We'll send you a reminder 7 days before your trial ends.</p>
+        </div>
+
+        <div class="footer">
+            <div class="top">
+                <span>About</span>
+                <span>Accessibility</span>
+                <span>Help Center</span>
+            </div>
+            <div class="middle">
+                <span>Privacy & Terms</span>
+                <span>Ad Choices</span>
+                <span>Advertising</span>
+            </div>
+            <div class="bottom">
+                <span>Business Services</span>
+                <span>Get the LinkedIn app</span>
+            </div>
+            <div class="more">
+                <span>More</span>
+            </div>
+            <div class="copyright">
+                <span id="linked-in">LinkedIn</span>
+                <img src="../../../assets/images/logos/linked-in.png" alt="" height="16px" width="16px">
+                <span>LinkedIn Corporation © 2024</span>
+            </div>
+        </div>
+    </aside>
+</div>

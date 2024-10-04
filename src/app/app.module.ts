@@ -34,6 +34,7 @@ import { AddSkillWindowComponent } from './components/add-skill-window/add-skill
 import { EditSkillWindowComponent } from './components/edit-skill-window/edit-skill-window.component';
 import { MyNetworkComponent } from './components/my-network/my-network.component';
 import { AddTimelinePhotoComponent } from './components/add-timeline-photo/add-timeline-photo.component';
+import { MessagingComponent } from './components/messaging/messaging.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { AddTimelinePhotoComponent } from './components/add-timeline-photo/add-t
     AddSkillWindowComponent,
     EditSkillWindowComponent,
     MyNetworkComponent,
-    AddTimelinePhotoComponent
+    AddTimelinePhotoComponent,
+    MessagingComponent
   ],
   imports: [
     BrowserModule,

@@ -295,10 +295,16 @@ export class MainComponent {
   }
 
   navigateTo(route : any){
-    if(route.name == "My Network"){
-      this.router.navigate(['', 'my-network']);
-    } else if(route == "Profile"){
-      this.router.navigate(['', 'your-profile', 'profile-details']);
+    switch(route){
+      case 'My Network':
+        this.router.navigate(['', 'my-network']);
+        break;
+      case 'Profile':
+        this.router.navigate(['', 'your-profile', 'profile-details']);
+        break;
+      case 'Messaging': 
+        this.router.navigate(['', 'messaging']);
+        break;
     }
   }
 
