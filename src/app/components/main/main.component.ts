@@ -428,7 +428,6 @@ export class MainComponent {
         }
         
         this.sortChatMessagesByTimeOFLastMessage(chatWindow.profile.id);
-
         this.scrollToBottom(index);
       });
     }

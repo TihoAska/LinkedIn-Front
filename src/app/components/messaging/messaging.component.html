@@ -15,21 +15,30 @@
         </div>
     
         <div class="tabs">
-            <button>Inbox</button>
-            <div class="line"></div>
-            <button>Unread</button>
-            <button>My Connections</button>
-            <button>InMail</button>
-            <button>Starred</button>
+            <div class="tab" *ngFor="let tab of tabs, let i = index"> 
+                <button 
+                    [ngStyle]="{
+                        'background-color': tab.isSelected ? '#01754F' : 'transparent',
+                        'color': tab.isSelected ? 'white' : 'gray',
+                    }"> {{ tab.name }} </button>
+                <div *ngIf="i == 0" class="line"></div>
+            </div>
         </div>
 
         <div class="middle">
-            <div class="left"> <!-- ngFor ... svi profili -->
-                <div class="profile">
-                    <img src="" alt="">
-                    <span>firstName lastName</span>
-                    <span class="last-message"></span>
-                    <span class="last-message-date-sent"></span>
+            <div class="left">
+                <div class="profile" *ngFor="let connection of ($usersFromChat | async)" (click)="openChatWindow(connection)"
+                        [ngStyle]="{
+                            'background-color': connection.isSelected ? '#cde2f6' : 'transparent'
+                        }">
+                    <div class="details-and-message">
+                        <img [src]="connection.chat.imageUrl" alt="" height="56px" width="56px">
+                        <div class="name-and-message">
+                            <span>{{ connection.chat.firstName }} {{ connection.chat.lastName }}</span>
+                            <span class="last-message">{{ getLastMessage(connection) }}</span>
+                        </div>
+                    </div>
+                    <span class="last-message-date-sent">{{ connection.timeOfLastMessage | date: 'MMM dd' }}</span>
                 </div>
                 
             </div>
@@ -37,8 +46,8 @@
             <div class="right">
                 <div class="profile-description">
                     <div class="name-and-study">
-                        <span id="profile-name">fistName lastName</span>
-                        <span id="studied-at">studied at ...</span>
+                        <span id="profile-name">{{ chatWindow?.profile?.chat?.firstName }} {{ chatWindow?.profile?.chat?.lastName }}</span>
+                        <span id="studied-at">{{ chatWindow?.profile?.chat?.job }}</span>
                     </div>
                     
                     <div class="profile-icons">
@@ -48,12 +57,21 @@
                     </div>
                 </div>
         
-                <div class="messages">
-                    
+                <div class="chat" #chatContent>
+                    <div class="messages-container" *ngFor="let message of chatWindow.messages, let i = index">
+                        <div class="message-header" *ngIf="i === 0 || chatWindow.messages[i-1].senderId !== message.senderId">
+                            <img [src]="message.senderId == loggedInUser.id ? loggedInUser.imageUrl : chatWindow.profile.chat.imageUrl" alt="" height="40px" width="40px">
+                            <span id="name">{{ message.senderId === loggedInUser.id ? loggedInUser.firstName : chatWindow.profile.chat.firstName }} {{ message.senderId === loggedInUser.id ? loggedInUser.lastName : chatWindow.profile.chat.lastName }}</span>
+                            <span id="time-sent"> <strong>·</strong> {{ message.timeSent | date:'HH:mm' }}</span>
+                        </div>
+                        <div class="message">
+                            {{ message.content }}
+                        </div>
+                    </div>
                 </div>
         
                 <div class="chatbox">
-                    <textarea [(ngModel)]="messageInput" (ngModelChange)="isTextareaEmpty()" name="" id="" placeholder="Write a message..."></textarea>
+                    <textarea [(ngModel)]="messageInput" (keyup.enter)="sendMessage($event, chatWindow)" (ngModelChange)="isTextareaEmpty()" name="" id="" placeholder="Write a message..."></textarea>
                 </div>
         
                 <div class="bottom">
@@ -65,9 +83,11 @@
                     </div>
         
                     <div class="bottom-right">
-                        <button id="send-button" [ngStyle]="{
-                            'background-color': isTextareaEmpty() ? 'rgba(0, 0, 0, 0.2)' : '#0A66C2'
-                            }">Send
+                        <button id="send-button" (click)="sendMessage($event, chatWindow)"
+                            [ngStyle]="{
+                                'background-color': (isTextareaEmpty() || isChatWindowEmpty()) ? 'rgba(0, 0, 0, 0.2)' : '#0A66C2'
+                            }"
+                            [disabled]="(isTextareaEmpty() || isChatWindowEmpty())">Send
                         </button>
                         <mat-icon>more_horiz</mat-icon>
                     </div>

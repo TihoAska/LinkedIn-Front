@@ -81,10 +81,16 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             background-color: white;
 
-            .line{
-                height: 30px;
-                width: 1px;
-                background-color: rgba(0, 0, 0, 0.4);
+            .tab{
+                display: flex;
+                flex-direction: row;
+
+                .line{
+                    height: 30px;
+                    width: 1px;
+                    background-color: rgba(0, 0, 0, 0.4);
+                    margin-left: 5px;
+                }
             }
 
             button{
@@ -99,6 +105,13 @@
                 color: rgba(0, 0, 0, 0.7);
                 padding: 10px;
                 font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover{
+                background-color: rgba(0, 0, 0, 0.05);
+                border: 2px solid rgba(0, 0, 0, 0.4);
+                cursor: pointer;
             }
         }
 
@@ -114,6 +127,42 @@
                 background-color: white;
                 border-bottom-left-radius: 10px;
                 border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+                .profile{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    box-sizing: border-box;
+                    padding: 10px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+                    .details-and-message{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+
+                        .name-and-message{
+                            display: flex;
+                            flex-direction: column;
+
+                            .last-message{
+                                color: gray;
+                            }
+                        }
+                    }
+
+                    .last-message-date-sent{
+                        color: gray;
+                    }
+                }
+
+                .profile:hover{
+                    background-color: rgba(0, 0, 0, 0.1);
+                    cursor: pointer;
+                }
             }
 
             .right{
@@ -155,12 +204,37 @@
                     }
                 }
 
-                .messages{
+                .chat{
                     height: 864px;
                     width: 472px;
                     background-color: white;
                     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+                    overflow-y: auto;
+                    box-sizing: border-box;
+                    padding: 10px;
+
+                    .messages-container{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding-bottom: 5px;
+
+                        .message-header{
+                            display: flex;
+                            flex-direction: row;
+                            padding-top: 10px;
+                            gap: 5px;
+                            align-items: flex-start;
+                        }
+
+                        .message{
+                            margin-left: 50px;
+                            padding-bottom: 5px;
+                        }
+                    }
                 }
+                
+                
 
                 .chatbox{
                     height: 125px;
