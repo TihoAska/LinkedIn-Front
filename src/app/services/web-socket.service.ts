@@ -32,6 +32,9 @@ export class WebSocketService {
         case 'message':
           this.newMessage.next(parsedData.Data);
           break;
+        case 'post':
+          console.log(parsedData.Data);
+          break;
       }
     };
 

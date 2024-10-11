@@ -11,11 +11,19 @@
     
             <div class="icons-and-misc">
                 <div class="icons">
-                    <div class="icon" *ngFor="let icon of icons; let i = index" (click)="navigateTo(icon.name)">
-                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="icon" width="24" height="24" focusable="false">
+                    <div class="icon" *ngFor="let icon of icons; let i = index" (click)="navigateTo(icon.name)"
+                        [ngStyle]="{'border-bottom': icon.isSelected ? '2.5px solid black' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" color="#00000099" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="icon" width="24" height="24" focusable="false"
+                            [ngStyle]="{
+                                'color': icon.isSelected ? 'black' : 'rgba(0, 0, 0, 0.6)'
+                            }">
                             <path [attr.d]="icon.shape"></path>
                         </svg>
-                        <p class="icon-name">{{ icon.name }}</p>
+                        <p class="icon-name"
+                            [ngStyle]="{
+                                'color': icon.isSelected ? 'black' : 'rgba(0, 0, 0, 0.6)'
+                            }">
+                        {{ icon.name }}</p>
                         <div class="red-dot" *ngIf="helperService.showRedDots[i]">
                             <div class="white-dot"></div>
                         </div>

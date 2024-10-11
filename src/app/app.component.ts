@@ -37,7 +37,7 @@ export class AppComponent {
 
           this.userService.$loggedUser.next(res);
           this.webSocketService.initWebSocketService();
-          this.router.navigate(['your-profile', 'profile-details']);
+          this.router.navigate(['', 'home']);
         });
       } else{
         this.router.navigate(['sign-up']);

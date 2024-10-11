@@ -4,15 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ProfileComponent } from './components/profile/profile.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { LoginComponent } from './components/login/login.component';
 import { AddExperienceWindowComponent } from './components/add-experience-window/add-experience-window.component';
@@ -35,14 +32,13 @@ import { EditSkillWindowComponent } from './components/edit-skill-window/edit-sk
 import { MyNetworkComponent } from './components/my-network/my-network.component';
 import { AddTimelinePhotoComponent } from './components/add-timeline-photo/add-timeline-photo.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     ProfileComponent,
-    FooterComponent,
     RegisterComponent,
     LoginComponent,
     AddExperienceWindowComponent,
@@ -64,7 +60,8 @@ import { MessagingComponent } from './components/messaging/messaging.component';
     EditSkillWindowComponent,
     MyNetworkComponent,
     AddTimelinePhotoComponent,
-    MessagingComponent
+    MessagingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

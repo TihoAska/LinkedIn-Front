@@ -64,6 +64,9 @@
                 .icons{
                     display: flex;
                     flex-direction: row;
+                    height: 100%;
+                    box-sizing: border-box;
+                    padding-top: 5px;
     
                     .icon{
                         display: flex;
@@ -104,7 +107,6 @@
                         cursor: pointer;
     
                         svg, p{
-                            
                             color: black;
                         }
                     }

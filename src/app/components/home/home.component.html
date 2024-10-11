@@ -1,0 +1,200 @@
+<div class="container">
+    <section class="left">
+        <div class="profile-details">
+            <img id="banner-image" [src]="(userService.$loggedUser | async).profileDetails.bannerImage" alt="">
+            <img id="profile-photo" [src]="(userService.$loggedUser | async).imageUrl" alt="">
+            <span id="first-and-last-name">{{ (userService.$loggedUser | async).firstName }} {{ (userService.$loggedUser | async).lastName }}</span>
+            <span id="experience">{{ (userService.$loggedUser | async).job }}</span>
+            
+            <div class="connections-container">
+                <div class="connections">
+                    <span id="connections">Connections</span>
+                    <span id="number-of-connections" >17</span>
+                </div>
+                <span id="grow-your-network" >Grow your network</span>
+            </div>
+            
+            <div class="unlock-tools">
+                <span id="unlock-exclusive">Unlock exclusive tools & insights</span>
+                <div class="try-premium">
+                    <div class="premium-icon"></div>
+                    <span id="try-premium" >Try premium for HRK0</span>
+                </div>
+            </div>
+
+            <div class="saved-items">
+                <mat-icon>bookmark</mat-icon>
+                <span>Saved items</span>
+            </div>
+
+        </div>
+
+        <div class="discover-more">
+            <div class="top">
+                <span>Groups</span>
+                <div class="events">
+                    <span>Events</span>
+                    <mat-icon>add</mat-icon>
+                </div>
+                <span>Followed Hashtags</span>
+            </div>
+
+            <div id="discover-more">
+                <span>Discover more</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="middle">
+        <div class="start-a-post">
+
+            <div class="img-and-post">
+                <img [src]="(userService.$loggedUser | async).imageUrl" alt="" height="48px" width="48px">
+                <div id="post">
+                    <span>Start a post, try writing with AI</span>
+                </div>
+            </div>
+
+            <div class="media-event-write">
+                <div class="media">
+                    <mat-icon id="insert-photo-icon"> insert_photo</mat-icon>
+                    <span>Media</span>
+                </div>
+                <div class="event">
+                    <mat-icon id="event-icon">calendar_today</mat-icon>
+                    <span>Event</span>
+                </div>
+                <div class="write">
+                    <mat-icon id="view-list-icon">view_list</mat-icon>
+                    <span>Write article</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="posts">
+            <div class="post" *ngFor="let post of (postService.$posts | async)" (mouseleave)="hideReactions(post.id)">
+                <!-- <div class="top">
+                    <div class="user-action">
+                        <img src="" alt="">
+                        <span>firstName lastName likes this</span>
+                    </div>
+                    <div class="buttons">
+                        <mat-icon>more_horiz</mat-icon>
+                        <mat-icon>close</mat-icon>
+                    </div>
+                </div> -->
+
+                <div class="main">
+                    <div class="profile">
+                        <div class="post-details">
+                            <div class="image-and-details">
+                                <img [src]="post.user.imageUrl" alt="" height="48px" width="48px">
+                                <div class="profile-details">
+                                    <span id="first-and-last-name">{{ post.user.firstName }} {{ post.user.lastName }}</span>
+                                    <span id="job">{{ post.user.job }}</span>
+                                    <div class="time-posted">
+                                        <span id="time-posted">{{  getPostedTimeAgo(post.timePosted) }}</span>
+                                        <mat-icon>language</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icons">
+                                <mat-icon>more_horiz</mat-icon>
+                                <mat-icon>close</mat-icon>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <div class="post-description">
+                                {{ post.content }}
+                            </div>
+                            <img id="post-image" [src]="post.image" alt="" width="555px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animated-reactions-container" [ngStyle]="{'display': hoveredPostId == post.id ? 'flex' : 'none'}" (mouseenter)="showReactions(post.id)">
+                    <div class="animated-reaction" *ngFor="let reaction of animatedReactions, let i = index" (click)="reactOnPost(post, reaction)">
+                      <img [src]="reaction.imageUrl" alt="like" height="42px" width="42px">
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <div class="reactions">
+                        <div class="images-and-likes">
+                            <div class="icons">
+                                <img id="first-icon" src="../../../assets/images/icons/like.png" alt="" height="16px" width="16px">
+                                <img id="second-icon" src="../../../assets/images/icons/love.png" alt="" height="16px" width="16px">
+                                <img id="third-icon" src="../../../assets/images/icons/celebrate.png" alt="" height="16px" width="16px">
+                            </div>
+                            <span class="post-likes">{{ post.numberOfReactions }}</span>
+                        </div>
+
+                        <span class="post-comments">{{ post.numberOfComments }} {{ post.numberOfComments?.length == 1 ? 'comment' : 'comments' }} </span>
+                    </div>
+
+                    <div class="actions">
+                        <div class="like-icon" (mouseenter)="showReactions(post.id)">
+                            <mat-icon [ngStyle]="{
+                                'transform': 'rotateY(180deg)',
+                                'color' : isLiked(post) ? 'blue' : 'black'
+                                }"
+                            >thumb_up</mat-icon>
+                            <span>Like</span>
+                        </div>
+
+                        <div class="comment-icon">
+                            <mat-icon>comment</mat-icon>
+                            <span>Comment</span>
+                        </div>
+
+                        <div class="repost-icon">
+                            <mat-icon>cached</mat-icon>
+                            Repost
+                        </div>
+
+                        <div class="send-icon">
+                            <mat-icon id="send-icon">send</mat-icon>
+                            Send
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="right">
+        <div class="add-to-your-feed">
+            <div class="top">
+                <span>Add to your feed</span>
+                <mat-icon>info</mat-icon>
+            </div>
+
+            <div class="profiles">
+                <div class="profile" *ngFor="let person of threePeopleYouMayKnow">
+                    <img [src]="person.imageUrl" alt="" height="48px" width="48px">
+                    <div class="details">
+                        <span id="follow-first-and-last-name">{{ person.firstName }} {{ person.lastName }}</span>
+                        <span id="job">{{ person.job }}</span>
+                        <button>
+                            <mat-icon>add</mat-icon>
+                            <span>Follow</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="view-all-recommendations">
+                    <span>View all recommendations</span>
+                    <mat-icon>arrow_right_alt</mat-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="see-whos-hiring">
+
+        </div>
+
+        <div class="links">
+
+        </div>
+    </section>
+</div>

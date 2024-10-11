@@ -12,6 +12,7 @@ import { EditLanguagesComponent } from './components/edit-languages/edit-languag
 import { EditSkillsComponent } from './components/edit-skills/edit-skills.component';
 import { MyNetworkComponent } from './components/my-network/my-network.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
       {
         path: 'messaging',
         component: MessagingComponent,
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
       }
     ]
   },

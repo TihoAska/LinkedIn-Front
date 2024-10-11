@@ -364,6 +364,12 @@
                 color: gray;
                 font-size: 12px;
                 width: 250px;
+
+                span:hover{
+                    cursor: pointer;
+                    color: #0A66C2;
+                    text-decoration: underline;
+                }
             }
 
             .copyright{
