@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserService } from './user.service';
+import { PostsService } from './posts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +10,11 @@ import { UserService } from './user.service';
 export class WebSocketService {
 
   private socket: WebSocket | null = null;
-  private messageSubject: BehaviorSubject<any> = new BehaviorSubject<any>('Initial value');
+  public messageSubject: BehaviorSubject<any> = new BehaviorSubject<any>('Initial value');
   public newMessage: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public $newCommentReaction: BehaviorSubject<any> = new BehaviorSubject<any>({});
   
-  constructor(public userService : UserService) {
+  constructor(public userService : UserService, public postsService : PostsService) {
     
   }
 
@@ -33,6 +36,33 @@ export class WebSocketService {
           this.newMessage.next(parsedData.Data);
           break;
         case 'post':
+          console.log(parsedData.Data);
+          break;
+        case 'comment': 
+          this.postsService.$posts.value.forEach((post : any) => {
+            if(post.id == parsedData.Data.UserPost.Id){
+              post.comments.push({content: parsedData.Data.Content,
+                id: parsedData.Data.Id,
+                postId: parsedData.Data.PostId,
+                timeCommented: parsedData.Data.TimeCommented,
+                user: {
+                  id: parsedData.Data.User.Id,
+                  firstName: parsedData.Data.User.FirstName,
+                  lastName: parsedData.Data.User.LastName,
+                  imageUrl: parsedData.Data.User.ImageUrl,
+                  job: parsedData.Data.User.Job,
+                },
+                userId: parsedData.Data.User.Id,
+              });
+
+              post.comments.sort((a: any, b: any) => {
+                return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
+              });
+            }
+          });
+          break;
+        case 'commentReaction':
+          this.$newCommentReaction.next(parsedData.Data);
           console.log(parsedData.Data);
           break;
       }

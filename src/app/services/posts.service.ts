@@ -20,7 +20,15 @@ export class PostsService {
   }
 
   reactOnPost(reactionModel : any){
-    return this.http.put<any>('api/Posts/ReactOnPost', reactionModel);
+    return this.http.post<any>('api/Posts/ReactOnPost', reactionModel);
+  }
+
+  commentOnPost(createRequest : any){
+    return this.http.post<any>('api/Posts/CommentOnPost', createRequest);
+  }
+
+  reactOnComment(createRequest : any){
+    return this.http.post<any>('api/Posts/ReactOnComment', createRequest);
   }
 
   createPost(createRequest : object){
