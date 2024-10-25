@@ -82,10 +82,10 @@
                             <a id="profile-name" href="">{{ page.name }}</a>
                             <p id="profile-job">{{ page.description }}</p>
                             <p id="profile-followers">{{ page.numberOfFollowers }} followers</p>
-                            <div class="people-following">
-                                <img id="people-following-1" [src]="page.followers[0].imageUrl" alt="avatar" height="24px" width="24px">
-                                <img id="people-following-2" [src]="page.followers[1].imageUrl" alt="avatar" height="24px" width="24px">
-                                <img id="people-following-3" [src]="page.followers[2].imageUrl" alt="avatar" height="24px" width="24px">
+                            <div class="people-following" *ngIf="page?.followers?.length > 3">
+                                <img id="people-following-1" [src]="page?.followers[0]?.imageUrl" alt="avatar" height="24px" width="24px">
+                                <img id="people-following-2" [src]="page?.followers[1]?.imageUrl" alt="avatar" height="24px" width="24px">
+                                <img id="people-following-3" [src]="page?.followers[2]?.imageUrl" alt="avatar" height="24px" width="24px">
                                 <p id="four-connections-follow">{{ page.followers.count }} connections follow this page</p>
                             </div>
                             <button (click)="followPage(page.name)"><mat-icon>add</mat-icon>Follow</button>
