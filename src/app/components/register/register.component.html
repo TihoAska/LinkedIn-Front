@@ -1,7 +1,7 @@
 <div class="container" [ngStyle]="{'background-color': (showEmailAndPasswordForm || showFirstAndLastNameForm) ? '#F3F2F0' : 'white'}">
     <header>
         <p>Linked</p>
-        <img src="../../../assets/linked-in.png" alt="" height="38px" width="38px">
+        <img src="../../../assets/images/logos/linked-in.png" alt="" height="38px" width="38px">
     </header>
 
     <main>
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <button id="continue-with-google"><img src="../../../assets/google.png" alt="" height="18px" width="18px">Continue with Google</button>
+            <button id="continue-with-google"><img src="../../../assets/images/logos/google.png" alt="" height="18px" width="18px">Continue with Google</button>
             <p id="already-on-linkedin">Already on LinkedIn? <a [routerLink]="'/sign-in'">Sign in</a></p>
         </div>
         <div class="first-and-last-name-form" *ngIf="showFirstAndLastNameForm">
@@ -139,7 +139,7 @@
     </main>
 
     <footer *ngIf="showEmailAndPasswordForm || showFirstAndLastNameForm">
-        <p id="footer-linkedin">Linked <img src="../../../assets/linked-in-black.png" alt="" height="20px" width="20px"></p>
+        <p id="footer-linkedin">Linked <img src="../../../assets/images/logos/linked-in-black.png" alt="" height="20px" width="20px"></p>
         <p id="copyright-2024">© 2024</p>
         <a href="">About</a>
         <a href="">Accessibility</a>
