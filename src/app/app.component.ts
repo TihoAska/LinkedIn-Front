@@ -30,17 +30,15 @@ export class AppComponent {
       if(localStorage && localStorage.getItem('accessToken')){
         var user = this.userService.decodeUserFromToken(localStorage.getItem('accessToken'));
         this.userService.getUserByIdWithUserDetails(user.id).subscribe(res => {
-          console.log(res?.education[0]?.startTime);
-          console.log(res?.education[0]?.endTime);
-
           res.profileDetails.bannerImage = environment.baseUrl + res.profileDetails.bannerImage;
 
           this.userService.$loggedUser.next(res);
           this.webSocketService.initWebSocketService();
           this.router.navigate(['', 'home']);
+          window.scrollTo(0, 0);
         });
       } else{
-        this.router.navigate(['sign-up']);
+        this.router.navigate(['sign-in']);
       }
     }
   }
