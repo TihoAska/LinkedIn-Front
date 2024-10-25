@@ -16,6 +16,9 @@ export class ProfileDetailsComponent {
 
   displaySkills = false;
   displayLicenses = false;
+  displayLanguages = false;
+  displayInterests = false;
+  displayConnections = false;
   displaySkillForExperience = true;
 
   userSkills = [];
@@ -32,12 +35,15 @@ export class ProfileDetailsComponent {
   ngOnInit(){
     this.userService.$loggedUser.subscribe(res => {
       this.userSkills = res.skills;
-
-      if(res.skills){
+      
+      if(res.skills && res.skills.length){
         this.displaySkills = true;
       }
-      if(res.licensesAndCertifications){
+      if(res.licensesAndCertifications && res.skills.length){
         this.displayLicenses = true;
+      }
+      if(res.languages && res.languages.length){
+        this.displayLanguages = true;
       }
     });
   }
