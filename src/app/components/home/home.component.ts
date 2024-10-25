@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PostsService } from '../../services/posts.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { WebSocketService } from '../../services/web-socket.service';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -30,18 +31,19 @@ export class HomeComponent {
   commentsToShowMap: { [key: number]: number } = {};
   clickedCommentReaction = '';
 
-  constructor(public userService : UserService, public postService : PostsService, private webSocketService : WebSocketService) {
+  constructor(public userService : UserService, public postService : PostsService, private webSocketService : WebSocketService, public helperService : HelperService) {
     
     
   }
 
   ngOnInit(){
     this.userService.$peopleYouMayKnow.subscribe(res => {
-      this.threePeopleYouMayKnow.push(...res.slice(0, 3))
+      this.threePeopleYouMayKnow = [];
+      this.threePeopleYouMayKnow.push(...res.slice(0, 3));
     });
 
     this.userService.$loggedUser.subscribe(res => {
-      if(res){
+      if(res && res.bannerImage){
         this.postService.getAllConnectionsPosts(this.userService.$loggedUser.value.id).subscribe(posts => {
           this.connectionsPosts = posts;
           posts.forEach((post : any) => {
@@ -55,36 +57,38 @@ export class HomeComponent {
     });
 
     this.webSocketService.$newCommentReaction.subscribe(res => {
-      let post = this.postService.$posts.value.find((posts : any) => posts.comments.some((comment : any) => comment.id == res.CommentId));
-      let comment = post.comments.find((comment : any) => comment.id == res.CommentId);
-      let reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
-
-      if(reaction){
-        if(reaction.reactionType.name == res.ReactionType.Name){
-          let index = comment.reactions.findIndex((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
-          comment.reactions.splice(index, 1);
+      if(res && Object.keys(res).length){
+        let post = this.postService.$posts.value.find((posts : any) => posts.comments.some((comment : any) => comment.id == res.CommentId));
+        let comment = post.comments.find((comment : any) => comment.id == res.CommentId);
+        let reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
+  
+        if(reaction){
+          if(reaction.reactionType.name == res.ReactionType.Name){
+            let index = comment.reactions.findIndex((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
+            comment.reactions.splice(index, 1);
+          } else{
+            reaction.reactionType = {
+              iconUrl: res.ReactionType.IconUrl,
+              name: res.ReactionType.Name,
+              id: res.ReactionType.Id,
+            };
+            reaction.reactionTypeId = res.ReactionTypeId;
+          }
         } else{
-          reaction.reactionType = {
-            iconUrl: res.ReactionType.IconUrl,
-            name: res.ReactionType.Name,
-            id: res.ReactionType.Id,
-          };
-          reaction.reactionTypeId = res.ReactionTypeId;
+          comment.reactions.push({
+            comment: res.Comment,
+            commentId: res.CommentId,
+            id: res.Id,
+            reactionType: {
+              iconUrl: res.ReactionType.IconUrl,
+              name: res.ReactionType.Name,
+              id: res.ReactionType.Id,
+            },
+            reactionTypeId: res.ReactionTypeId,
+            user: res.User,
+            userId: res.UserId,
+          });
         }
-      } else{
-        comment.reactions.push({
-          comment: res.Comment,
-          commentId: res.CommentId,
-          id: res.Id,
-          reactionType: {
-            iconUrl: res.ReactionType.IconUrl,
-            name: res.ReactionType.Name,
-            id: res.ReactionType.Id,
-          },
-          reactionTypeId: res.ReactionTypeId,
-          user: res.User,
-          userId: res.UserId,
-        });
       }
     });
   }

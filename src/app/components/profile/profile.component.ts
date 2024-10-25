@@ -33,17 +33,23 @@ export class ProfileComponent {
         this.userService.getFiveOtherSimilarProfiles().subscribe(res => {
           this.otherSimilarProfiles = [];
           this.userService.$otherSimilarProfiles.next(res);
-          this.otherSimilarProfiles.push(res);
+          if(res && res.length){
+            this.otherSimilarProfiles.push(res);
+          }
         });
         this.userService.getFivePeopleYouMayKnow().subscribe(res => {
           this.peopleYouMayKnow = [];
           this.userService.$peopleYouMayKnow.next(res);
-          this.peopleYouMayKnow.push(res);
+          if(res && res.length){
+            this.peopleYouMayKnow.push(res);
+          }
         });
         this.pageService.getTwoPages().subscribe(res => {
           this.twoPages = [];
-          this.pageService.$twoPages.next(res);
-          this.twoPages.push(res);
+          if(res && res.length){
+            this.pageService.$twoPages.next(res);
+            this.twoPages.push(res);
+          }
         });
       }
     });
