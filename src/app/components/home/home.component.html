@@ -1,7 +1,7 @@
 <div class="container">
     <section class="left">
         <div class="profile-details">
-            <img id="banner-image" [src]="(userService.$loggedUser | async).profileDetails.bannerImage" alt="">
+            <img id="banner-image" [src]="(userService.$loggedUser | async).profileDetails?.bannerImage" alt="">
             <img id="profile-photo" [src]="(userService.$loggedUser | async).imageUrl" alt="">
             <span id="first-and-last-name">{{ (userService.$loggedUser | async).firstName }} {{ (userService.$loggedUser | async).lastName }}</span>
             <span id="experience">{{ (userService.$loggedUser | async).job }}</span>
