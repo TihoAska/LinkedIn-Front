@@ -28,6 +28,9 @@ export class HelperService {
   $displayError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   $errorMessage: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  public isProfileDetailsExpanded = false;
+  public backendUrl = 'https://localhost:7285'
+
   public showRedDots = [false, false, false, false, false];
 
   constructor() { }
