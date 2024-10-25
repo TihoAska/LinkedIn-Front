@@ -911,7 +911,7 @@ main{
 
     .education{
         width: 804px;
-        min-height: 248px;
+        min-height: 75px;
         background-color: white;
         border-radius: 10px;
         border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1013,7 +1013,7 @@ main{
 
     .licenses-and-verifications{
         width: 804px;
-        min-height: 228px;
+        min-height: 75px;
         background-color: white;
         border-radius: 10px;
         box-sizing: border-box;
@@ -1136,7 +1136,7 @@ main{
 
     .skills{
         width: 804px;
-        min-height: 80px;
+        min-height: 75px;
         background-color: white;
         border-radius: 10px;
         box-sizing: border-box;
@@ -1152,7 +1152,6 @@ main{
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
-                padding-bottom: 10px;
 
                 #skills{
                     font-size: 20px;
@@ -1271,7 +1270,7 @@ main{
 
     .languages{
         width: 804px;
-        height: 237px;
+        min-height: 75px;
         background-color: white;
         border-radius: 10px;
         box-sizing: border-box;
@@ -1288,7 +1287,6 @@ main{
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding-bottom: 20px;
 
                 #languages{
                     font-weight: bold;
@@ -1350,7 +1348,7 @@ main{
                     display: flex;
                     flex-direction: column;
                     margin-bottom: 10px;
-                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    height: 50px;
 
                     #croatian{
                         font-weight: bold;
@@ -1363,6 +1361,8 @@ main{
                 }
 
                 .english{
+                    padding-bottom: 10px;
+
                     #english{
                         font-weight: bold;
                         font-size: 16px;
