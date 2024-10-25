@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +37,12 @@ export class LoginComponent {
           localStorage.setItem('accessToken', res.accessToken);
           localStorage.setItem('refreshToken', res.refreshToken);
   
-          this.userService.getUserById(userFromToken.id).subscribe(res => {
+          this.userService.getUserByIdWithUserDetails(userFromToken.id).subscribe(res => {
+            res.profileDetails.bannerImage = environment.baseUrl + res.profileDetails.bannerImage;
             this.userService.$loggedUser.next(res);
+            this.router.navigate(['home']);
           });
 
-          this.router.navigate(['your-profile']);
         } else{
           this.displayEmailError = true;
         }
