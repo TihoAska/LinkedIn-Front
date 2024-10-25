@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -94,10 +95,11 @@ export class RegisterComponent {
         localStorage.setItem('accessToken', (<any>res).accessToken);
         localStorage.setItem('refreshToken', (<any>res).refreshToken);
         this.userService.getUserById(userFromToken.id).subscribe(res => {
+          res.profileDetails.bannerImage = environment.baseUrl + res.profileDetails.bannerImage;
           this.userService.$loggedUser.next(res);
         });
 
-        this.router.navigate(['your-profile']);
+        this.router.navigate(['your-profile', 'profile-details']);
       } 
       else{
         this.router.navigate(['sign-in']);
