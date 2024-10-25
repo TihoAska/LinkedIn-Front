@@ -13,7 +13,7 @@
                     <p>75% of hirers value skill context. Select at least one item to show where you used this skill.</p>
 
                     <div class="skill-categories">
-                        <div class="experience" formArrayName="experiences">
+                        <div class="experience" formArrayName="experiences" *ngIf="userExperiences.length > 0">
                             <p>Experience</p>
                             <div class="check-and-experiences" *ngFor="let experience of userExperiences; let i = index">
                                 <input type="checkbox" [formControlName]="i">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
     
-                        <div class="education" formArrayName="educations">
+                        <div class="education" formArrayName="educations" *ngIf="uniqueEducations.length > 0">
                             <p>Education</p>
                             <div class="check-and-education" *ngFor="let education of uniqueEducations; let i = index">
                                 <input type="checkbox" [formControlName]="i">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
     
-                        <div class="licenses-and-certifications" formArrayName="licenses">
+                        <div class="licenses-and-certifications" formArrayName="licenses" *ngIf="licenses.length > 0">
                             <p>Licenses & certifications</p>
                             <div class="check-and-licenses" *ngFor="let license of licenses; let i = index">
                                 <input type="checkbox" [formControlName]="i">

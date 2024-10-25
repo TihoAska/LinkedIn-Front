@@ -3,6 +3,7 @@ import { HelperService } from '../../services/helper.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-education-window',
@@ -23,6 +24,7 @@ export class EditEducationWindowComponent {
   searchSchoolControl = new FormControl();
 
   schoolImage = '';
+  educationId = -1;
 
   educationForm = new FormGroup({
     school: new FormControl('', Validators.required),
@@ -40,7 +42,8 @@ export class EditEducationWindowComponent {
   constructor(
     public helperService : HelperService,
     public profileService : ProfileService,
-    public userService : UserService) {
+    public userService : UserService,
+    public router : Router) {
     
   }
 
@@ -55,6 +58,7 @@ export class EditEducationWindowComponent {
     })
 
     this.profileService.$editEducationFormValues.subscribe(ef => {
+      this.educationId = ef.id;
       let formattedDate = this.formatDate(ef);
 
       this.schoolImage = ef.schoolImageUrl;
@@ -110,6 +114,9 @@ export class EditEducationWindowComponent {
   closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showEditEducationWindow.next(false);
+    this.showSchoolImage = false;
+    this.showSchoolQuery = false;
+    this.educationForm.reset();
   }
 
   submitForm(){
@@ -128,7 +135,10 @@ export class EditEducationWindowComponent {
         this.helperService.$dimBackground.next(false);
         this.helperService.$showEditEducationWindow.next(false);
         this.profileService.getAllEducationsForUser(this.userService.$loggedUser.value.id).subscribe(ed => {
-          this.userService.$loggedUser.value.education = ed;
+          this.userService.$loggedUser.next({
+            ...this.userService.$loggedUser.value,
+            education: ed,
+          });
         },
         error => console.log(error));
       });
@@ -160,6 +170,29 @@ export class EditEducationWindowComponent {
           location.name.toLowerCase().includes(inputValue.toLowerCase())
         );
       }
+    }
+  }
+
+  deleteEducation(){
+    if(this.educationId != -1){
+      this.profileService.deleteEducationForUser({
+        userId: this.userService.$loggedUser.value.id,
+        educationId: this.educationId,
+      }).subscribe(res => {
+        this.showSchoolImage = false;
+        console.log(res);
+        this.helperService.$showEditEducationWindow.next(false);
+        this.helperService.$dimBackground.next(false);
+
+        this.profileService.getAllEducationsForUser(this.userService.$loggedUser.value.id).subscribe(education => {
+          education.sort((a : any, b : any) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
+          this.userService.$loggedUser.value.education = education;
+
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['your-profile', 'profile-details']);
+          });
+        });
+      })
     }
   }
 }

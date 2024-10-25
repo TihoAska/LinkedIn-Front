@@ -56,24 +56,27 @@ export class AddSkillWindowComponent {
     });
 
     this.userService.$loggedUser.subscribe(res => {
-      res.experience.forEach((experience : any) => {
-        this.experiences.push({
-          position: experience.position,
-          company: this.companies.find((company : any) => company.id == experience.companyId),
-        })
-      });
-
-      res.education.forEach((education : any) => {
-        this.educationCompanies.push(education.name);
-      });
-
-      res.licensesAndCertifications.forEach((license : any) => {
-        this.licenses.push(license);
-      });
-
-      this.uniqueEducations = [...new Set(this.educationCompanies)];
-
-      this.initializeFormArrays();
+      if(res && res.experience && res.education && res.licensesAndCertifications){
+        this.experiences = [];
+        res.experience.forEach((experience : any) => {
+          this.experiences.push({
+            position: experience.position,
+            company: this.companies.find((company : any) => company.id == experience.companyId),
+          })
+        });
+  
+        res.education.forEach((education : any) => {
+          this.educationCompanies.push(education.name);
+        });
+  
+        res.licensesAndCertifications.forEach((license : any) => {
+          this.licenses.push(license);
+        });
+  
+        this.uniqueEducations = [...new Set(this.educationCompanies)];
+  
+        this.initializeFormArrays();
+      }
     });
 
     this.profileService.getAllSkills().subscribe((skills : any) => {
@@ -96,7 +99,7 @@ export class AddSkillWindowComponent {
 
     this.licenses.forEach(() => {
       (this.skillForm.get('licenses') as FormArray).push(new FormControl(false));
-    })
+    });
   }
 
   submitForm() {

@@ -2,7 +2,7 @@
     <main>
         <header>
             <p>Add experience</p>
-            <div class="close-container" (click)="undimBackground()">
+            <div class="close-container" (click)="closeWindow()">
                 <mat-icon>close</mat-icon>
             </div>
         </header>
@@ -18,7 +18,7 @@
                 <div class="employment-container">
                     <label for="employment-type-input">Employment type</label>
                     <select name="employment-type" id="employment-type-input" formControlName="employmentType">
-                        <option value="please-select">Please select</option>
+                        <option value="">Please select</option>
                         <option value="Full-time">Full time</option>
                         <option value="Part-time">Part time</option>
                         <option value="Self-employed">Self-employed</option>

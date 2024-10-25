@@ -17,8 +17,8 @@
 
                 <div class="company-container">
                     <label for="company-name-input">Issuing organization*</label>
-                    <img id="selected-company-in-input" [src]="issuingOrganizationImage" alt="" height="30px" width="30px" [ngStyle]="{'display': showIssuingOrganizationImage ? 'inline' : 'none'}">
-                    <input id="company-name-input" type="text" placeholder="Ex: Microsoft" formControlName="issuingOrganization" (input)="onInputChange($event)" [ngStyle]="{'padding-left': showIssuingOrganizationImage ? '40px' : '2px'}" autocomplete="off">
+                    <img id="selected-company-in-input" [src]="issuingOrganizationImage" alt="" height="30px" width="30px" [ngStyle]="{'display': (profileService.$showIssuingOrganizationImage | async) ? 'inline' : 'none'}">
+                    <input id="company-name-input" type="text" placeholder="Ex: Microsoft" formControlName="issuingOrganization" (input)="onInputChange($event)" [ngStyle]="{'padding-left': (profileService.$showIssuingOrganizationImage | async) ? '40px' : '2px'}" autocomplete="off">
 
                     <div class="search-company-results" *ngIf="showIssuingOrganizationQuery" [ngStyle]="{'border': filteredInstitutions.length > 0 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none'}">
                         <div class="searched-company-result" *ngFor="let institution of filteredInstitutions" (click)="select(institution)">
@@ -119,7 +119,6 @@
             </form>
         </section>
         <footer>
-            <span>Delete education</span>
             <button type="submit" (click)="submitForm()">Save</button>
         </footer>
     </main>

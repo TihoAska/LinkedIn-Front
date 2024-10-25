@@ -50,7 +50,7 @@ export class EditSkillWindowComponent {
     });
 
     this.userService.$loggedUser.subscribe(res => {
-      if(res){
+      if(res && res.experience && res.education && res.licensesAndCertifications){
         this.userSkills = res.skills;
 
         res.experience.forEach((experience : any) => {

@@ -3,6 +3,7 @@ import { HelperService } from '../../services/helper.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-language-window',
@@ -16,13 +17,18 @@ export class AddLanguageWindowComponent {
     proficiency: new FormControl('', Validators.required),
   });
   
-  constructor(public helperService : HelperService, public profileService : ProfileService, public userService : UserService) {
+  constructor(
+    public helperService : HelperService, 
+    public profileService : ProfileService, 
+    public userService : UserService,
+    public router : Router) {
     
   }
 
   closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showAddLanguageWindow.next(false);
+    this.resetForm();
   }
 
   submitForm(){
@@ -34,10 +40,16 @@ export class AddLanguageWindowComponent {
       }).subscribe(res => {
         this.helperService.$dimBackground.next(false);
         this.helperService.$showAddLanguageWindow.next(false);
-        this.profileService.getAllLanguagesByUserId(this.userService.$loggedUser.value.id).subscribe(languages => {
-          this.userService.$loggedUser.value.languages = languages;
-        });
-      })
+        this.resetForm();
+        this.userService.$loggedUser.value.languages = [...this.userService.$loggedUser.value.languages, res];
+      });
     }
+  }
+
+  resetForm(){
+    this.languageForm.reset({
+      language: '',
+      proficiency: '',
+    });
   }
 }

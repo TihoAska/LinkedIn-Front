@@ -131,7 +131,9 @@
             </form>
         </section>
         <footer>
-            <span>Delete education</span>
+            <div class="delete-education" (click)="deleteEducation()">
+                <span>Delete education</span>
+            </div>
             <button type="submit" (click)="submitForm()">Save</button>
         </footer>
     </main>

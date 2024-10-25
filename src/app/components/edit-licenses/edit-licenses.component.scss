@@ -72,13 +72,14 @@
             align-items: flex-start;
             width: 100%;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            min-height: 100px;
             
             .image-and-description{
                 padding-top: 15px;
                 display: flex;
                 flex-direction: row;
                 gap: 10px;
-                height: 135px;
+                min-height: 100px;
                 width: 100%;
                 
     

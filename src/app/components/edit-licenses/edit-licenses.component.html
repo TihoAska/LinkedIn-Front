@@ -23,9 +23,9 @@
                     <p id="date-worked">Issued {{getMonthFromDateObject(license.issueDate)}} {{getYearFromDateObject(license.issueDate) }}</p>
                     <p id="place-worked">{{ license.credentialId }}</p>
                     <br>
-                    <div class="skills-earned">
+                    <div class="skills-earned" *ngIf="(userService.$loggedUser | async)?.skills.length > 0">
                         <mat-icon>details</mat-icon>
-                        <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0].name }}, {{ (userService.$loggedUser | async)?.skills[1].name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
+                        <a id="skills-earned">{{ (userService.$loggedUser | async)?.skills[0]?.name }}, {{ (userService.$loggedUser | async)?.skills[1]?.name }} {{ (userService.$loggedUser | async)?.skills.length - 2 <= 0 ? '' : ('and +' + (userService.$loggedUser | async)?.skills.length + ' skills') }}</a>
                     </div>
                 </div>
             </div>

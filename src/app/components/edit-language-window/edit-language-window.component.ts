@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HelperService } from '../../services/helper.service';
 import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-language-window',
@@ -15,17 +16,26 @@ export class EditLanguageWindowComponent {
     language: new FormControl('', Validators.required),
     proficiency: new FormControl('', Validators.required),
   });
+
+  languageId = -1;
   
-  constructor(public helperService : HelperService, public profileService : ProfileService, public userService : UserService) {
-     
+  constructor(
+    public helperService : HelperService, 
+    public profileService : ProfileService,
+    public userService : UserService,
+    public router : Router) {
+    
   }
 
   ngOnInit(){
     this.profileService.$editLanguageFormValues.subscribe(res => {
-      this.languageForm.setValue({
-        language: res.name,
-        proficiency: res.proficiency,
-      })
+      if(res && Object.keys(res).length){
+        this.languageId = res.id,
+        this.languageForm.setValue({
+          language: res.name,
+          proficiency: res.proficiency,
+        });
+      }
     })
   }
 
@@ -48,5 +58,22 @@ export class EditLanguageWindowComponent {
   closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showEditLanguageWindow.next(false);
+    this.languageForm.reset();
+  }
+
+  deleteLanguage(){
+    if(this.languageId != -1){
+      this.profileService.deleteLanguageForUser({
+        userId: this.userService.$loggedUser.value.id,
+        languageId: this.languageId,
+      }).subscribe(res => {
+        console.log(res);
+        this.helperService.$showEditLanguageWindow.next(false);
+        this.helperService.$dimBackground.next(false);
+        this.profileService.getAllLanguagesByUserId(this.userService.$loggedUser.value.id).subscribe(res => {
+          this.userService.$loggedUser.value.languages = res;
+        });
+      })
+    }
   }
 }

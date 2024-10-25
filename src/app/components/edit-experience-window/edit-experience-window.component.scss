@@ -312,7 +312,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             box-sizing: border-box;
             padding: 10px;
             
@@ -325,6 +325,28 @@
                 border-radius: 20px;
                 background-color: #0A66C2;
                 font-size: 14px;
+            }
+
+            .delete-experience{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+
+                height: 30px;
+                width: 140px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+
+                span{
+                    font-weight: 500;
+                }
+            }
+            
+            .delete-experience:hover{
+                background-color: rgba(0, 0, 0, 0.1);
+                cursor: pointer;
             }
         }
     }

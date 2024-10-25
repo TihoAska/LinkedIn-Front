@@ -237,6 +237,23 @@
                 background-color: #0A66C2;
                 font-size: 14px;
             }
+
+            .delete-language{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+
+                height: 30px;
+                width: 120px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            
+            .delete-language:hover{
+                background-color: rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
         }
     }
 }

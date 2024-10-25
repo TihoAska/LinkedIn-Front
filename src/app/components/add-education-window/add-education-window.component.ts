@@ -1,8 +1,10 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { HelperService } from '../../services/helper.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-education-window',
@@ -41,7 +43,8 @@ export class AddEducationWindowComponent {
   constructor(
     public helperService : HelperService, 
     public profileService : ProfileService, 
-    public userService : UserService) {
+    public userService : UserService,
+    public router : Router) {
     
   }
 
@@ -59,6 +62,8 @@ export class AddEducationWindowComponent {
   closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showAddEducationWindow.next(false);
+    this.resetForm();
+    this.showSchoolImage = false;
   }
 
   select(school : any){
@@ -114,11 +119,28 @@ export class AddEducationWindowComponent {
         this.helperService.$showAddEducationWindow.next(false);
         this.profileService.getAllEducationsForUser(this.userService.$loggedUser.value.id).subscribe(ed => {
           ed.sort((a : any, b : any) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
-          this.userService.$loggedUser.value.education = ed;
+          this.userService.$loggedUser.next({
+            ...this.userService.$loggedUser.value,
+            education: ed,
+          });
+          this.resetForm();
+          this.showSchoolImage = false;
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['your-profile', 'profile-details']);
+          });
         },
         error => console.log(error));
       });
     }
+  }
+
+  resetForm(){
+    this.educationForm.reset({
+      startDateMonth: '',
+      startDateYear: 'Year',
+      endDateMonth: '',
+      endDateYear: 'Year',
+    });
   }
 }
 

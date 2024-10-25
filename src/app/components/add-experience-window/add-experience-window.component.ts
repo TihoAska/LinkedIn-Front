@@ -156,20 +156,38 @@ export class AddExperienceWindowComponent {
           locationType: this.experienceForm.value.locationType,
         }).subscribe(res => {
           console.log(res);
-          this.experienceForm.reset();
+          this.showCompanyImage = false;
           this.helperService.$showAddExperienceWindow.next(false);
           this.helperService.$dimBackground.next(false);
+          this.resetForm();
           this.profileService.getAllExperiencesForUser(this.userService.$loggedUser.value.id).subscribe(exp => {
-            this.userService.$loggedUser.value.experience = exp;
+            this.userService.$loggedUser.next({
+              ...this.userService.$loggedUser.value,
+              experience: exp,
+            });
           });
         });
       }
     }
   }
 
-  undimBackground(){
+  resetForm(){
+    this.experienceForm.reset({
+      employmentType: '',
+      startDateMonth: '',
+      startDateYear: 'Year',
+      endDateMonth: '',
+      endDateYear: 'Year',
+      companyName: '',
+      location: '',
+    });
+  }
+
+  closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showAddExperienceWindow.next(false);
+    this.resetForm();
+    this.showCompanyImage = false;
   }
 }
 

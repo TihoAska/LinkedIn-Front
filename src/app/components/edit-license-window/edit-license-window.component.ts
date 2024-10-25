@@ -54,8 +54,8 @@ export class EditLicenseWindowComponent {
       });
 
       this.pageService.getCompanyByName(lf.issuingOrganization).subscribe(res => {
-        this.issuingOrganizationImage = res.imageUrl;
-        this.showIssuingOrganizationImage = true;
+        this.issuingOrganizationImage = res?.imageUrl;
+        this.profileService.$showIssuingOrganizationImage.next(true);
       });
     });
 
@@ -82,6 +82,9 @@ export class EditLicenseWindowComponent {
   closeWindow(){
     this.helperService.$showEditLicenseWindow.next(false);
     this.helperService.$dimBackground.next(false);
+    this.licenseForm.reset();
+    this.profileService.$showIssuingOrganizationImage.next(false);
+    this.showIssuingOrganizationQuery = false;
   }
 
   onInputChange(event : any){
@@ -92,7 +95,7 @@ export class EditLicenseWindowComponent {
     );
 
     if(inputValue == ""){
-      this.showIssuingOrganizationImage = false;
+      this.profileService.$showIssuingOrganizationImage.next(false);
     } 
     else 
     {
@@ -103,14 +106,14 @@ export class EditLicenseWindowComponent {
         }
       });
 
-      this.showIssuingOrganizationImage = true;
+      this.profileService.$showIssuingOrganizationImage.next(true);
       this.showIssuingOrganizationQuery = true;
     }
   }
 
   select(institution : any){
     this.showIssuingOrganizationQuery = false;
-    this.showIssuingOrganizationImage = true;
+    this.profileService.$showIssuingOrganizationImage.next(true);
     
     this.licenseForm.patchValue({
       issuingOrganization: institution.name,
@@ -131,11 +134,33 @@ export class EditLicenseWindowComponent {
       }).subscribe(res => {
         this.helperService.$dimBackground.next(false);
         this.helperService.$showEditLicenseWindow.next(false);
+        this.profileService.$showIssuingOrganizationImage.next(false);
+        this.showIssuingOrganizationQuery = false;
         this.profileService.getAllLicensesAndCertificationsForUser(this.userService.$loggedUser.value.id).subscribe(response => {
           this.userService.$loggedUser.value.licensesAndCertifications = response;
         }, error => console.log(error));
       });
     }
+  }
+
+  deleteLicense(){
+    this.profileService.deleteLicense({
+      userId: this.userService.$loggedUser.value.id,
+      licenseId: this.profileService.$editLicenseFormValues.value.id,
+    }).subscribe(res => {
+      if(res){
+        this.helperService.$dimBackground.next(false);
+        this.helperService.$showEditLicenseWindow.next(false);
+        this.licenseForm.reset();
+        this.profileService.$showIssuingOrganizationImage.next(false);
+        this.profileService.getAllLicensesAndCertificationsForUser(this.userService.$loggedUser.value.id).subscribe(licenses => {
+          this.userService.$loggedUser.next({
+            ...this.userService.$loggedUser.value,
+            licensesAndCertifications: licenses,
+          });
+        });
+      }
+    });
   }
 }
 

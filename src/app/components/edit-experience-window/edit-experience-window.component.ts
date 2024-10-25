@@ -83,31 +83,33 @@ export class EditExperienceWindowComponent {
 
   ngOnInit(){
     this.profileService.$editExperienceFormValues.subscribe(ef => {
-
-      this.pageService.getCompanyLocationByLocationId(this.profileService.$editExperienceFormValues?.value?.companyLocationId).subscribe(res => {
-        this.companyLocation = res;
-
-        this.showCompanyImage = true;
-        this.companyImage = ef.companyImageUrl;
-
-        let formattedDate = this.formatDate(ef);
-
-        this.experienceForm = new FormGroup({
-          title: new FormControl(ef.position, Validators.required),
-          employmentType: new FormControl(ef.employmentType, Validators.required),
-          companyName: new FormControl(ef?.company?.name, Validators.required),
-          location: new FormControl(res.city + ', ' + res.county + ', ' + res.country, Validators.required),
-          locationType: new FormControl(ef.locationType, Validators.required),
-          startDateMonth: new FormControl(formattedDate.startMonth.toString(), Validators.required),
-          startDateYear: new FormControl(formattedDate.startYear.toString(), Validators.required),
-          endDateMonth: new FormControl(formattedDate.endMonth.toString()),
-          endDateYear: new FormControl(formattedDate.endYear.toString()),
-          description: new FormControl(''),
-          profileHeadline: new FormControl(''),
-          skills: new FormControl(''),
-          media: new FormControl(''),
+      if(ef && Object.keys(ef).length){
+        this.pageService.getCompanyLocationByLocationId(this.profileService.$editExperienceFormValues?.value?.companyLocationId).subscribe(res => {
+          this.companyLocation = res;
+  
+          this.showCompanyImage = true;
+          this.companyImage = ef.companyImageUrl;
+  
+          let formattedDate = this.formatDate(ef);
+  
+          this.experienceForm = new FormGroup({
+            title: new FormControl(ef.position, Validators.required),
+            employmentType: new FormControl(ef.employmentType, Validators.required),
+            companyName: new FormControl(ef?.company?.name, Validators.required),
+            location: new FormControl(res.city + ', ' + res.county + ', ' + res.country, Validators.required),
+            locationType: new FormControl(ef.locationType, Validators.required),
+            startDateMonth: new FormControl(formattedDate.startMonth.toString(), Validators.required),
+            startDateYear: new FormControl(formattedDate.startYear.toString(), Validators.required),
+            endDateMonth: new FormControl(formattedDate.endMonth.toString()),
+            endDateYear: new FormControl(formattedDate.endYear.toString()),
+            description: new FormControl(''),
+            profileHeadline: new FormControl(''),
+            skills: new FormControl(''),
+            media: new FormControl(''),
+          });
         });
-      });
+      }
+
     });
 
     this.years.push('Year');
@@ -228,6 +230,25 @@ export class EditExperienceWindowComponent {
     this.showCompaniesQuery = false;
     this.showQuery = false;
     this.experienceForm.reset();
+  }
+
+  deleteExperience(){
+    this.profileService.deleteExperience({
+      userId: this.userService.$loggedUser.value.id,
+      experienceId: this.profileService.$editExperienceFormValues.value.id,
+    }).subscribe(res => {
+      this.showCompanyImage = false;
+      if(res){
+        this.helperService.$dimBackground.next(false);
+        this.helperService.$showEditExperienceWindow.next(false);
+        this.profileService.getAllExperiencesForUser(this.userService.$loggedUser.value.id).subscribe(experiences => {
+          this.userService.$loggedUser.next({
+            ...this.userService.$loggedUser.value.id,
+            experience: experiences,
+          });
+        });
+      }
+    });
   }
 }
 

@@ -41,6 +41,7 @@ export class AddLicensesWindowComponent {
   }
 
   ngOnInit(){
+    this.profileService.$showIssuingOrganizationImage.next(false);
     this.years.push('Year');
     for (let index = 2024; index > 1923; index--) {
       this.years.push(index);
@@ -48,8 +49,10 @@ export class AddLicensesWindowComponent {
 
     this.profileService.$editLicenseFormValues.subscribe(lf => {
       this.pageService.getCompanyByName(lf.issuingOrganization).subscribe(res => {
-        this.issuingOrganizationImage = res.imageUrl;
-        this.showIssuingOrganizationImage = true;
+        if(res){
+          this.issuingOrganizationImage = res.imageUrl;
+          this.profileService.$showIssuingOrganizationImage.next(true);
+        }
       });
     });
 
@@ -61,6 +64,9 @@ export class AddLicensesWindowComponent {
   closeWindow(){
     this.helperService.$dimBackground.next(false);
     this.helperService.$showAddLicenseWindow.next(false);
+    this.profileService.$showIssuingOrganizationImage.next(false);
+    this.showIssuingOrganizationQuery = false;
+    this.resetForm();
   }
 
   onInputChange(event : any){
@@ -71,7 +77,7 @@ export class AddLicensesWindowComponent {
     );
 
     if(inputValue == ""){
-      this.showIssuingOrganizationImage = false;
+      this.profileService.$showIssuingOrganizationImage.next(false);
     } 
     else 
     {
@@ -81,7 +87,7 @@ export class AddLicensesWindowComponent {
         }
       });
 
-      this.showIssuingOrganizationImage = true;
+      this.profileService.$showIssuingOrganizationImage.next(true);
       this.showIssuingOrganizationQuery = true;
     }
   }
@@ -107,11 +113,26 @@ export class AddLicensesWindowComponent {
       }).subscribe(res => {
         this.helperService.$dimBackground.next(false);
         this.helperService.$showAddLicenseWindow.next(false);
+        this.resetForm();
+        this.profileService.$showIssuingOrganizationImage.next(false);
         this.profileService.getAllLicensesAndCertificationsForUser(this.userService.$loggedUser.value.id).subscribe(licenses => {
-          this.userService.$loggedUser.value.licensesAndCertifications = licenses;
+          this.userService.$loggedUser.next({
+            ...this.userService.$loggedUser.value,
+            licensesAndCertifications: licenses,
+          })
         });
       });
     }
+  }
+
+  resetForm(){
+    this.licenseForm.reset({
+      issueDateMonth: '',
+      issueDateYear: 'Year',
+      expirationDateMonth: '',
+      expirationDateYear: 'Year',
+      credentialUrl: 'https://www.youtube.com/watch?v=xYavnl1nPho',
+    });
   }
 }
 
