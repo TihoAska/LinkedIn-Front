@@ -18,6 +18,8 @@ export class ProfileService {
 
   public $showAddTimelineWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  public $showIssuingOrganizationImage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private http : HttpClient) { }
 
   createExperience(createRequest : any){
@@ -70,6 +72,22 @@ export class ProfileService {
 
   editLanguageForUser(updateRequest : any){
     return this.http.put('api/Profile/EditUserLanguage', updateRequest);
+  }
+
+  deleteLanguageForUser(deleteRequest : any){
+    return this.http.delete('api/Profile/DeleteLanguageForUser?userId=' + deleteRequest.userId + '&languageId=' + deleteRequest.languageId);
+  }
+
+  deleteEducationForUser(deleteRequest : any){
+    return this.http.delete('api/Profile/DeleteEducationForUser?educationId=' + deleteRequest.educationId + '&userId=' + deleteRequest.userId);
+  }
+
+  deleteExperience(deleteRequest : any){
+    return this.http.delete('api/Profile/DeleteExperienceForUser?userId=' + deleteRequest.userId + '&experienceId=' + deleteRequest.experienceId);
+  }
+
+  deleteLicense(deleteRequest : any){
+    return this.http.delete('/api/Profile/DeleteLicenseForUser?userId=' + deleteRequest.userId + '&licenseId=' + deleteRequest.licenseId);
   }
 
   getAllSkills(){
