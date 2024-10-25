@@ -30,9 +30,9 @@
                     </div>
                 </div>
     
-                <div class="avatar" (click)="navigateTo('Profile')">
+                <div class="avatar" (click)="toggleProfileDetailsWindow()">
                     <img id="avatar" src="../../../assets/images/avatars/avatar.png" alt="avatar" height="24px" width="24px">
-                    <p style="color: #00000099;">Me</p>
+                    <p id="me-and-arrow" style="color: #00000099;">Me <mat-icon>keyboard_arrow_down</mat-icon></p>
                 </div>
     
                 <div class="vertical-line">
@@ -59,6 +59,36 @@
 
     <div class="main-container">
         <router-outlet></router-outlet>
+        <div class="details-window" *ngIf="helperService.isProfileDetailsExpanded">
+            <div class="top" (click)="navigateTo('Profile')">
+                <div class="img-and-name">
+                    <img [src]="userService.$loggedUser.value.imageUrl" alt="" height="56px" width="56px">
+                    <div class="name-and-job">
+                        <span id="first-and-last-name" >{{ userService.$loggedUser.value.firstName }}  {{ userService.$loggedUser.value.lastName }}</span>
+                        <span id="job">{{ userService.$loggedUser.value.job }}</span>
+                    </div>
+                </div>
+                <button (click)="navigateTo('Profile')">View Profile</button>
+            </div>
+
+            <div class="middle">
+                <span id="middle-account">Account</span>
+                <span>Try 1 month of Premium for HRK0</span>
+                <span>Settings & Privacy</span>
+                <span>Help</span>
+                <span>Language</span>
+            </div>
+
+            <div class="bottom">
+                <span id="bottom-manage">Manage</span>
+                <span>Posts & Activity</span>
+                <span>Job Posting Account</span>
+            </div>
+
+            <div class="sign-out" (click)="signOut()">
+                <span>Sign Out</span>
+            </div>
+        </div>
     </div>
     
     <footer>
