@@ -261,7 +261,10 @@
         </div>
     </section>
 
-    <section class="skills">
+    <section class="skills" 
+        *ngIf="userService.$loggedUser.value.education?.length > 0 || 
+               userService.$loggedUser.value.experience?.length > 0 ||
+               userService.$loggedUser.value.licensesAndCertifications?.length > 0">
         <div class="skills-container">
             <div class="top-part">
                 <p id="skills">Skills</p>
@@ -314,26 +317,26 @@
                 </div>
             </div>
 
-            <div class="main-part">
-                <div class="croatian">
-                    <p id="croatian">{{ (userService.$loggedUser | async)?.languages[0].name }}</p>
-                    <p class="native-or-bilingual">{{ (userService.$loggedUser | async)?.languages[0].proficiency }}</p>
+            <div class="main-part" *ngIf="displayLanguages">
+                <div class="croatian" [ngStyle]="{'border-bottom': (userService.$loggedUser | async)?.languages.length == 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.1)'}">
+                    <p id="croatian">{{ (userService.$loggedUser | async)?.languages[0]?.name }}</p>
+                    <p class="native-or-bilingual">{{ (userService.$loggedUser | async)?.languages[0]?.proficiency }}</p>
                 </div>
 
-                <div class="english">
-                    <p id="english">{{ (userService.$loggedUser | async)?.languages[1].name }}</p>
-                    <p class="native-or-bilingual">{{ (userService.$loggedUser | async)?.languages[1].proficiency }}</p>
+                <div class="english" *ngIf="(userService.$loggedUser | async)?.languages?.length > 1">
+                    <p id="english">{{ (userService.$loggedUser | async)?.languages[1]?.name }}</p>
+                    <p class="native-or-bilingual">{{ (userService.$loggedUser | async)?.languages[1]?.proficiency }}</p>
                 </div>
             </div>
         </div>
         
-        <div class="bottom-part" (click)="edit('edit-languages')">
+        <div class="bottom-part" (click)="edit('edit-languages')" *ngIf="displayLanguages">
             <p>Show all {{ (userService.$loggedUser | async)?.languages?.length }} languages</p>
             <mat-icon id="left-arrow">keyboard_backspace</mat-icon>
         </div>
     </section>
 
-    <section class="interests">
+    <section class="interests" *ngIf="displayInterests">
         <div class="interests-wrapper">
             <div class="top-side">
                 <p id="interests">Interests</p>
