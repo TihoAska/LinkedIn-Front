@@ -8,6 +8,8 @@ import { MessagesService } from '../../services/messages.service';
 import { WebSocketService } from '../../services/web-socket.service';
 import { BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { ProfileService } from '../../services/profile.service';
+import { profile } from 'console';
 
 @Component({
   selector: 'app-main',
@@ -125,11 +127,16 @@ export class MainComponent {
     public router : Router,
     public messagesService : MessagesService,
     public webSocketService : WebSocketService,
-    private datePipe : DatePipe) {
+    private datePipe : DatePipe,
+    public profileService : ProfileService) {
 
   }
 
   ngOnInit(){
+    this.profileService.$showIssuingOrganizationImage.subscribe(res => {
+      console.log(res);
+    })
+
     this.userService.$loggedUser.subscribe(user => {
       if(user.id){
         this.loggedInUser = user;
@@ -301,6 +308,8 @@ export class MainComponent {
 
   navigateTo(route : any){
     let selectedIcon : any = {};
+    this.helperService.isProfileDetailsExpanded = false;
+    window.scrollTo(0, 0);
 
     if(selectedIcon){
       this.icons.forEach(icon => {
@@ -467,5 +476,16 @@ export class MainComponent {
         chatContent.scrollTop = chatContent.scrollHeight;
       }, 0);
     }
+  }
+
+  toggleProfileDetailsWindow(){
+    this.helperService.isProfileDetailsExpanded = !this.helperService.isProfileDetailsExpanded;
+  }
+
+  signOut(){
+    this.helperService.isProfileDetailsExpanded = false;
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.router.navigate(['sign-in']);
   }
 }

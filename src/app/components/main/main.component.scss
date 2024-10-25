@@ -122,6 +122,12 @@
                     #avatar{
                         border-radius: 50%;
                     }
+
+                    #me-and-arrow{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
     
                     p{
                         margin: 0;
@@ -177,6 +183,149 @@
         // justify-content: start;
         gap: 20px;
         margin-top: 50px;
+        position: relative;
+
+        .details-window{
+            position: fixed;
+            height: 460px;
+            width: 250px;
+            top: 60px;
+            right: 913px;
+            border-radius: 10px 0 10px 10px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+
+            .top{
+                width: 100%;
+                height: 150px;
+                box-sizing: border-box;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+                .img-and-name{
+                    display: flex;
+                    align-items: flex-start;
+                    width: 100%;
+                    height: 100px;
+                    gap: 10px;
+
+                    .name-and-job{
+                        display: flex;
+                        flex-direction: column;
+                        max-width: 60%;
+                        height: 100%;
+
+                        #first-and-last-name{
+                            font-weight: 500;
+                        }
+
+                        #job{
+                            height: 78px;
+                            word-wrap: break-word;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 4;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+
+                button{
+                    height: 25px;
+                    font-weight: bold;
+                    width: 100%;
+                    border-radius: 20px;
+                    border: 1px solid #0A66C2;
+                    background-color: transparent;
+                    color: #0A66C2;
+                    transition: background-color 0.2s ease;
+                }
+
+                button:hover{
+                    cursor: pointer;
+                    background-color: #daecfe;
+                    border: 2px solid #0A66C2;
+                }
+            }
+
+            .top:hover{
+                cursor: pointer;
+            }
+
+            .middle{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                box-sizing: border-box;
+                padding: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                width: 100%;
+                height: 150px;
+                user-select: none;
+
+                #middle-account{
+                    font-weight: 500;
+                }
+
+                span:not(#middle-account){
+                    color: gray;
+                }
+
+                span:hover:not(#middle-account){
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+
+            .bottom{
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+                padding: 10px;
+                justify-content: space-evenly;
+                width: 100%;
+                height: 120px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                user-select: none;
+
+                #bottom-manage{
+                    font-weight: 500;
+                }
+
+                span:not(#bottom-manage){
+                    color: gray;
+                }
+
+                span:hover:not(#bottom-manage){
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+
+            .sign-out{
+                box-sizing: border-box;
+                padding: 10px;
+                width: 100%;
+                height: 40px;
+                user-select: none;
+
+                span{
+                    color: gray;
+                }
+
+                span:hover{
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+        }
     }
     
     footer{
