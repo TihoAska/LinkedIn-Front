@@ -318,7 +318,7 @@
             </div>
 
             <div class="main-part" *ngIf="displayLanguages">
-                <div class="croatian" [ngStyle]="{'border-bottom': (userService.$loggedUser | async)?.languages.length == 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.1)'}">
+                <div class="croatian" [ngStyle]="{'border-bottom': (userService.$loggedUser | async)?.languages?.length == 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.1)'}">
                     <p id="croatian">{{ (userService.$loggedUser | async)?.languages[0]?.name }}</p>
                     <p class="native-or-bilingual">{{ (userService.$loggedUser | async)?.languages[0]?.proficiency }}</p>
                 </div>
