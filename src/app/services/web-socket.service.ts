@@ -11,7 +11,7 @@ export class WebSocketService {
 
   private socket: WebSocket | null = null;
   public messageSubject: BehaviorSubject<any> = new BehaviorSubject<any>('Initial value');
-  public newMessage: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public $newMessage: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public $newCommentReaction: BehaviorSubject<any> = new BehaviorSubject<any>({});
   
   constructor(public userService : UserService, public postsService : PostsService) {
@@ -33,7 +33,7 @@ export class WebSocketService {
           this.userService.$receivedConnection.next(parsedData);
           break;
         case 'message':
-          this.newMessage.next(parsedData.Data);
+          this.$newMessage.next(parsedData.Data);
           break;
         case 'post':
           console.log(parsedData.Data);
@@ -63,7 +63,6 @@ export class WebSocketService {
           break;
         case 'commentReaction':
           this.$newCommentReaction.next(parsedData.Data);
-          console.log(parsedData.Data);
           break;
       }
     };
