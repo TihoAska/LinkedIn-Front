@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Inject, PLATFORM_ID, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { PageService } from '../../services/page.service';
 import { UserService } from '../../services/user.service';
 import { HelperService } from '../../services/helper.service';
@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ProfileService } from '../../services/profile.service';
 import { profile } from 'console';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-main',
@@ -108,7 +109,7 @@ export class MainComponent {
   receivedMessages : any[] = [];
   messagesInput: { [key: string]: string } = {};
 
-  fetchedChatMessages : BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  $fetchedChatMessages : BehaviorSubject<any> = new BehaviorSubject<any>([]);
   $usersFromChat : BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   otherSimilarProfiles : any = [];
@@ -128,13 +129,31 @@ export class MainComponent {
     public messagesService : MessagesService,
     public webSocketService : WebSocketService,
     private datePipe : DatePipe,
-    public profileService : ProfileService) {
+    public profileService : ProfileService,
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) {
 
   }
 
   ngOnInit(){
-    this.profileService.$showIssuingOrganizationImage.subscribe(res => {
-      console.log(res);
+    this.messagesService.$chatWindowProfile.subscribe(res => {
+      if(Object.keys(res).length){
+        this.openChatWindow(res);
+      }
+    });
+
+    this.messagesService.$sentMessageFromPage.subscribe(res => {
+      if(res){
+        let chatWindow = this.chatWindows.find(cw => cw.profile.id == res.receiverId);
+        this.$fetchedChatMessages.value.push(res);
+        this.sortChatMessagesByTimeOFLastMessage(res.receiverId);
+
+        if(chatWindow){
+          chatWindow.messages.push(res);
+          this.getLastMessage(chatWindow.profile);
+        }
+      }
     })
 
     this.userService.$loggedUser.subscribe(user => {
@@ -157,8 +176,8 @@ export class MainComponent {
           this.twoPages.push(res);
         });
 
-        this.messagesService.getAllMessagesForUser(this.userService.$loggedUser.value.id).subscribe(res => {
-          this.fetchedChatMessages.next(res);
+        this.messagesService.getAllMessagesForUser(user.id).subscribe(res => {
+          this.$fetchedChatMessages.next(res);
           const uniqueUserIds = new Set<number>();
 
           res.forEach((message: any) => {
@@ -170,10 +189,10 @@ export class MainComponent {
           this.fetchUsersFromIds(uniqueUserIdsArray);
         });
 
-        this.webSocketService.newMessage.subscribe(res => {
+        this.webSocketService.$newMessage.subscribe(res => {
           if (res) {
             let chatWindowIndex = this.chatWindows.findIndex(cw => cw.profile.id == res.SenderId);
-            this.fetchedChatMessages.value.push({
+            this.$fetchedChatMessages.value.push({
               content: res.Content,
               id: res.Id, 
               receiverId: res.ReceiverId,
@@ -200,13 +219,16 @@ export class MainComponent {
       }
     });
 
-    this.helperService.$dimBackground.subscribe(res => {
-      if(res){
-        document.querySelector('.container')?.classList.add('no-scroll');
-      } else{
-        document.querySelector('.container')?.classList.remove('no-scroll');
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.helperService.$dimBackground.subscribe(res => {
+        const container = this.renderer.selectRootElement('.container', true);
+        if (res) {
+          this.renderer.addClass(container, 'no-scroll');
+        } else {
+          this.renderer.removeClass(container, 'no-scroll');
+        }
+      });
+    }
 
     this.userService.$receivedConnection.subscribe(res => {
       if(res && res != ''){
@@ -256,7 +278,7 @@ export class MainComponent {
   }
 
   getLastMessageFullTimeSent(profile : any){
-    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+    let messagesForUser = this.$fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
 
     if(messagesForUser){
       return messagesForUser[messagesForUser.length-1]?.timeSent;
@@ -374,7 +396,7 @@ export class MainComponent {
 
     this.chatWindows.push({
       profile: profile,
-      messages: this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id),
+      messages: this.$fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id),
       minimized: false,
     });
 
@@ -385,7 +407,7 @@ export class MainComponent {
   }
 
   getLastMessage(profile : any){
-    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+    let messagesForUser = this.$fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
 
     if(messagesForUser[messagesForUser.length-1]?.senderId == profile.id){
       return (profile.firstName + ': ' + messagesForUser[messagesForUser.length-1]?.content);
@@ -395,7 +417,7 @@ export class MainComponent {
   }
 
   getLastMessageTimeSent(profile : any){
-    let messagesForUser = this.fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
+    let messagesForUser = this.$fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.id || cm.receiverId == profile.id);
 
     if(messagesForUser){
       let lastMessageTime = messagesForUser[messagesForUser.length-1]?.timeSent;
@@ -427,7 +449,6 @@ export class MainComponent {
   sendMessage(event : any, chatWindow : any){
     if(this.messagesInput[chatWindow.profile.id]?.trim()){
       event.preventDefault();
-
       const sanitizedMessage = this.messagesInput[chatWindow.profile.id].replace(/\n/g, '').trim();
       
       this.messagesService.sendMessage({
@@ -437,20 +458,16 @@ export class MainComponent {
       }).subscribe(res => {
         let index = this.chatWindows.findIndex(cw => cw.profile.id === chatWindow.profile.id);
         if (index !== -1) {
-          this.fetchedChatMessages.value.push(res);
+          this.$fetchedChatMessages.value.push(res);
           this.chatWindows[index].messages = this.chatWindows[index].messages || [];
           this.chatWindows[index].messages.push(res);
           this.messagesInput[chatWindow.profile.id] = '';
         }
-        
+        this.messagesService.$sentMessageFromWindow.next(res);
         this.sortChatMessagesByTimeOFLastMessage(chatWindow.profile.id);
         this.scrollToBottom(index);
       });
     }
-  }
-
-  changeMessageReceiver(messageReceiver : any){
-    this.messagesService.messageReceiver.next(messageReceiver);
   }
 
   scrollToBottom(chatWindowIndex: number){

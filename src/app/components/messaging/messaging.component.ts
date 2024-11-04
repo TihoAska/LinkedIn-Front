@@ -1,3 +1,4 @@
+import { RegisterComponent } from './../register/register.component';
 import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from '../../services/user.service';
@@ -18,6 +19,8 @@ export class MessagingComponent {
   @ViewChild('chatContent') chatContent!: ElementRef;
   loggedInUser : any = {}
   chatsWithLastMessageSentTime : any = [];
+  chatMessageFromWindow = '';
+
   tabs = [
     {
       name: 'Index',
@@ -49,23 +52,38 @@ export class MessagingComponent {
   }
 
   ngOnInit(){
+    this.messagesService.$sentMessageFromWindow.subscribe(res => {
+      this.$fetchedChatMessages.value.push(res);
+      this.sortChatMessagesByTimeOFLastMessage(res.receiverId);
+      if(Object.keys(this.chatWindow).length){
+        this.getLastMessage(this.chatWindow.profile);
+        if(this.chatWindow?.profile?.chat.id == res.receiverId){
+          this.chatWindow.messages.push(res);
+        }
+      }
+    })
+
     this.userService.$loggedUser.subscribe(res => {
-      this.loggedInUser = res;
+      if(res.id){
+        this.loggedInUser = res;
+  
+        this.messagesService.getAllMessagesForUser(res.id).subscribe(res => {
+          this.$fetchedChatMessages.next(res);
+          const uniqueUserIds = new Set<number>();
+    
+          res.forEach((message: any) => {
+            uniqueUserIds.add(message.senderId);
+            uniqueUserIds.add(message.receiverId);
+          });
+    
+          const uniqueUserIdsArray = Array.from(uniqueUserIds);
+          this.fetchUsersFromIds(uniqueUserIdsArray);
+        });
+      }
     });
-    this.messagesService.getAllMessagesForUser(this.userService.$loggedUser.value.id).subscribe(res => {
-      this.$fetchedChatMessages.next(res);
-      const uniqueUserIds = new Set<number>();
+    
 
-      res.forEach((message: any) => {
-        uniqueUserIds.add(message.senderId);
-        uniqueUserIds.add(message.receiverId);
-      });
-
-      const uniqueUserIdsArray = Array.from(uniqueUserIds);
-      this.fetchUsersFromIds(uniqueUserIdsArray);
-    });
-
-    this.webSocketService.newMessage.subscribe(res => {
+    this.webSocketService.$newMessage.subscribe(res => {
       if (res) {
         this.$fetchedChatMessages.value.push({
           content: res.Content,
@@ -90,8 +108,6 @@ export class MessagingComponent {
   }
 
   sendMessage(event : any, chatWindow : any){
-    console.log(chatWindow.length);
-
     if(this.messageInput.trim()){
       event.preventDefault();
 
@@ -103,6 +119,7 @@ export class MessagingComponent {
         content: sanitizedMessage,
       }).subscribe(res => {
         this.$fetchedChatMessages.value.push(res);
+        this.messagesService.$sentMessageFromPage.next(res);
         this.chatWindow.messages = this.chatWindow.messages || [];
         this.chatWindow.messages.push(res);
         this.messageInput = '';
@@ -172,7 +189,7 @@ export class MessagingComponent {
 
   getLastMessage(profile : any){
     let messagesForUser = this.$fetchedChatMessages.value.filter((cm : any) => cm.senderId == profile.chat.id || cm.receiverId == profile.chat.id);
-
+  
     if(messagesForUser[messagesForUser.length-1]?.senderId == profile.chat.id){
       return (profile.chat.firstName + ': ' + messagesForUser[messagesForUser.length-1]?.content);
     } else{
