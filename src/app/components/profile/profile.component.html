@@ -36,7 +36,7 @@
                             </div>
                             <!-- <p id="profile-name">{{ profile.firstName }} {{ profile.lastName }}<span>· 1st</span></p> -->
                             <p id="profile-job">{{ profile.job }}</p>
-                            <button><mat-icon>send</mat-icon>Message</button>
+                            <button (click)="openChatWindow(profile)"><mat-icon>send</mat-icon>Message</button>
                         </div>
                     </div>
                 </div>

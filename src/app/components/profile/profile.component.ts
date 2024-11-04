@@ -23,7 +23,8 @@ export class ProfileComponent {
     public pageService : PageService,
     public userService : UserService,
     public helperService : HelperService,
-    private router : Router) {
+    private router : Router,
+    public messagesService : MessagesService) {
 
   }
 
@@ -114,5 +115,9 @@ export class ProfileComponent {
 
   closeError(){
     this.helperService.$displayError.next(false);
+  }
+
+  openChatWindow(profile : any){
+    this.messagesService.$chatWindowProfile.next(profile);
   }
 }
