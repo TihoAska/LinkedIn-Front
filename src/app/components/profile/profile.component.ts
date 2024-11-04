@@ -80,22 +80,6 @@ export class ProfileComponent {
     this.pageService.getPageByName(pageName);
   }
 
-  getOtherSimilarProfiles(){
-    this.userService.getFiveOtherSimilarProfiles().subscribe(res => {
-      this.otherSimilarProfiles = [];
-      this.userService.$otherSimilarProfiles.next(res);
-      this.otherSimilarProfiles.push(res[0]);
-    });
-  }
-
-  getPeopleYouMayKnow(){
-    this.userService.getFivePeopleYouMayKnow().subscribe(res => {
-      this.peopleYouMayKnow = [];
-      this.userService.$peopleYouMayKnow.next(res);
-      this.peopleYouMayKnow.push(res[0]);
-    });
-  }
-
   sendConnection(receiverId : number){
     this.userService.sendConnection(this.userService.$loggedUser.value.id, receiverId).subscribe(res => {
       this.buttonStates[receiverId] = true;
