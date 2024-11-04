@@ -2,14 +2,14 @@
     <section class="left">
         <div class="profile-details">
             <img id="banner-image" [src]="(userService.$loggedUser | async).profileDetails?.bannerImage" alt="">
-            <img id="profile-photo" [src]="(userService.$loggedUser | async).imageUrl" alt="">
-            <span id="first-and-last-name">{{ (userService.$loggedUser | async).firstName }} {{ (userService.$loggedUser | async).lastName }}</span>
-            <span id="experience">{{ (userService.$loggedUser | async).job }}</span>
+            <img id="profile-photo" [src]="(userService.$loggedUser | async)?.imageUrl" alt="">
+            <span id="first-and-last-name">{{ (userService.$loggedUser | async)?.firstName }} {{ (userService.$loggedUser | async)?.lastName }}</span>
+            <span id="experience">{{ (userService.$loggedUser | async)?.job }}</span>
             
             <div class="connections-container">
                 <div class="connections">
                     <span id="connections">Connections</span>
-                    <span id="number-of-connections" >17</span>
+                    <span id="number-of-connections">{{ (userService.$loggedUser | async)?.connections?.length }}</span>
                 </div>
                 <span id="grow-your-network" >Grow your network</span>
             </div>
@@ -49,7 +49,7 @@
         <div class="start-a-post">
 
             <div class="img-and-post">
-                <img [src]="(userService.$loggedUser | async).imageUrl" alt="" height="48px" width="48px">
+                <img [src]="(userService.$loggedUser | async)?.imageUrl" alt="" height="48px" width="48px">
                 <div id="post">
                     <span>Start a post, try writing with AI</span>
                 </div>
@@ -88,12 +88,12 @@
                     <div class="profile">
                         <div class="post-details">
                             <div class="image-and-details">
-                                <img [src]="post.user.imageUrl" alt="" height="48px" width="48px">
+                                <img [src]="post?.user?.imageUrl" alt="" height="48px" width="48px">
                                 <div class="profile-details">
-                                    <span id="first-and-last-name">{{ post.user.firstName }} {{ post.user.lastName }}</span>
-                                    <span id="job">{{ post.user.job }}</span>
+                                    <span id="first-and-last-name">{{ post?.user?.firstName }} {{ post?.user?.lastName }}</span>
+                                    <span id="job">{{ post?.user?.job }}</span>
                                     <div class="time-posted">
-                                        <span id="time-posted">{{  getPostedTimeAgo(post.timePosted) }}</span>
+                                        <span id="time-posted">{{  getPostedTimeAgo(post?.timePosted) }}</span>
                                         <mat-icon>language</mat-icon>
                                     </div>
                                 </div>
@@ -106,16 +106,16 @@
 
                         <div class="content">
                             <div class="post-description">
-                                {{ post.content }}
+                                {{ post?.content }}
                             </div>
-                            <img id="post-image" [src]="post.image" alt="" width="555px">
+                            <img id="post-image" [src]="post?.image" alt="" width="555px">
                         </div>
                     </div>
                 </div>
 
                 <div class="animated-reactions-container" [ngStyle]="{'display': hoveredPostId == post.id ? 'flex' : 'none'}" (mouseenter)="showReactions(post.id)">
                     <div class="animated-reaction" *ngFor="let reaction of animatedReactions, let i = index" (click)="reactOnPost(post, reaction)">
-                      <img [src]="reaction.imageUrl" alt="like" height="42px" width="42px">
+                      <img [src]="reaction?.imageUrl" alt="like" height="42px" width="42px">
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
 
                     <div class="comments-container" *ngIf="openCommentsIds.includes(post.id)">
                         <div class="add-a-comment">
-                            <img id="commenter-image" [src]="userService.$loggedUser.value.imageUrl" alt="" height="32px" width="32px">
+                            <img id="commenter-image" [src]="userService.$loggedUser.value?.imageUrl" alt="" height="32px" width="32px">
                             <div class="comment-input">
                                 <input type="text" placeholder="Add a comment..." (keydown)="commentOnPost($event, commentInput.value, post, commentInput)" #commentInput>
                                 <div class="input-icons">
@@ -187,7 +187,7 @@
                                         <img *ngIf="comment?.reactions[0]?.reactionType?.iconUrl" id="first-reaction" [src]="comment?.reactions[0]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
                                         <img *ngIf="comment?.reactions[1]?.reactionType?.iconUrl" id="second-reaction" [src]="comment?.reactions[1]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
                                         <img *ngIf="comment?.reactions[2]?.reactionType?.iconUrl" id="third-reaction" [src]="comment?.reactions[2]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
-                                        <span *ngIf="comment?.reactions.length > 0" id="number-of-reactions">{{ comment?.reactions.length }}</span>
+                                        <span *ngIf="comment?.reactions.length > 0" id="number-of-reactions">{{ comment?.reactions?.length }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                             </div>
                         </div>
 
-                        <div class="load-more-comments" *ngIf="post.comments.length > commentsToShowMap[post.id]">
+                        <div class="load-more-comments" *ngIf="post?.comments?.length > commentsToShowMap[post.id]">
                             <div class="load-more-icon-container" (click)="showMoreComments(post)">
                                 <mat-icon id="load-more-icon">unfold_more</mat-icon>
                             </div>
@@ -210,7 +210,7 @@
     </section>
 
     <section class="right">
-        <div class="add-to-your-feed">
+        <div class="add-to-your-feed" *ngIf="hasPeopleToShow()">
             <div class="top">
                 <span>Add to your feed</span>
                 <mat-icon>info</mat-icon>
@@ -218,10 +218,10 @@
 
             <div class="profiles">
                 <div class="profile" *ngFor="let person of threePeopleYouMayKnow">
-                    <img [src]="person.imageUrl" alt="" height="48px" width="48px">
+                    <img [src]="person?.imageUrl" alt="" height="48px" width="48px">
                     <div class="details">
-                        <span id="follow-first-and-last-name">{{ person.firstName }} {{ person.lastName }}</span>
-                        <span id="job">{{ person.job }}</span>
+                        <span id="follow-first-and-last-name">{{ person?.firstName }} {{ person?.lastName }}</span>
+                        <span id="job">{{ person?.job }}</span>
                         <button>
                             <mat-icon>add</mat-icon>
                             <span>Follow</span>
