@@ -50,7 +50,6 @@ export class RegisterComponent {
     if(this.emailAndPasswordFrom.valid){
       this.userService.getUserByEmail(this.emailAndPasswordFrom.value.email).subscribe(res => {
         if(res){
-          console.log('You suck');
           this.showToastMessage = true;
         } else{
           this.showToastMessage = false;
@@ -104,7 +103,6 @@ export class RegisterComponent {
       else{
         this.router.navigate(['sign-in']);
       }
-      console.log(res);
     });
   }
 

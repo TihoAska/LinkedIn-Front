@@ -155,7 +155,6 @@ export class AddExperienceWindowComponent {
           },
           locationType: this.experienceForm.value.locationType,
         }).subscribe(res => {
-          console.log(res);
           this.showCompanyImage = false;
           this.helperService.$showAddExperienceWindow.next(false);
           this.helperService.$dimBackground.next(false);

@@ -144,7 +144,6 @@ export class EditSkillWindowComponent {
 
     this.profileService.$editSkillFormValues.subscribe(res => {
       res.forEach((skill : any) => {
-        console.log(skill);
         deleteRequests.push(
           this.profileService.deleteUserSkill(skill.userId, skill.name, skill.description)
           .pipe(catchError(err => {
@@ -154,7 +153,6 @@ export class EditSkillWindowComponent {
       });
 
       forkJoin(deleteRequests).subscribe(res => {
-        console.log(res);
         this.helperService.$dimBackground.next(false);
         this.helperService.$showEditSkillWindow.next(false);
         window.location.reload();

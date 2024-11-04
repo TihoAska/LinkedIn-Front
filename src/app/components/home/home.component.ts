@@ -123,10 +123,8 @@ export class HomeComponent {
       userId: this.userService.$loggedUser.value.id,
       reactionType: reaction.name,
     }).subscribe(res => {
-      console.log(res);
       post.reactions = res.reactions;
       post.numberOfReactions = res.numberOfReactions;
-      console.log(post?.reactions[0]?.type?.iconUrl);
     });
   }
 
