@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { PageService } from '../../services/page.service';
 import { HelperService } from '../../services/helper.service';
 import { Router } from '@angular/router';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
   selector: 'app-profile',
@@ -73,8 +74,28 @@ export class ProfileComponent {
     this.router.navigate(['your-profile', 'edit-experience']);
   }
 
-  followPage(pageName : string){
-    this.pageService.followPage(pageName);
+  followedPages : any[] =  [];
+
+  followPage(page : any){
+    this.pageService.followPage({
+      userId: this.userService.$loggedUser.value.id,
+      pageName: page.name,
+    }).subscribe((res : any) => {
+      if(res.succeeded){
+        this.userService.$loggedUser.value.pagesFollowing.push(page);
+      } else {
+        this.pageService.unfollowPage(this.userService.$loggedUser.value.id, page.name).subscribe((response : any) => {
+          if(response.succeeded){
+            const index = this.userService.$loggedUser.value.pagesFollowing.findIndex((p : any) => p.name == page.name);
+            this.userService.$loggedUser.value.pagesFollowing.splice(index, 1);
+          }
+        });
+      }
+    });
+  }
+
+  isFollowing(followedPage : any){
+    return this.userService.$loggedUser.value.pagesFollowing.some((page : any) => page.name == followedPage.name);
   }
 
   getPageByName(pageName : string){
@@ -84,7 +105,6 @@ export class ProfileComponent {
   sendConnection(receiverId : number){
     this.userService.sendConnection(this.userService.$loggedUser.value.id, receiverId).subscribe(res => {
       this.buttonStates[receiverId] = true;
-      console.log(res);
     });
   }
 

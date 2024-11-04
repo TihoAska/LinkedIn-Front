@@ -88,7 +88,11 @@
                                 <img id="people-following-3" [src]="page?.followers[2]?.imageUrl" alt="avatar" height="24px" width="24px">
                                 <p id="four-connections-follow">{{ page.followers.count }} connections follow this page</p>
                             </div>
-                            <button (click)="followPage(page.name)"><mat-icon>add</mat-icon>Follow</button>
+                            <button [ngStyle]="{
+                                'width': isFollowing(page) ? '130px' : '100px',
+                                'color': isFollowing(page) ? '#0A66C2' : 'rgba(0, 0, 0, 0.6)',
+                                'border': isFollowing(page) ? '1px solid #0A66C2' : '1px solid rgba(0, 0, 0, 0.6)',
+                            }" (click)="followPage(page)"><mat-icon [ngStyle]="{'color': isFollowing(page) ? '#0A66C2' : 'rgba(0, 0, 0, 0.6)'}"> {{ isFollowing(page) ? 'check icon' : 'add' }}</mat-icon>{{ isFollowing(page) ? 'Following' : 'Follow'}}</button>
                         </div>
                     </div>
                 </div>
