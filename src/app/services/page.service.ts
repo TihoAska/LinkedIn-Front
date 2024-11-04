@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
@@ -23,12 +23,20 @@ export class PageService {
     });
   }
 
-  public followPage(pageName : string){
-    const body = { userId: 2, pageName: pageName };
+  public followPage(request : any){
+    return this.http.put(this.baseUrl + '/api/Page/Follow', request);
+  }
 
-    return this.http.put(this.baseUrl + '/api/Page/Follow', body).subscribe(res => {
-      console.log(res);
-    });
+  public unfollowPage(userId: string, pageName: string){
+    const params = new HttpParams()
+        .set('userId', userId)
+        .set('pageName', pageName);
+        
+    return this.http.delete('/api/Page/Unfollow', { params });
+  }
+
+  public getAllPagesForUser(){
+    return this.http.get('/api/Page/GetAllPagesForUser?userId=' + this.userService.$loggedUser.value.id);
   }
 
   public getTwoPages(){
