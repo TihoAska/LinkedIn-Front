@@ -10,7 +10,9 @@ export class MessagesService {
 
   private baseUrl = environment.baseUrl;
 
-  messageReceiver : BehaviorSubject<any> = new BehaviorSubject<any>({});
+  $chatWindowProfile: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  $sentMessageFromWindow: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  $sentMessageFromPage: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http : HttpClient) { }
 
