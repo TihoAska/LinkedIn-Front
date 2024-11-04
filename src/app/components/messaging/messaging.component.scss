@@ -188,6 +188,7 @@
                         #profile-name{
                             font-size: 14px;
                             font-weight: 500;
+                            font-weight: bold;
                         }
 
                         #studied-at{
@@ -225,6 +226,10 @@
                             padding-top: 10px;
                             gap: 5px;
                             align-items: flex-start;
+
+                            #name{
+                                font-weight: bold;
+                            }
                         }
 
                         .message{
