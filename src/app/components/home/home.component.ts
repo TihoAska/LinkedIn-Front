@@ -196,4 +196,8 @@ export class HomeComponent {
   isLiked(post : any){
     return post.reactions.some((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
   }
+
+  hasPeopleToShow(){
+    return this.threePeopleYouMayKnow.length > 0;
+  }
 }
