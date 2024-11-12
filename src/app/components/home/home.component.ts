@@ -36,6 +36,9 @@ export class HomeComponent {
     
   }
 
+  postValue = ''
+  posts : any[] = [];
+
   ngOnInit(){
     this.userService.$peopleYouMayKnow.subscribe(res => {
       this.threePeopleYouMayKnow = [];
@@ -43,24 +46,103 @@ export class HomeComponent {
     });
 
     this.userService.$loggedUser.subscribe(res => {
-      if(res && res.bannerImage){
-        this.postService.getAllConnectionsPosts(this.userService.$loggedUser.value.id).subscribe(posts => {
-          this.connectionsPosts = posts;
-          posts.forEach((post : any) => {
-            post.comments.sort((a: any, b: any) => {
-              return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
-            });
-          });
-          this.postService.$posts.next(posts);
+      if(res && res.profileDetails){
+        this.postService.getAllConnectionsAndUserPosts(this.userService.$loggedUser.value.id).subscribe((posts : any) => {
+          if(Object.keys(posts).length > 0){
+            this.connectionsPosts = posts;
+            this.connectionsPosts.sort((a: any, b: any) => {
+              return new Date(b.timePosted).getTime() - new Date(a.timePosted).getTime();
+            })
+            this.connectionsPosts.forEach(post => {
+              if(post.comments){
+                post.comments.sort((a: any, b: any) => {
+                  return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
+                });
+              }
+            })
+            
+            this.postService.$posts.next(posts);
+          }
+        });
+      }
+    });
+
+    this.webSocketService.$postReaction.subscribe(res => {
+      if(Object.keys(res).length > 0){
+        let connectionPost = this.connectionsPosts.find((connectionPost : any) => connectionPost.id == res.UserPost.Id);
+        let existingReaction = connectionPost.reactions.find((reaction : any) => reaction.id == res.Id);
+        if(existingReaction){
+          if(existingReaction.type.name == res.Type.Name){
+            let index = connectionPost.reactions.findIndex((reaction : any) => reaction.id == existingReaction.id);
+            connectionPost.reactions.splice(index, 1);
+          } else {
+            existingReaction.type = {
+              id: res.Type.Id,
+              iconUrl: res.Type.IconUrl,
+              name: res.Type.Name
+            }
+            existingReaction.timeReacted = res.TimeReacted;
+          }
+        } else {
+          connectionPost.reactions.push({
+            id: res.Id,
+            postId: res.PostId,
+            timeReacted: res.TimeReacted,
+            type: {
+              id: res.Type.Id,
+              iconUrl: res.Type.IconUrl,
+              name: res.Type.Name
+            },
+            user: {
+              firstName : res.User.FirstName,
+              lastName: res.User.LastName,
+              imageUrl: res.User.ImageUrl,
+              job: res.User.Job,
+            },
+            userId: res.UserId
+          })
+          console.log(connectionPost.reactions);
+        }
+      }
+    })
+
+    this.webSocketService.$newPost.subscribe(res => {
+      if(Object.keys(res).length > 0){
+        this.connectionsPosts.push({
+          comments: res.Comments,
+          content: res.Content,
+          id: res.Id,
+          isEdited: res.IsEdited,
+          postImage: res.PostImage,
+          posterId: res.PosterId,
+          reactions: res.Reactions,
+          timePosted: res.TimePosted,
+          user: {
+            connections: res.User.Connections,
+            firstName: res.User.FirstName,
+            lastName: res.User.LastName,
+            imageUrl: res.User.ImageUrl
+          }
+        });
+
+        this.connectionsPosts.sort((a: any, b: any) => {
+          return new Date(b.timePosted).getTime() - new Date(a.timePosted).getTime();
         });
       }
     });
 
     this.webSocketService.$newCommentReaction.subscribe(res => {
       if(res && Object.keys(res).length){
-        let post = this.postService.$posts.value.find((posts : any) => posts.comments.some((comment : any) => comment.id == res.CommentId));
+        let post = this.postService.$posts.value.find((posts : any) => posts?.comments?.some((comment : any) => comment.id == res.CommentId));
         let comment = post.comments.find((comment : any) => comment.id == res.CommentId);
-        let reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
+
+        let reaction;
+
+        if(comment.reactions){
+          reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
+        }else{
+          comment.reactions = [];
+        }
   
         if(reaction){
           if(reaction.reactionType.name == res.ReactionType.Name){
@@ -132,7 +214,9 @@ export class HomeComponent {
     if (!this.commentsToShowMap[post.id]) {
       this.commentsToShowMap[post.id] = 3;
     }
-    return post.comments.slice(0, this.commentsToShowMap[post.id]);
+    if(post.comments){
+      return post.comments.slice(0, this.commentsToShowMap[post.id]);
+    }
   }
 
   showMoreComments(post: any) {
@@ -194,10 +278,28 @@ export class HomeComponent {
   }
 
   isLiked(post : any){
-    return post.reactions.some((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
+    if(post.reactions){
+      return post.reactions.some((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
+    }
   }
 
   hasPeopleToShow(){
     return this.threePeopleYouMayKnow.length > 0;
+  }
+
+  createPost(event : any, postValue : any){
+    if(event.key === 'Enter'){
+      this.postService.createPost({
+        userId: this.userService.$loggedUser.value.id,
+        content: postValue,
+        image: '',
+      }).subscribe(res => {
+        this.postValue = ''
+        this.posts = [];
+        this.posts.push(this.postService.$posts.value);
+        this.posts.push(res);
+        this.postService.$posts.next(this.posts);
+      });
+    }
   }
 }
