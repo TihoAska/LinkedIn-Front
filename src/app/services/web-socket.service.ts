@@ -13,6 +13,9 @@ export class WebSocketService {
   public messageSubject: BehaviorSubject<any> = new BehaviorSubject<any>('Initial value');
   public $newMessage: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public $newCommentReaction: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public $newPost: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public $postReaction: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public $newComment: BehaviorSubject<any> = new BehaviorSubject<any>({});
   
   constructor(public userService : UserService, public postsService : PostsService) {
     
@@ -36,11 +39,18 @@ export class WebSocketService {
           this.$newMessage.next(parsedData.Data);
           break;
         case 'post':
-          console.log(parsedData.Data);
+          this.$newPost.next(parsedData.Data);
+          break;
+        case 'postReaction':
+          this.$postReaction.next(parsedData.Data);
           break;
         case 'comment': 
+          this.$newComment.next(parsedData.Data); //nek samo ovo bude
           this.postsService.$posts.value.forEach((post : any) => {
             if(post.id == parsedData.Data.UserPost.Id){
+              if(!post.comments){
+                post.comments = [];
+              }
               post.comments.push({content: parsedData.Data.Content,
                 id: parsedData.Data.Id,
                 postId: parsedData.Data.PostId,
