@@ -38,6 +38,6 @@ export class PostsService {
       'Authorization': `Bearer ${accessToken}`,
     });
 
-    return this.http.put<any>('/api/Posts/Create', createRequest, { headers });
+    return this.http.post<any>('/api/Posts/Create', createRequest, { headers });
   }
 }
