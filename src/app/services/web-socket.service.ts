@@ -45,31 +45,7 @@ export class WebSocketService {
           this.$postReaction.next(parsedData.Data);
           break;
         case 'comment': 
-          this.$newComment.next(parsedData.Data); //nek samo ovo bude
-          this.postsService.$posts.value.forEach((post : any) => {
-            if(post.id == parsedData.Data.UserPost.Id){
-              if(!post.comments){
-                post.comments = [];
-              }
-              post.comments.push({content: parsedData.Data.Content,
-                id: parsedData.Data.Id,
-                postId: parsedData.Data.PostId,
-                timeCommented: parsedData.Data.TimeCommented,
-                user: {
-                  id: parsedData.Data.User.Id,
-                  firstName: parsedData.Data.User.FirstName,
-                  lastName: parsedData.Data.User.LastName,
-                  imageUrl: parsedData.Data.User.ImageUrl,
-                  job: parsedData.Data.User.Job,
-                },
-                userId: parsedData.Data.User.Id,
-              });
-
-              post.comments.sort((a: any, b: any) => {
-                return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
-              });
-            }
-          });
+          this.$newComment.next(parsedData.Data);
           break;
         case 'commentReaction':
           this.$newCommentReaction.next(parsedData.Data);

@@ -30,14 +30,16 @@ export class HomeComponent {
   openCommentsIds: number[] = [];
   commentsToShowMap: { [key: number]: number } = {};
   clickedCommentReaction = '';
-
-  constructor(public userService : UserService, public postService : PostsService, private webSocketService : WebSocketService, public helperService : HelperService) {
-    
-    
-  }
-
   postValue = ''
   posts : any[] = [];
+
+  constructor(
+    public userService : UserService,
+    public postService : PostsService,
+    private webSocketService : WebSocketService,
+    public helperService : HelperService) {
+    
+  }
 
   ngOnInit(){
     this.userService.$peopleYouMayKnow.subscribe(res => {
@@ -52,127 +54,21 @@ export class HomeComponent {
             this.connectionsPosts = posts;
             this.connectionsPosts.sort((a: any, b: any) => {
               return new Date(b.timePosted).getTime() - new Date(a.timePosted).getTime();
-            })
+            });
             this.connectionsPosts.forEach(post => {
               if(post.comments){
                 post.comments.sort((a: any, b: any) => {
                   return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
                 });
               }
-            })
-            
+            });
             this.postService.$posts.next(posts);
           }
         });
       }
     });
 
-    this.webSocketService.$postReaction.subscribe(res => {
-      if(Object.keys(res).length > 0){
-        let connectionPost = this.connectionsPosts.find((connectionPost : any) => connectionPost.id == res.UserPost.Id);
-        let existingReaction = connectionPost.reactions.find((reaction : any) => reaction.id == res.Id);
-        if(existingReaction){
-          if(existingReaction.type.name == res.Type.Name){
-            let index = connectionPost.reactions.findIndex((reaction : any) => reaction.id == existingReaction.id);
-            connectionPost.reactions.splice(index, 1);
-          } else {
-            existingReaction.type = {
-              id: res.Type.Id,
-              iconUrl: res.Type.IconUrl,
-              name: res.Type.Name
-            }
-            existingReaction.timeReacted = res.TimeReacted;
-          }
-        } else {
-          connectionPost.reactions.push({
-            id: res.Id,
-            postId: res.PostId,
-            timeReacted: res.TimeReacted,
-            type: {
-              id: res.Type.Id,
-              iconUrl: res.Type.IconUrl,
-              name: res.Type.Name
-            },
-            user: {
-              firstName : res.User.FirstName,
-              lastName: res.User.LastName,
-              imageUrl: res.User.ImageUrl,
-              job: res.User.Job,
-            },
-            userId: res.UserId
-          })
-          console.log(connectionPost.reactions);
-        }
-      }
-    })
-
-    this.webSocketService.$newPost.subscribe(res => {
-      if(Object.keys(res).length > 0){
-        this.connectionsPosts.push({
-          comments: res.Comments,
-          content: res.Content,
-          id: res.Id,
-          isEdited: res.IsEdited,
-          postImage: res.PostImage,
-          posterId: res.PosterId,
-          reactions: res.Reactions,
-          timePosted: res.TimePosted,
-          user: {
-            connections: res.User.Connections,
-            firstName: res.User.FirstName,
-            lastName: res.User.LastName,
-            imageUrl: res.User.ImageUrl
-          }
-        });
-
-        this.connectionsPosts.sort((a: any, b: any) => {
-          return new Date(b.timePosted).getTime() - new Date(a.timePosted).getTime();
-        });
-      }
-    });
-
-    this.webSocketService.$newCommentReaction.subscribe(res => {
-      if(res && Object.keys(res).length){
-        let post = this.postService.$posts.value.find((posts : any) => posts?.comments?.some((comment : any) => comment.id == res.CommentId));
-        let comment = post.comments.find((comment : any) => comment.id == res.CommentId);
-
-        let reaction;
-
-        if(comment.reactions){
-          reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
-        }else{
-          comment.reactions = [];
-        }
-  
-        if(reaction){
-          if(reaction.reactionType.name == res.ReactionType.Name){
-            let index = comment.reactions.findIndex((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
-            comment.reactions.splice(index, 1);
-          } else{
-            reaction.reactionType = {
-              iconUrl: res.ReactionType.IconUrl,
-              name: res.ReactionType.Name,
-              id: res.ReactionType.Id,
-            };
-            reaction.reactionTypeId = res.ReactionTypeId;
-          }
-        } else{
-          comment.reactions.push({
-            comment: res.Comment,
-            commentId: res.CommentId,
-            id: res.Id,
-            reactionType: {
-              iconUrl: res.ReactionType.IconUrl,
-              name: res.ReactionType.Name,
-              id: res.ReactionType.Id,
-            },
-            reactionTypeId: res.ReactionTypeId,
-            user: res.User,
-            userId: res.UserId,
-          });
-        }
-      }
-    });
+    this.initWebSocketSubscriptions();
   }
 
   getPostedTimeAgo(value: Date) {
@@ -301,5 +197,144 @@ export class HomeComponent {
         this.postService.$posts.next(this.posts);
       });
     }
+  }
+
+  initWebSocketSubscriptions(){
+    this.webSocketService.$newComment.subscribe(res => {
+      if(Object.keys(res).length > 0){
+        this.postService.$posts.value.forEach((post : any) => {
+          if(post.id == res.UserPost.Id){
+            if(!post.comments){
+              post.comments = [];
+            }
+            post.comments.push({
+              content: res.Content,
+              id: res.Id,
+              postId: res.PostId,
+              timeCommented: res.TimeCommented,
+              user: {
+                id: res.User.Id,
+                firstName: res.User.FirstName,
+                lastName: res.User.LastName,
+                imageUrl: res.User.ImageUrl,
+                job: res.User.Job,
+              },
+              userId: res.User.Id,
+            });
+  
+            post.comments.sort((a: any, b: any) => {
+              return new Date(b.timeCommented).getTime() - new Date(a.timeCommented).getTime();
+            });
+          }
+        });
+      }
+    })
+
+    this.webSocketService.$postReaction.subscribe(res => {
+      if(Object.keys(res).length > 0){
+        let connectionPost = this.connectionsPosts.find((connectionPost : any) => connectionPost.id == res.UserPost.Id);
+        let existingReaction = connectionPost.reactions.find((reaction : any) => reaction.id == res.Id);
+        if(existingReaction){
+          if(existingReaction.type.name == res.Type.Name){
+            let index = connectionPost.reactions.findIndex((reaction : any) => reaction.id == existingReaction.id);
+            connectionPost.reactions.splice(index, 1);
+          } else {
+            existingReaction.type = {
+              id: res.Type.Id,
+              iconUrl: res.Type.IconUrl,
+              name: res.Type.Name
+            }
+            existingReaction.timeReacted = res.TimeReacted;
+          }
+        } else {
+          connectionPost.reactions.push({
+            id: res.Id,
+            postId: res.PostId,
+            timeReacted: res.TimeReacted,
+            type: {
+              id: res.Type.Id,
+              iconUrl: res.Type.IconUrl,
+              name: res.Type.Name
+            },
+            user: {
+              firstName : res.User.FirstName,
+              lastName: res.User.LastName,
+              imageUrl: res.User.ImageUrl,
+              job: res.User.Job,
+            },
+            userId: res.UserId
+          })
+          console.log(connectionPost.reactions);
+        }
+      }
+    })
+
+    this.webSocketService.$newPost.subscribe(res => {
+      if(Object.keys(res).length > 0){
+        this.connectionsPosts.push({
+          comments: res.Comments,
+          content: res.Content,
+          id: res.Id,
+          isEdited: res.IsEdited,
+          postImage: res.PostImage,
+          posterId: res.PosterId,
+          reactions: res.Reactions,
+          timePosted: res.TimePosted,
+          user: {
+            connections: res.User.Connections,
+            firstName: res.User.FirstName,
+            lastName: res.User.LastName,
+            imageUrl: res.User.ImageUrl
+          }
+        });
+
+        this.connectionsPosts.sort((a: any, b: any) => {
+          return new Date(b.timePosted).getTime() - new Date(a.timePosted).getTime();
+        });
+      }
+    });
+
+    this.webSocketService.$newCommentReaction.subscribe(res => {
+      if(res && Object.keys(res).length){
+        let post = this.postService.$posts.value.find((posts : any) => posts?.comments?.some((comment : any) => comment.id == res.CommentId));
+        let comment = post.comments.find((comment : any) => comment.id == res.CommentId);
+
+        let reaction;
+
+        if(comment.reactions){
+          reaction = comment.reactions.find((reaction : any) => reaction.userId == res.UserId);
+        }else{
+          comment.reactions = [];
+        }
+  
+        if(reaction){
+          if(reaction.reactionType.name == res.ReactionType.Name){
+            let index = comment.reactions.findIndex((reaction : any) => reaction.userId == this.userService.$loggedUser.value.id);
+            comment.reactions.splice(index, 1);
+          } else{
+            reaction.reactionType = {
+              iconUrl: res.ReactionType.IconUrl,
+              name: res.ReactionType.Name,
+              id: res.ReactionType.Id,
+            };
+            reaction.reactionTypeId = res.ReactionTypeId;
+          }
+        } else{
+          comment.reactions.push({
+            comment: res.Comment,
+            commentId: res.CommentId,
+            id: res.Id,
+            reactionType: {
+              iconUrl: res.ReactionType.IconUrl,
+              name: res.ReactionType.Name,
+              id: res.ReactionType.Id,
+            },
+            reactionTypeId: res.ReactionTypeId,
+            user: res.User,
+            userId: res.UserId,
+          });
+        }
+      }
+    });
   }
 }
