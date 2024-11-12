@@ -50,9 +50,7 @@
 
             <div class="img-and-post">
                 <img [src]="(userService.$loggedUser | async)?.imageUrl" alt="" height="48px" width="48px">
-                <div id="post">
-                    <span>Start a post, try writing with AI</span>
-                </div>
+                <input id="post" type="text" placeholder="Start a post, try writing with AI" [(ngModel)]="postValue" (keydown)="createPost($event, postValue)" autocomplete="off">
             </div>
 
             <div class="media-event-write">
@@ -123,14 +121,14 @@
                     <div class="reactions">
                         <div class="images-and-likes">
                             <div class="icons">
-                                <img id="first-icon" *ngIf="post?.reactions[0]?.type?.iconUrl" [src]="post?.reactions[0]?.type?.iconUrl" alt="" height="16px" width="16px">
-                                <img id="second-icon" *ngIf="post?.reactions[1]?.type?.iconUrl" [src]="post?.reactions[1]?.type?.iconUrl" alt="" height="16px" width="16px">
-                                <img id="third-icon" *ngIf="post?.reactions[2]?.type?.iconUrl" [src]="post?.reactions[2]?.type?.iconUrl" alt="" height="16px" width="16px">
+                                <img id="first-icon" *ngIf="post?.reactions?.length > 0 && post?.reactions[0]?.type?.iconUrl" [src]="post?.reactions[0]?.type?.iconUrl" alt="" height="16px" width="16px">
+                                <img id="second-icon" *ngIf="post?.reactions?.length > 0 && post?.reactions[1]?.type?.iconUrl" [src]="post?.reactions[1]?.type?.iconUrl" alt="" height="16px" width="16px">
+                                <img id="third-icon" *ngIf="post?.reactions?.length > 0 && post?.reactions[2]?.type?.iconUrl" [src]="post?.reactions[2]?.type?.iconUrl" alt="" height="16px" width="16px">
                             </div>
-                            <span class="post-likes">{{ post.numberOfReactions }}</span>
+                            <span class="post-likes"  *ngIf="post?.reactions?.length > 0">{{ post?.reactions?.length }}</span>
                         </div>
 
-                        <span class="post-comments" (click)="showComments(post.id)">{{ post?.comments?.length }} {{ post?.comments?.length == 1 ? 'comment' : 'comments' }} </span>
+                        <span *ngIf="post?.comments?.length > 0" class="post-comments" (click)="showComments(post.id)">{{ post?.comments?.length }} {{ post?.comments?.length == 1 ? 'comment' : 'comments' }} </span>
                     </div>
 
                     <div class="actions">
@@ -184,10 +182,10 @@
                                     </div>
                                     <div class="comment-reactions">
                                         <span id="like-comment" (mouseenter)="showCommentReactions(comment.id)">Like</span>
-                                        <img *ngIf="comment?.reactions[0]?.reactionType?.iconUrl" id="first-reaction" [src]="comment?.reactions[0]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
-                                        <img *ngIf="comment?.reactions[1]?.reactionType?.iconUrl" id="second-reaction" [src]="comment?.reactions[1]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
-                                        <img *ngIf="comment?.reactions[2]?.reactionType?.iconUrl" id="third-reaction" [src]="comment?.reactions[2]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
-                                        <span *ngIf="comment?.reactions.length > 0" id="number-of-reactions">{{ comment?.reactions?.length }}</span>
+                                        <img *ngIf="comment?.reactions?.length > 0 && comment?.reactions[0]?.reactionType?.iconUrl" id="first-reaction" [src]="comment?.reactions[0]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
+                                        <img *ngIf="comment?.reactions?.length > 0 && comment?.reactions[1]?.reactionType?.iconUrl" id="second-reaction" [src]="comment?.reactions[1]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
+                                        <img *ngIf="comment?.reactions?.length > 0 && comment?.reactions[2]?.reactionType?.iconUrl" id="third-reaction" [src]="comment?.reactions[2]?.reactionType?.iconUrl" alt="" height="16px" width="16px">
+                                        <span *ngIf="comment?.reactions?.length > 0" id="number-of-reactions">{{ comment?.reactions?.length }}</span>
                                     </div>
                                 </div>
                             </div>
