@@ -5,6 +5,7 @@ import { PageService } from './services/page.service';
 import { HelperService } from './services/helper.service';
 import { WebSocketService } from './services/web-socket.service';
 import { environment } from '../environments/environment';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,6 @@ export class AppComponent {
   constructor(
     private router : Router,
     private userService : UserService,
-    private pageService : PageService,
     public helperService : HelperService,
     public webSocketService : WebSocketService
   ) {
@@ -31,7 +31,6 @@ export class AppComponent {
         var user = this.userService.decodeUserFromToken(localStorage.getItem('accessToken'));
         this.userService.getUserByIdWithUserDetails(user.id).subscribe(res => {
           res.profileDetails.bannerImage = environment.baseUrl + res.profileDetails.bannerImage;
-
           this.userService.$loggedUser.next(res);
           this.webSocketService.initWebSocketService();
           this.router.navigate(['', 'home']);
