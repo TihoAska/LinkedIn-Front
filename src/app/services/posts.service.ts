@@ -19,6 +19,10 @@ export class PostsService {
     return this.http.get<any>('/api/Posts/GetAllConnectionsPosts?userId=' + userId);
   }
 
+  getAllConnectionsAndUserPosts(userId : number){
+    return this.http.get('api/Posts/GetAllConnectionAndUserPosts?userId=' + userId);
+  }
+
   reactOnPost(reactionModel : any){
     return this.http.post<any>('api/Posts/ReactOnPost', reactionModel);
   }
